@@ -1,0 +1,18 @@
+@startuml
+
+WeatherViewController o-- WeatherViewModel
+
+WeatherViewModel o-- WeatherRequestInteractor
+WeatherViewModel o-- WeatherSetDataSourceInteractor
+
+WeatherRepository o-- WeatherAPIProvider
+WeatherRepository o-- WeatherLocalProvider
+
+WeatherAPIProvider o-- APIClient
+
+WeatherRequestInteractor o-- AplicationPreferences
+WeatherRequestInteractor o-- WeatherRepository
+
+WeatherSetDataSourceInteractor o-- WeatherRepository
+
+@enduml
