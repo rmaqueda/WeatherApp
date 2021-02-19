@@ -8,19 +8,14 @@ import {{ importName }}
 {% endfor %}
 {% endif %}
 @testable import {{ argument.module }}
-
 {% macro parameterType typeName typeToReplace replaceType %}{% if typeName.description == typeToReplace %}{{ genericReplaceType }}{% else %}{{ typeName }}{% endif %}{% endmacro %}
-
 {% macro methodCaseName method skipParameter typeToReplace replaceType %}{{ method.callName }}{% if method.parameters.count > 0 %}({% for param in method.parameters where param.name != skipParameter|default:"" and param.typeName.isClosure == 0 %}{{ param.name }}: {% call parameterType param.typeName genericType genericReplaceType %}{% if not forloop.last%}, {% endif %}{% endfor %}){% endif %}{% endmacro %}
-
 {% macro mockOptionalVariable variable %}
     public var {% call mockedVariableName variable %}: {{ variable.typeName }}
 {% endmacro %}
-
 {% macro mockNonOptionalArrayOrDictionaryVariable variable %}
     public var {% call mockedVariableName variable %}: {{ variable.typeName }} = {% if variable.isArray %}[]{% elif variable.isDictionary %}[:]{% endif %}
 {% endmacro %}
-
 {% macro mockNonOptionalVariable variable %}
     public var {% call mockedVariableName variable %}: {{ variable.typeName }} {
         get { return {% call underlyingMockedVariableName variable %} }
@@ -28,24 +23,23 @@ import {{ importName }}
     }
     public var {% call underlyingMockedVariableName variable %}: {{ variable.typeName }}!
 {% endmacro %}
-
 {% macro underlyingMockedVariableName variable %}underlying{{ variable.name|upperFirstLetter }}{% endmacro %}
 {% macro mockedVariableName variable %}{{ variable.name }}{% endmacro %}
-
 {% macro spyCase method skipParameter genericType genericReplaceType %}
     {% if not method.isInitializer %}
         case {% call methodCaseName method skipParameter genericType genericReplaceType %}
     {% endif %}
 {% endmacro %}
-
 {% macro addDefaultInitialiser initialisers %}
 {% if initialisers == "[]" %}
-    public init() {}
+    public init() {
+        // Intentionally unimplemented
+    }
 {% endif %}
 {% endmacro %}
 
 {% for type in types.protocols where type.annotations.autoSpy %}
-// Spy for {{ type.name }}
+// MARK: Spy for {{ type.name }}
 public class Spy{{ type.name }}: {{ type.name }}, TestSpy {
 	public enum Method: Equatable {
 	{% for method in type.allMethods|!definedInExtension %}
@@ -78,4 +72,6 @@ public class Spy{{ type.name }}: {{ type.name }}, TestSpy {
 	{% endif %}
 	{% endfor %}
 }
+
 {% endfor %}
+

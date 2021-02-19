@@ -1,36 +1,38 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
 default_platform(:ios)
 
 platform :ios do
-	
-	desc "Tests"
-  	lane :tests do
-    	scan(
-    		scheme: "WeatherApp",
-    		device: "iPhone 12 Pro Max"	 
-    	)
-  	end
 
-  	desc "Lint"
-  	lane :lint do
-    	swiftlint(
-    		output_file: "swiftlint.json",
-    		reporter: "json"
-    	)
-  	end
+  before_all do
+    xcode_select("/Applications/Xcode_12.3.app")
+  end
+
+  desc "Lint all targets with Swiftlint."
+  lane :lint do
+    swiftlint(
+      output_file: "swiftlint.json",
+      reporter: "json"
+      )
+  end
+
+  desc "Run unis tests in iOS sumilator."
+  lane :tests do
+    run_tests(
+      devices: ["iPhone SE 13.6", "iPhone SE 14.0", "iPad Air 2 13.6", "iPad Air 2 14.0"],
+      output_types: "junit",
+      derived_data_path: 'build'
+      )
+  end
+
+  desc "Archive project for tests."
+  lane :archive_for_tests do
+    build_app(
+      configuration: "Debug",
+      derived_data_path: "build",
+      export_method: "development",
+      output_name: "WeatherApp.ipa",
+      xcargs: "build-for-testing",
+      silent: true
+      )
+  end
 
 end

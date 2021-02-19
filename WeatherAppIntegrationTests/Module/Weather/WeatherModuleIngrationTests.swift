@@ -14,21 +14,20 @@ final class WeatherModuleIngrationTests: XCTestCase {
     private var cancellables = Set<AnyCancellable>()
         
     override func setUp() {
-        let preferences = AplicationPreferences()
-        let client = APIClient(preferences: preferences, session: .stubbed)
+        super.setUp()
+        
+        let client = APIClient(session: .stubbed)
         let APIProvider = WeatherAPIProvider(APIClient: client)
         let localProvider = WeatherLocalProvider()
         let repository = WeatherRepository(APIProvider: APIProvider, localProvider: localProvider)
         let mapper = WeatherViewModelMapper()
         
-        let requestForecastInteractor = WeatherRequestInteractor(preferences: preferences, repository: repository)
+        let requestForecastInteractor = WeatherRequestInteractor(repository: repository)
         let setDataSourceInteractor = WeatherSetDataSourceInteractor(repository: repository)
         
         sut = WeatherViewModel(requestForecastInteractor: requestForecastInteractor,
                                setDataSourceInteractor: setDataSourceInteractor,
                                mapper: mapper)
-        
-        super.setUp()
     }
     
     override func tearDown() {
@@ -40,7 +39,7 @@ final class WeatherModuleIngrationTests: XCTestCase {
     
     func test_givenResponseSuccess_whenRequestForecast_thenReceiveExpectedForecastSections() throws {
         // given
-        HTTPStubProtocol.stubForecastRequest()
+        try HTTPStubProtocol.stubForecastRequest()
         
         let didReceiveActivityIndicator = expectation(description: "didReceiveValue")
         let didReceiveSections = expectation(description: "didReceiveValue")
@@ -73,7 +72,7 @@ final class WeatherModuleIngrationTests: XCTestCase {
     
     func test_givenResponseError_whenRequestForecast_thenReceiveError() throws {
         // given
-        HTTPStubProtocol.stubForecastRequestError()
+        try HTTPStubProtocol.stubForecastRequestError()
         
         let didReceiveActivityIndicator = expectation(description: "didReceiveValue")
         let didReceiveResponse = expectation(description: "didReceiveValue")

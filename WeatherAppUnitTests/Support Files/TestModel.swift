@@ -7,10 +7,6 @@
 
 import Foundation
 
-struct User: Equatable, Codable {
-    let name: String
-}
-
 struct TestError: Equatable, Codable {
     let message: String
 }

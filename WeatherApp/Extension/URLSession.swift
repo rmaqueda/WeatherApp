@@ -7,6 +7,7 @@
 
 import Foundation
 
+#if DEBUG
 extension URLSession {
     
     static var stubbed: URLSession {
@@ -18,3 +19,4 @@ extension URLSession {
     }
     
 }
+#endif

@@ -15,6 +15,7 @@ final class WeatherLocalProviderTests: XCTestCase {
         
         // when
         sut.requestForecast(city: "stub")
+            .assertNoFailure()
             .sink(receiveCompletion: { _ in
                 didReceiveData.fulfill()
             },

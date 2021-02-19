@@ -11,8 +11,6 @@ import Combine
 
 final class WeatherRequestInteractorTests: XCTestCase {
     private var sut: WeatherRequestInteractor!
-    
-    private let preferences = AplicationPreferences()
     private let spy = SpyWeatherRepositoryProtocol()
     
     private var cancellables = Set<AnyCancellable>()
@@ -20,7 +18,7 @@ final class WeatherRequestInteractorTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        sut = WeatherRequestInteractor(preferences: preferences, repository: spy)
+        sut = WeatherRequestInteractor(repository: spy)
     }
     
     override func tearDown() {
@@ -36,9 +34,10 @@ final class WeatherRequestInteractorTests: XCTestCase {
         
         // when
         sut.requestForecast(for: "London")
+            .assertNoFailure()
             .sink(receiveCompletion: { _ in
                 didReceiveValue.fulfill()
-            }) { _ in }
+            }) { _ in /* NOOP */ }
             .store(in: &cancellables)
 
         wait(for: [didReceiveValue], timeout: 1)
@@ -54,9 +53,10 @@ final class WeatherRequestInteractorTests: XCTestCase {
         
         // when
         sut.requestForecast(for: nil)
+            .assertNoFailure()
             .sink(receiveCompletion: { _ in
                 didReceiveValue.fulfill()
-            }) { _ in }
+            }) { _ in /* NOOP */ }
             .store(in: &cancellables)
         
         wait(for: [didReceiveValue], timeout: 1)

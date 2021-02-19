@@ -19,7 +19,7 @@ extension APIRequest where Output: Decodable, Error: Decodable {
                    headers: [.accept: ContentType.json].merging(headers) { _, new in new },
                    parameters: parameters,
                    body: nil,
-                   output: {  try jsonDecoder.decode(Output.self, from: $0) },
+                   output: { try jsonDecoder.decode(Output.self, from: $0) },
                    error: { try jsonDecoder.decode(Error.self, from: $0) })
     }
 

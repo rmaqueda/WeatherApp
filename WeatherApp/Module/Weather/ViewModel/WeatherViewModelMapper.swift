@@ -11,14 +11,14 @@ class WeatherViewModelMapper {
     
     func map(for response: OpenWeatherResponse) -> WeatherViewModelData {
         let city = WeatherViewModelData.City(name: response.city.name,
-                                              curretWeatherText: response.list.first?.weather.first?.descriptionText)
+                                             curretWeatherText: response.list.first?.weather.first?.descriptionText)
         
         let daily = response.list.map {
             WeatherViewModelData.HourCondition(date: $0.date,
-                                                title: MeasurementFormatter.string(from: $0.main.temperature),
-                                                subTitle: DateFormatter.time.string(from: $0.date),
-                                                dateString: DateFormatter.date.string(from: $0.date),
-                                                icon: ForecastIcon(rawValue: $0.weather.first?.icon ?? "") ?? .unknown
+                                               title: MeasurementFormatter.string(from: $0.main.temperature),
+                                               subTitle: DateFormatter.time.string(from: $0.date),
+                                               dateString: DateFormatter.date.string(from: $0.date),
+                                               icon: ForecastIcon(rawValue: $0.weather.first?.icon ?? "") ?? .unknown
             )
         }
         

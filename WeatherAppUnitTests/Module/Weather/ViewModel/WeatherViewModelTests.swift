@@ -45,6 +45,7 @@ final class WeatherViewModelTests: XCTestCase {
         sut.requestForecast(for: nil)
 
         sut.dataSourcePublisher
+            .assertNoFailure()
             .sink { viewModel in
                 response = viewModel
                 didReceiveValue.fulfill()
@@ -73,6 +74,7 @@ final class WeatherViewModelTests: XCTestCase {
         sut.requestForecast(for: "stub")
         
         sut.dataSourcePublisher
+            .assertNoFailure()
             .sink { viewModel in
                 response = viewModel
                 didReceiveValue.fulfill()
@@ -101,6 +103,7 @@ final class WeatherViewModelTests: XCTestCase {
         sut.requestForecast(for: "stub")
         
         sut.dataSourcePublisher
+            .assertNoFailure()
             .sink { viewModel in
                 response = viewModel
                 didReceiveValue.fulfill()

@@ -31,7 +31,7 @@ final class APIClientTest: XCTestCase {
     func test_givenAnyValidResponse_whenResponse_thenReturnsOutput() throws {
         // given
         let request = APIRequest<String, TestError>.get("/user")
-        try? HTTPStubProtocol.stub("stub", statusCode: 200, for: request, baseURL: stubURL)
+        try HTTPStubProtocol.stub(output: "stub", statusCode: 200, for: request, baseURL: stubURL)
         let didReceiveValue = expectation(description: "didReceiveValue")
         var result: String?
 

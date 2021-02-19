@@ -16,12 +16,10 @@ enum WeatherViewSectionType: Int, CaseIterable {
     case activityIndicator
     
     var numberOfItems: Int {
-        switch self {
-        case .dailyForecast:
+        if case .dailyForecast = self {
             return 40
-        default:
-            return 1
         }
+        return 1
     }
     
     var size: CGSize {

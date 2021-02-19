@@ -19,7 +19,7 @@ final class WeatherViewControllerSnapShotTests: XCTestCase {
         super.tearDown()
     }
   
-    func test_happypath() throws {
+    func test_weatherScreen_iPhone() {
         isRecording = false
         
         // given
@@ -31,8 +31,24 @@ final class WeatherViewControllerSnapShotTests: XCTestCase {
         // when
 
         // then
-        assertSnapshot(matching: nav, as: .image)
-        assertSnapshot(matching: nav, as: .recursiveDescription)
+        assertSnapshot(matching: nav, as: .image(on: .iPhoneSe, precision: 0.8))
+        assertSnapshot(matching: nav, as: .image(on: .iPhoneXsMax, precision: 0.8))
+    }
+    
+    func test_weatherScreen_iPad() {
+        isRecording = false
+        
+        // given
+        let mock = OpenWeatherResponse.mockLondon
+        let mockMapped = WeatherViewModelMapper().map(for: mock)
+        spy.dataSource = mockMapped
+        let nav = UINavigationController(rootViewController: sut)
+        
+        // when
+        
+        // then
+        assertSnapshot(matching: nav, as: .image(on: .iPadPro12_9, precision: 0.8))
+        assertSnapshot(matching: nav, as: .image(on: .iPadMini, precision: 0.8))
     }
             
 }

@@ -6,15 +6,7 @@ import Foundation
 import Combine
 @testable import WeatherApp
 
-
-
-
-
-
-
-
-
-// Spy for WeatherProviderProtocol
+// MARK: Spy for WeatherProviderProtocol
 public class SpyWeatherProviderProtocol: WeatherProviderProtocol, TestSpy {
 	public enum Method: Equatable {
         case requestForecast(city: String)
@@ -23,7 +15,9 @@ public class SpyWeatherProviderProtocol: WeatherProviderProtocol, TestSpy {
 
     public var callstack = CallstackContainer<Method>()
 
-    public init() {}
+    public init() {
+        // Intentionally unimplemented
+    }
 
     public var requestForecastResult: AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>>!
     public func requestForecast(city: String) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>> {
@@ -31,7 +25,8 @@ public class SpyWeatherProviderProtocol: WeatherProviderProtocol, TestSpy {
         return requestForecastResult
     }
 }
-// Spy for WeatherRepositoryProtocol
+
+// MARK: Spy for WeatherRepositoryProtocol
 public class SpyWeatherRepositoryProtocol: WeatherRepositoryProtocol, TestSpy {
 	public enum Method: Equatable {
         case requestForecast(city: String)
@@ -41,7 +36,9 @@ public class SpyWeatherRepositoryProtocol: WeatherRepositoryProtocol, TestSpy {
 
     public var callstack = CallstackContainer<Method>()
 
-    public init() {}
+    public init() {
+        // Intentionally unimplemented
+    }
 
     public var requestForecastResult: AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>>!
     public func requestForecast(city: String) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>> {
@@ -52,7 +49,8 @@ public class SpyWeatherRepositoryProtocol: WeatherRepositoryProtocol, TestSpy {
         callstack.record(.setDataSourceType(type: type ))
     }
 }
-// Spy for WeatherRequestInteractorProtocol
+
+// MARK: Spy for WeatherRequestInteractorProtocol
 public class SpyWeatherRequestInteractorProtocol: WeatherRequestInteractorProtocol, TestSpy {
 	public enum Method: Equatable {
         case requestForecast(city: String?)
@@ -61,7 +59,9 @@ public class SpyWeatherRequestInteractorProtocol: WeatherRequestInteractorProtoc
 
     public var callstack = CallstackContainer<Method>()
 
-    public init() {}
+    public init() {
+        // Intentionally unimplemented
+    }
 
     public var requestForecastResult: AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>>!
     public func requestForecast(for city: String?) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>> {
@@ -69,7 +69,8 @@ public class SpyWeatherRequestInteractorProtocol: WeatherRequestInteractorProtoc
         return requestForecastResult
     }
 }
-// Spy for WeatherSetDataSourceInteractorProtocol
+
+// MARK: Spy for WeatherSetDataSourceInteractorProtocol
 public class SpyWeatherSetDataSourceInteractorProtocol: WeatherSetDataSourceInteractorProtocol, TestSpy {
 	public enum Method: Equatable {
         case changeDataSource(isCacheEnabled: Bool)
@@ -78,9 +79,13 @@ public class SpyWeatherSetDataSourceInteractorProtocol: WeatherSetDataSourceInte
 
     public var callstack = CallstackContainer<Method>()
 
-    public init() {}
+    public init() {
+        // Intentionally unimplemented
+    }
 
     public func changeDataSource(isCacheEnabled: Bool) {
         callstack.record(.changeDataSource(isCacheEnabled: isCacheEnabled ))
     }
 }
+
+

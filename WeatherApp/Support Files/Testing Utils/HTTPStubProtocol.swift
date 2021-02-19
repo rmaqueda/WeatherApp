@@ -19,7 +19,7 @@ class HTTPStubProtocol: URLProtocol {
     
     private static var stubs: [URLRequest: Stub] = [:]
     
-    static func stub<Output, Error>(_ output: Output,
+    static func stub<Output, Error>(output: Output,
                                     jsonEncoder: JSONEncoder = JSONEncoder(),
                                     statusCode: Int,
                                     headers: [String: String]? = nil,
@@ -76,42 +76,32 @@ class HTTPStubProtocol: URLProtocol {
 
 extension HTTPStubProtocol {
     
-    static func stubForecastRequest() {
-        let stubURL = URL(string: "https://api.openweathermap.org/data/2.5/")!
-        
-        let request = APIRequest<OpenWeatherResponse, TestError>
-            .get("forecast", parameters: ["q": "Munich",
-                                          "appid": "c4f676324b18f84850fb1c06eb03c021",
-                                          "units": "metric",
-                                          "lang": "en"]
+    static func stubForecastRequest() throws {
+        let request = APIRequest<OpenWeatherResponse, OpenWeatherAPIError>
+            .get("forecast", parameters: ["q": AplicationPreferences.defaultCity,
+                                          "appid": AplicationPreferences.APIKey,
+                                          "units": AplicationPreferences.openWeahterAPIUnit,
+                                          "lang": AplicationPreferences.language]
             )
         
-        let model = OpenWeatherResponse.mockMadrid
-        
-        do {
-            try HTTPStubProtocol.stub(model, statusCode: 200, for: request, baseURL: stubURL)
-        } catch {
-            print(error)
-        }
+        try HTTPStubProtocol.stub(output: OpenWeatherResponse.mockMadrid,
+                                  statusCode: 200,
+                                  for: request,
+                                  baseURL: AplicationPreferences.openWeahterAPIURL)
     }
     
-    static func stubForecastRequestError() {
-        let stubURL = URL(string: "https://api.openweathermap.org/data/2.5/")!
-
-        let request = APIRequest<OpenWeatherAPIError, TestError>
-            .get("forecast", parameters: ["q": "Munich",
-                                          "appid": "c4f676324b18f84850fb1c06eb03c021",
-                                          "units": "metric",
-                                          "lang": "en"]
+    static func stubForecastRequestError() throws {
+        let request = APIRequest<OpenWeatherAPIError, OpenWeatherAPIError>
+            .get("forecast", parameters: ["q": AplicationPreferences.defaultCity,
+                                          "appid": AplicationPreferences.APIKey,
+                                          "units": AplicationPreferences.openWeahterAPIUnit,
+                                          "lang": AplicationPreferences.language]
             )
-
-        let error = OpenWeatherAPIError.mock
-
-        do {
-            try HTTPStubProtocol.stub(error, statusCode: 400, for: request, baseURL: stubURL)
-        } catch {
-            print(error)
-        }
+        
+        try HTTPStubProtocol.stub(output: OpenWeatherAPIError.mock,
+                                  statusCode: 400,
+                                  for: request,
+                                  baseURL: AplicationPreferences.openWeahterAPIURL)
     }
     
 }

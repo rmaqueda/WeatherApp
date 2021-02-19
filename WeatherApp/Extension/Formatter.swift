@@ -52,15 +52,15 @@ extension MeasurementFormatter {
         guard let value = from else { return "-" }
         let formatter = MeasurementFormatter.temperature
         
-        // FixBug Simulator and user temperature forma
-        // The Simulator does not respect the Temperature Unit setting, so force to work with celsius
+        // FixBug Simulator and user temperature format
+        // The Simulator doesn't respect the Temperature Unit setting, so force to work with celsius
         // https://openradar.appspot.com/radar?id=5042283099455488
         #if targetEnvironment(simulator)
             let measurement = Measurement(value: Double(value), unit: UnitTemperature.fahrenheit)
         #else
             let measurement = Measurement(value: Double(value), unit: UnitTemperature.celsius)
         #endif
-        // end FixBug
+        // end FixBug Simulator
         
         let temperature = formatter.string(from: measurement)
         

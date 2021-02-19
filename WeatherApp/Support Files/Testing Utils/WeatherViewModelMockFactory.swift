@@ -9,7 +9,7 @@ import Foundation
 
 #if DEBUG
 
-class WeatherViewModelMockFactory {
+struct WeatherViewModelMockFactory {
     private let UITestTag: UITestTag
     
     init(UITestTag: UITestTag) {
@@ -21,9 +21,9 @@ class WeatherViewModelMockFactory {
         
         switch UITestTag {
         case .weatherHappyPath:
-            viewModel.responseSuccess = WeatherViewModelData.mockSuccess
+            viewModel.requestForecastSuccessResult = WeatherViewModelData.mockSuccess
         case .weatherErrorPath:
-            viewModel.responseError = WeatherViewModelData.mockError
+            viewModel.requestForecastErrorResult = WeatherViewModelData.mockError
         }
         
         return viewModel
@@ -35,22 +35,22 @@ class WeatherViewModelMock: WeatherViewModelProtocol {
     @Published private(set) var dataSource: WeatherViewModelData = WeatherViewModelData.activityIndicator()
     var dataSourcePublished: Published<WeatherViewModelData> { _dataSource }
     var dataSourcePublisher: Published<WeatherViewModelData>.Publisher { $dataSource }
-    
-    var responseSuccess: WeatherViewModelData?
-    var responseError: WeatherViewModelData?
-    
+
+    var requestForecastSuccessResult: WeatherViewModelData?
+    var requestForecastErrorResult: WeatherViewModelData?
+
     func requestForecast(for city: String?) {
-        if let response = responseSuccess {
+        if let response = requestForecastSuccessResult {
             dataSource = response
-        } else if let error = responseError {
+        } else if let error = requestForecastErrorResult {
             dataSource = error
         }
     }
-    
+
     func cacheSwitchDidChange(isEnable: Bool) {
-        responseSuccess = WeatherViewModelData.mockMadrid
+        requestForecastSuccessResult = WeatherViewModelData.mockMadrid
     }
-    
+
 }
 
 #endif

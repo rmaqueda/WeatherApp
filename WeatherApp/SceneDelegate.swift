@@ -10,12 +10,11 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
-    private let preferences = AplicationPreferences()
-    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        AplicationPreferences.setupAppearance()
+        
         if let windowScene = scene as? UIWindowScene {
             let viewController: UIViewController
-            
             #if DEBUG
                 // Avoid to start the app on unit testing
                 if isUnitTesting() {
@@ -30,13 +29,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 viewController = setupWeatherModule()
             #endif
             
-            let window = UIWindow(windowScene: windowScene)
             let navigationController = UINavigationController(rootViewController: viewController)
-            window.rootViewController = navigationController
-            self.window = window
-            window.makeKeyAndVisible()
+            
+            window = UIWindow(windowScene: windowScene)
+            window?.rootViewController = navigationController
+            window?.makeKeyAndVisible()
         }
-        
     }
 
     private func setupWeatherModule() -> WeatherViewController {
@@ -44,14 +42,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         sessionConfig.timeoutIntervalForRequest = 5.0
         let session = URLSession(configuration: sessionConfig)
         
-        let client = APIClient(preferences: preferences, session: session)
+        let client = APIClient(session: session)
         let APIProvider = WeatherAPIProvider(APIClient: client)
         
         let localProvider = WeatherLocalProvider()
         let repository = WeatherRepository(APIProvider: APIProvider, localProvider: localProvider)
         let mapper = WeatherViewModelMapper()
         
-        let requestForecastInteractor = WeatherRequestInteractor(preferences: preferences, repository: repository)
+        let requestForecastInteractor = WeatherRequestInteractor(repository: repository)
         let setDataSourceInteractor = WeatherSetDataSourceInteractor(repository: repository)
         
         let viewModel = WeatherViewModel(requestForecastInteractor: requestForecastInteractor,

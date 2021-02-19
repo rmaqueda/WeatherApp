@@ -14,11 +14,11 @@ class AplicationPreferences {
         case cache
     }
     
-    let defaultCity = "Munich"
-    let language = Locale.current.languageCode ?? "en"
+    static let defaultCity = "Munich"
+    static let language = Locale.current.languageCode ?? "en"
     
     // swiftlint:disable force_cast
-    var APIKey: String = {
+    static var APIKey: String = {
         var propertyListForamt =  PropertyListSerialization.PropertyListFormat.xml
         let plistPath = Bundle.main.path(forResource: "Secrets", ofType: "plist")!
         let plistXML = FileManager.default.contents(atPath: plistPath)!
@@ -31,14 +31,10 @@ class AplicationPreferences {
     }()
     // swiftlint:enable force_cast
     
-    let openWeahterAPIURL = URL(string: "https://api.openweathermap.org/data/2.5/")!
-    let openWeahterAPIUnit = "metric"
+    static let openWeahterAPIURL = URL(string: "https://api.openweathermap.org/data/2.5/")!
+    static let openWeahterAPIUnit = "metric"
     
-    init() {
-        setupAppearance()
-    }
-    
-    private func setupAppearance() {
+    static func setupAppearance() {
         UICollectionView.appearance().backgroundColor = UIColor(named: "BackgroundColor")
         UINavigationBar.appearance().barTintColor = UIColor(named: "BackgroundColor")
         UINavigationBar.appearance().backgroundColor = UIColor(named: "BackgroundColor")

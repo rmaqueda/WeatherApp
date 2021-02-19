@@ -1,2 +1,10 @@
-WeatherApp/Preferences/Secrets.plist
+// Files generated during continuous integration
 swiftlint.json
+*.ipa
+archive
+logs
+build
+WeatherAppUITests-Runner.app.zip
+
+// Files containing secrets 
+WeatherApp/Preferences/Secrets.plist

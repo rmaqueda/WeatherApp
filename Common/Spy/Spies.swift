@@ -43,28 +43,29 @@ class APIClientSpy<T>: APIClientProtocol, TestSpy {
 }
 
 public class SpyWeatherViewModelProtocol: WeatherViewModelProtocol, TestSpy {
-    var requestForecastResult: WeatherViewModelData?
-    
     public enum Method: Equatable {
         case requestForecast(city: String?)
         case cacheSwitchDidChange(isEnable: Bool)
     }
-    
-    
+
     @Published public var dataSource: WeatherViewModelData = WeatherViewModelData.activityIndicator()
     public var dataSourcePublished: Published<WeatherViewModelData> { _dataSource }
     public var dataSourcePublisher: Published<WeatherViewModelData>.Publisher { $dataSource }
+
+    public var requestForecastResult: WeatherViewModelData?
     
     public var callstack = CallstackContainer<Method>()
     
+    // MARK: WeatherViewModelProtocol
+    
     public func requestForecast(for city: String?) {
         callstack.record(.requestForecast(city: city ))
-        
+
         if let requestForecastResult = requestForecastResult {
             dataSource = requestForecastResult
         }
     }
-    
+
     public func cacheSwitchDidChange(isEnable: Bool) {
         callstack.record(.cacheSwitchDidChange(isEnable: isEnable ))
     }
