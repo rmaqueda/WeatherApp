@@ -6,10 +6,12 @@ import Foundation
 import Combine
 @testable import WeatherApp
 
-// MARK: Spy for WeatherProviderProtocol
-public class SpyWeatherProviderProtocol: WeatherProviderProtocol, TestSpy {
+// MARK: Spy for WeahterProviderProtocol
+public class SpyWeahterProviderProtocol: WeahterProviderProtocol, TestSpy {
 	public enum Method: Equatable {
-        case requestForecast(city: String)
+        case isSaved(city: City)
+        case save(city: City)
+        case forecast(city: City)
 	}
 
 
@@ -19,18 +21,29 @@ public class SpyWeatherProviderProtocol: WeatherProviderProtocol, TestSpy {
         // Intentionally unimplemented
     }
 
-    public var requestForecastResult: AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>>!
-    public func requestForecast(city: String) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>> {
-        callstack.record(.requestForecast(city: city ))
-        return requestForecastResult
+    public var isSavedResult: Bool!
+    public func isSaved(city: City) -> Bool {
+        callstack.record(.isSaved(city: city ))
+        return isSavedResult
+    }
+    public func save(city: City) throws {
+        callstack.record(.save(city: city ))
+    }
+    public var forecastResult: AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>>!
+    public func forecast(for city: City) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>> {
+        callstack.record(.forecast(city: city ))
+        return forecastResult
     }
 }
 
-// MARK: Spy for WeatherRepositoryProtocol
-public class SpyWeatherRepositoryProtocol: WeatherRepositoryProtocol, TestSpy {
+// MARK: Spy for WireframeProtocol
+public class SpyWireframeProtocol: WireframeProtocol, TestSpy {
 	public enum Method: Equatable {
-        case requestForecast(city: String)
-        case setDataSourceType(type: AplicationPreferences.DataSourceType)
+        case presentMainScreen
+        case presentCityList
+        case presentCitySearch
+        case presentForecast(city: City)
+        case didPressCityListButton
 	}
 
 
@@ -40,51 +53,20 @@ public class SpyWeatherRepositoryProtocol: WeatherRepositoryProtocol, TestSpy {
         // Intentionally unimplemented
     }
 
-    public var requestForecastResult: AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>>!
-    public func requestForecast(city: String) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>> {
-        callstack.record(.requestForecast(city: city ))
-        return requestForecastResult
+    public func presentMainScreen() {
+        callstack.record(.presentMainScreen)
     }
-    public func setDataSourceType(_ type: AplicationPreferences.DataSourceType) {
-        callstack.record(.setDataSourceType(type: type ))
+    public func presentCityList() {
+        callstack.record(.presentCityList)
     }
-}
-
-// MARK: Spy for WeatherRequestInteractorProtocol
-public class SpyWeatherRequestInteractorProtocol: WeatherRequestInteractorProtocol, TestSpy {
-	public enum Method: Equatable {
-        case requestForecast(city: String?)
-	}
-
-
-    public var callstack = CallstackContainer<Method>()
-
-    public init() {
-        // Intentionally unimplemented
+    public func presentCitySearch() {
+        callstack.record(.presentCitySearch)
     }
-
-    public var requestForecastResult: AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>>!
-    public func requestForecast(for city: String?) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>> {
-        callstack.record(.requestForecast(city: city ))
-        return requestForecastResult
+    public func presentForecast(for city: City) {
+        callstack.record(.presentForecast(city: city ))
     }
-}
-
-// MARK: Spy for WeatherSetDataSourceInteractorProtocol
-public class SpyWeatherSetDataSourceInteractorProtocol: WeatherSetDataSourceInteractorProtocol, TestSpy {
-	public enum Method: Equatable {
-        case changeDataSource(isCacheEnabled: Bool)
-	}
-
-
-    public var callstack = CallstackContainer<Method>()
-
-    public init() {
-        // Intentionally unimplemented
-    }
-
-    public func changeDataSource(isCacheEnabled: Bool) {
-        callstack.record(.changeDataSource(isCacheEnabled: isCacheEnabled ))
+    public func didPressCityListButton() {
+        callstack.record(.didPressCityListButton)
     }
 }
 

@@ -16,3 +16,21 @@ extension String {
     }
     
 }
+
+extension String {
+    
+    func highlightedString(rangeValues: [NSValue]) -> NSAttributedString {
+        let attributtedString = NSMutableAttributedString(string: self,
+                                                          attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexString: "#4DFFFFFF")])
+        
+        let highligAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold),
+                                 NSAttributedString.Key.foregroundColor: UIColor.white]
+        let ranges = rangeValues.map { $0.rangeValue }
+        ranges.forEach { (range) in
+            attributtedString.addAttributes(highligAttributes, range: range)
+        }
+        
+        return attributtedString
+    }
+    
+}

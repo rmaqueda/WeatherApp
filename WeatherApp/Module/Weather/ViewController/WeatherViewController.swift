@@ -37,7 +37,7 @@ class WeatherViewController: UICollectionViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        requestForecast()
+        viewModel.requestForecast()
     }
 
     // MARK: Configuration
@@ -106,14 +106,10 @@ class WeatherViewController: UICollectionViewController {
     // MARK: Actions
     
     @objc func switchToggled(_ sender: UISwitch) {
-        viewModel.cacheSwitchDidChange(isEnable: sender.isOn)
-        requestForecast()
+//        viewModel.cacheSwitchDidChange(isEnable: sender.isOn)
+//        requestForecast()
     }
-    
-    private func requestForecast() {
-        viewModel.requestForecast(for: nil)
-    }
-        
+            
     private func handleError(error: APIClientError<OpenWeatherAPIError>) {
         var message: String = "The network request failed.\n\n"
         
@@ -127,7 +123,7 @@ class WeatherViewController: UICollectionViewController {
         }
         
         presentRetryAlert(withTitle: "Oops", message: message) { [weak self] _ in
-            self?.requestForecast()
+            self?.viewModel.requestForecast()
         }
     }
     

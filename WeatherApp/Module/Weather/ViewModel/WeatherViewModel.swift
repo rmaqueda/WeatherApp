@@ -9,9 +9,10 @@ import Foundation
 import Combine
 
 class WeatherViewModel: WeatherViewModelProtocol {
-    private let requestForecastInteractor: WeatherRequestInteractorProtocol
-    private let setDataSourceInteractor: WeatherSetDataSourceInteractorProtocol
+    private let city: City
     private let mapper: WeatherViewModelMapper
+    private let provider: WeahterProviderProtocol
+    private let wireframe: WireframeProtocol
     
     @Published private(set) var dataSource: WeatherViewModelData = WeatherViewModelData.activityIndicator()
     var dataSourcePublished: Published<WeatherViewModelData> { _dataSource }
@@ -19,20 +20,44 @@ class WeatherViewModel: WeatherViewModelProtocol {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(requestForecastInteractor: WeatherRequestInteractorProtocol,
-         setDataSourceInteractor: WeatherSetDataSourceInteractorProtocol,
-         mapper: WeatherViewModelMapper) {
-        self.requestForecastInteractor = requestForecastInteractor
-        self.setDataSourceInteractor = setDataSourceInteractor
+    required init(city: City,
+                  mapper: WeatherViewModelMapper,
+                  provider: WeahterProviderProtocol,
+                  wireframe: WireframeProtocol) {
+        self.city = city
         self.mapper = mapper
+        self.provider = provider
+        self.wireframe = wireframe
     }
     
     // MARK: WeatherViewModelProtocol
     
-    func requestForecast(for city: String?) {
+    func navigateToCityList() {
+        wireframe.didPressCityListButton()
+    }
+    
+    func saveCity() throws {
+        try provider.save(city: city)
+    }
+    
+    func saveCityIfNeeded() throws {
+        if provider.isSaved(city: city) {
+            try provider.save(city: city)
+        }
+    }
+    
+    var addButtonIsHiden: Bool {
+        provider.isSaved(city: city)
+    }
+    
+    var cancelButtonIsHiden: Bool {
+        provider.isSaved(city: city)
+    }
+
+    func requestForecast() {
         dataSource = WeatherViewModelData.activityIndicator()
         
-        requestForecastInteractor.requestForecast(for: city)
+        provider.forecast(for: city)
             .map(mapper.map(for:))
             .sink(
                 receiveCompletion: { [weak self] completion in
@@ -44,10 +69,6 @@ class WeatherViewModel: WeatherViewModelProtocol {
                     self?.dataSource = forecast
                 })
             .store(in: &cancellables)
-    }
-    
-    func cacheSwitchDidChange(isEnable: Bool) {
-        setDataSourceInteractor.changeDataSource(isCacheEnabled: isEnable)
     }
     
 }

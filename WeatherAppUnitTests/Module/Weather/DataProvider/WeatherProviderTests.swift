@@ -1,5 +1,5 @@
 //
-//  WeatherAPIProviderTests.swift
+//  WeatherProviderTests.swift
 //  WeatherAppTests
 //
 //  Created by Ricardo Maqueda Martinez on 06/02/2021.
@@ -9,8 +9,8 @@ import XCTest
 import Combine
 @testable import WeatherApp
 
-final class WeatherAPIProviderTests: XCTestCase {
-    private var sut: WeatherAPIProvider!
+final class WeatherProviderTests: XCTestCase {
+    private var sut: WeatherProvider!
     private var spy: APIClientSpy<OpenWeatherResponse>!
     
     private let URLStub = URL(string: "http://stub.com")!
@@ -24,7 +24,7 @@ final class WeatherAPIProviderTests: XCTestCase {
         spy = APIClientSpy(baseURL: URLStub)
         spy.response = responseMock
 
-        sut = WeatherAPIProvider(APIClient: spy)
+        sut = WeatherProvider(apiClient: spy, storage: CityDiskStorage())
     }
     
     override func tearDown() {
@@ -38,11 +38,13 @@ final class WeatherAPIProviderTests: XCTestCase {
         let didReceiveValue = expectation(description: "didReceiveValue")
         var response: OpenWeatherResponse?
         
-        let expectedAPIRequest: APIRequest<OpenWeatherResponse, TestError> = APIRequest.get("forecast", parameters: ["q": "city"])
+        let expectedAPIRequest: APIRequest<OpenWeatherResponse, TestError> = APIRequest.get("forecast",
+                                                                                            parameters: ["q": "stub"],
+                                                                                            jsonDecoder: JSONDecoder.openWeatherDecoder)
         let expectedRequest = URLRequest(baseURL: URLStub, apiRequest: expectedAPIRequest)
         
         // when
-        sut.requestForecast(city: "city")
+        sut.forecast(for: City(name: "stub", coordinate: City.Coordenate(lat: 0, lon: 0), timeZone: nil, temperature: nil))
             .assertNoFailure()
             .sink(receiveValue: {
                 response = $0

@@ -23,7 +23,9 @@ final class APIRequestTests: XCTestCase {
         expected.httpMethod = "GET"
         
         // when
-        let request = APIRequest<String, TestError>.get("/path", parameters: ["appid": "value"])
+        let request = APIRequest<String, TestError>.get("/path",
+                                                        parameters: ["appid": "value"],
+                                                        jsonDecoder: JSONDecoder.openWeatherDecoder)
         let result = URLRequest(baseURL: aURL, apiRequest: request)
         
         // then
@@ -42,7 +44,7 @@ final class APIRequestTests: XCTestCase {
         expected.httpMethod = "GET"
         
         // when
-        let request = APIRequest<String, TestError>.get("/path")
+        let request = APIRequest<String, TestError>.get("/path", jsonDecoder: JSONDecoder.openWeatherDecoder)
         let result = URLRequest(baseURL: aURL, apiRequest: request).addingParameters(["lang": "en"])
         
         // then
@@ -59,7 +61,7 @@ final class APIRequestTests: XCTestCase {
         expected.httpMethod = "GET"
         
         // when
-        let request = APIRequest<String, TestError>.get("/path")
+        let request = APIRequest<String, TestError>.get("/path", jsonDecoder: JSONDecoder.openWeatherDecoder)
         let result = URLRequest(baseURL: aURL, apiRequest: request).addingHeaders([.authorization: "Bearer stub"])
         
         // then

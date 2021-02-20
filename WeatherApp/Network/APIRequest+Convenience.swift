@@ -8,11 +8,11 @@
 import Foundation
 
 extension APIRequest where Output: Decodable, Error: Decodable {
-
+    
     static func get(_ path: String,
                     headers: [HeaderField: String] = [:],
                     parameters: [String: CustomStringConvertible] = [:],
-                    jsonDecoder: JSONDecoder = JSONDecoder.openWeatherDecoder) -> APIRequest {
+                    jsonDecoder: JSONDecoder) -> APIRequest {
         
         APIRequest(method: .get,
                    path: path,
@@ -22,5 +22,5 @@ extension APIRequest where Output: Decodable, Error: Decodable {
                    output: { try jsonDecoder.decode(Output.self, from: $0) },
                    error: { try jsonDecoder.decode(Error.self, from: $0) })
     }
-
+    
 }

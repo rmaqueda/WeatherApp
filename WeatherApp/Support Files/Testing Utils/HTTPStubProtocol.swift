@@ -78,10 +78,12 @@ extension HTTPStubProtocol {
     
     static func stubForecastRequest() throws {
         let request = APIRequest<OpenWeatherResponse, OpenWeatherAPIError>
-            .get("forecast", parameters: ["q": AplicationPreferences.defaultCity,
-                                          "appid": AplicationPreferences.APIKey,
-                                          "units": AplicationPreferences.openWeahterAPIUnit,
-                                          "lang": AplicationPreferences.language]
+            .get("forecast",
+                 parameters: ["q": AplicationPreferences.defaultCity,
+                              "appid": AplicationPreferences.APIKey,
+                              "units": AplicationPreferences.openWeahterAPIUnit,
+                              "lang": AplicationPreferences.language],
+                 jsonDecoder: JSONDecoder.openWeatherDecoder
             )
         
         try HTTPStubProtocol.stub(output: OpenWeatherResponse.mockMadrid,
@@ -92,10 +94,12 @@ extension HTTPStubProtocol {
     
     static func stubForecastRequestError() throws {
         let request = APIRequest<OpenWeatherAPIError, OpenWeatherAPIError>
-            .get("forecast", parameters: ["q": AplicationPreferences.defaultCity,
-                                          "appid": AplicationPreferences.APIKey,
-                                          "units": AplicationPreferences.openWeahterAPIUnit,
-                                          "lang": AplicationPreferences.language]
+            .get("forecast",
+                 parameters: ["q": AplicationPreferences.defaultCity,
+                              "appid": AplicationPreferences.APIKey,
+                              "units": AplicationPreferences.openWeahterAPIUnit,
+                              "lang": AplicationPreferences.language],
+                 jsonDecoder: JSONDecoder.openWeatherDecoder
             )
         
         try HTTPStubProtocol.stub(output: OpenWeatherAPIError.mock,

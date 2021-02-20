@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OpenWeatherAPIError: Codable {
+struct OpenWeatherAPIError: Error, Codable {
     let cod: String
     let message: String
 }

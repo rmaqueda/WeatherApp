@@ -16,18 +16,13 @@ final class WeatherModuleIngrationTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        let client = APIClient(session: .stubbed)
-        let APIProvider = WeatherAPIProvider(APIClient: client)
-        let localProvider = WeatherLocalProvider()
-        let repository = WeatherRepository(APIProvider: APIProvider, localProvider: localProvider)
-        let mapper = WeatherViewModelMapper()
-        
-        let requestForecastInteractor = WeatherRequestInteractor(repository: repository)
-        let setDataSourceInteractor = WeatherSetDataSourceInteractor(repository: repository)
-        
-        sut = WeatherViewModel(requestForecastInteractor: requestForecastInteractor,
-                               setDataSourceInteractor: setDataSourceInteractor,
-                               mapper: mapper)
+        let apiClient = APIClient(session: .stubbed)
+        let storage = CityDiskStorage()
+        let provider = WeatherProvider(apiClient: apiClient, storage: storage)
+        sut = WeatherViewModel(city: City(name: AplicationPreferences.defaultCity, coordinate: City.Coordenate(lat: 0, lon: 0), timeZone: nil, temperature: nil),
+                               mapper: WeatherViewModelMapper(),
+                               provider: provider,
+                               wireframe: SpyWireframeProtocol())
     }
     
     override func tearDown() {
@@ -47,7 +42,7 @@ final class WeatherModuleIngrationTests: XCTestCase {
         var expectedSections: [WeatherViewSectionData]?
         
         // when
-        sut.requestForecast(for: "Munich")
+        sut.requestForecast()
         
         sut.dataSourcePublisher
             .receive(on: DispatchQueue.main)
@@ -80,7 +75,7 @@ final class WeatherModuleIngrationTests: XCTestCase {
         var expectedResponse: WeatherViewModelData?
         
         // when
-        sut.requestForecast(for: "Munich")
+        sut.requestForecast()
         
         sut.dataSourcePublisher
             .receive(on: DispatchQueue.main)
