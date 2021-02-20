@@ -839,6 +839,7 @@
 			buildConfigurationList = 8C1048A525CBAF8400282A3E /* Build configuration list for PBXNativeTarget "WeatherApp" */;
 			buildPhases = (
 				8C8E1D3825D66359006D8E73 /* Build Scripts */,
+				8C18112C25E0F1B8009940DE /* Copy Paste Detector */,
 				8C10487725CBAF8300282A3E /* Sources */,
 				8C10487825CBAF8300282A3E /* Frameworks */,
 				8C10487925CBAF8300282A3E /* Resources */,
@@ -1041,6 +1042,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		8C18112C25E0F1B8009940DE /* Copy Paste Detector */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Paste Detector";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "DIR1=\"WeatherApp\"\nDIR2=\"WeatherAppUnitTests\"\nDIR3=\"WeatherAppIntegrationTests\"\nDIR4=\"WeatherAppUITests\"\nDIR5=\"WeatherAppSnapshotTests\"\n\nPMD=\"$HOME/Scripts/pmd-bin-6.30.0/bin/run.sh\"\nCPD=\"$HOME/Scripts/cpd_script.php\"\n\nif [ -f $PMD ] && [ -f $CPD ] && which php >/dev/null; then\n    $PMD cpd --files $DIR1,$DIR2,$DIR3,$DIR4,$DIR5 --minimum-tokens 50 --language swift --encoding UTF-8 --format net.sourceforge.pmd.cpd.XMLRenderer --failOnViolation true > cpd-output.xml\n    php $HOME/Scripts/cpd_script.php -cpd-xml cpd-output.xml\n    rm cpd-output.xml\nfi\n";
+		};
 		8C8E1D3825D66359006D8E73 /* Build Scripts */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1057,7 +1076,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Scripts/Build-Phases/sourcery.sh\n./Scripts/Build-Phases/copy_secrets.sh\n./Scripts/Build-Phases/swiftlint.sh\n./Scripts/Build-Phases/copy_paste_detector.sh\n\n";
+			shellScript = "set -x\n./Scripts/Build-Phases/sourcery.sh\n./Scripts/Build-Phases/copy_secrets.sh\n./Scripts/Build-Phases/swiftlint.sh\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

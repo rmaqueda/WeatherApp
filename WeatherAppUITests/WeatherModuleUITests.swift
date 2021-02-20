@@ -83,7 +83,7 @@ final class WeatherModuleUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts["DailyForecastDate_0"].label.isEmpty)
         XCTAssertFalse(app.staticTexts["DailyForecastSubtitle_0"].label.isEmpty)
     }
-    
+        
     private func checkElementsUnHappyPath() {
         XCTAssertEqual(app.alerts.element.label, "Oops")
         XCTAssert(app.alerts["Oops"].buttons["Retry"].exists)

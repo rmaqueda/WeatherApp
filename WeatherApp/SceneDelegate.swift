@@ -40,5 +40,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             wireframe.presentMainScreen()
         }
     }
-   
+    
 }

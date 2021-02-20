@@ -73,14 +73,14 @@ The project is integrated with [Sonar Cloud](https://sonarcloud.io/dashboard?id=
 This's the dashboard:
 
 <p align="center">
-	<a href="https://sonarcloud.io/dashboard?id=rmaqueda_WeatherApp">
-   		<img title="" src="https://github.com/rmaqueda/WeatherApp/raw/main/Documentation/Sonar.png" width="508">
-   </a>
+    <a href="https://sonarcloud.io/dashboard?id=rmaqueda_WeatherApp">
+        <img title="" src="https://github.com/rmaqueda/WeatherApp/raw/main/Documentation/Sonar.png" width="508">
+    </a>
 </p>
 
 SwiftLint is set up in all targets. [👀 rules](https://github.com/rmaqueda/WeatherApp/blob/main/.swiftlint.yml)
 
-I've used [CPD](https://pmd.github.io/latest/pmd_userdocs_cpd.html) to detect duplicate code blocks automatically inline. [👀 build script](https://github.com/rmaqueda/WeatherApp/blob/main/Scripts/Build-Phases/copy_paste_detector.sh)
+I've used [CPD](https://pmd.github.io/latest/pmd_userdocs_cpd.html) to detect duplicate code blocks automatically inline.
 
 ## Continuous Integration
 
