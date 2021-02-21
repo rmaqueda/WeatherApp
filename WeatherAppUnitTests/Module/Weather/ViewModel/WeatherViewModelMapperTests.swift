@@ -28,7 +28,7 @@ final class WeatherViewModelMapperTests: XCTestCase {
         let responseMock = OpenWeatherResponse.mockLondon
         
         // when
-        let viewModelMock = sut.map(for: responseMock)
+        let viewModelMock = sut.map(with: responseMock)
         
         // then
         XCTAssertNotNil(viewModelMock)

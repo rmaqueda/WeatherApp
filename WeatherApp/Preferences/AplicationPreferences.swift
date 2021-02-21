@@ -36,10 +36,18 @@ class AplicationPreferences {
     
     static func setupAppearance() {
         UICollectionView.appearance().backgroundColor = UIColor(named: "BackgroundColor")
+        
+        UINavigationBar.appearance().tintColor = UIColor(named: "ForeGroundColor")
         UINavigationBar.appearance().barTintColor = UIColor(named: "BackgroundColor")
         UINavigationBar.appearance().backgroundColor = UIColor(named: "BackgroundColor")
+        
+        UIToolbar.appearance().barTintColor = UIColor(named: "BackgroundColor")
+        UIToolbar.appearance().tintColor = UIColor(named: "ForeGroundColor")
+        
         UILabel.appearance().textColor = UIColor(named: "ForeGroundColor")
+        
         UIImageView.appearance().tintColor = UIColor(named: "ForeGroundColor")
+        
         UIActivityIndicatorView.appearance().color = UIColor(named: "ForeGroundColor")
     }
 }

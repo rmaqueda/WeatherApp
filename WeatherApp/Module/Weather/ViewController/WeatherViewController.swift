@@ -30,16 +30,19 @@ class WeatherViewController: UICollectionViewController {
         super.viewDidLoad()
         
         configureCollectionView()
-        configureCacheSwitch()
+        configureNavigationBar()
+        configureToolBar()
         configureBindings()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
         viewModel.requestForecast()
     }
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        try? viewModel.updateCity()
+    }
+    
     // MARK: Configuration
     
     private func configureCollectionView() {
@@ -61,25 +64,28 @@ class WeatherViewController: UICollectionViewController {
             .store(in: &cancellables)
     }
     
-    private func configureCacheSwitch() {
-        let label = UILabel()
-        label.text = "Use cache"
-        label.accessibilityIdentifier = "CacheLabel"
-
-        let prefSwitch = UISwitch(frame: .zero)
-        prefSwitch.isOn = false
-        prefSwitch.addTarget(self, action: #selector(switchToggled(_:)), for: .valueChanged)
-        prefSwitch.accessibilityIdentifier = "CacheSwitch"
-
-        let stackView = UIStackView()
-        stackView.addArrangedSubview(label)
-        stackView.addArrangedSubview(prefSwitch)
-        stackView.spacing = 8
+    private func configureNavigationBar() {
+        guard !viewModel.isSaved else { return }
         
-        let barButton = UIBarButtonItem(customView: stackView)
-        navigationItem.rightBarButtonItem = barButton
+        navigationController?.navigationBar.isHidden = false
+        
+        let addButton = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(didTapAdd(_:)))
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(didTapCancel(_:)))
+        
+        navigationItem.rightBarButtonItem = addButton
+        navigationItem.leftBarButtonItem = cancelButton
     }
-     
+    
+    private func configureToolBar() {
+        navigationController?.isToolbarHidden = false
+        
+        let TWCButton = UIBarButtonItem(image: UIImage(named: "twc"), style: .plain, target: self, action: #selector(didTapTWC(_:)))
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let listButton = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .plain, target: self, action: #selector(didTapCancel(_:)))
+        
+        toolbarItems = [TWCButton, spacer, listButton]
+    }
+    
     // MARK: UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -105,9 +111,24 @@ class WeatherViewController: UICollectionViewController {
         
     // MARK: Actions
     
-    @objc func switchToggled(_ sender: UISwitch) {
-//        viewModel.cacheSwitchDidChange(isEnable: sender.isOn)
-//        requestForecast()
+    @objc func didTapTWC(_ sender: UIBarButtonItem) {
+        // TODO: move to viewModel
+        if let url = URL(string: "https://www.weather.com") {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @objc func didTapAdd(_ sender: UIBarButtonItem) {
+        do {
+            try viewModel.saveCity()
+            navigationController?.navigationBar.isHidden = !viewModel.isSaved
+        } catch {
+            print("Error saving city \(error)")
+        }
+    }
+    
+    @objc func didTapCancel(_ sender: UIBarButtonItem) {
+        viewModel.navigateToCityList()
     }
             
     private func handleError(error: APIClientError<OpenWeatherAPIError>) {

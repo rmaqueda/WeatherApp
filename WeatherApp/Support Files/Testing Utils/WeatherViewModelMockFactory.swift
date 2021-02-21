@@ -50,10 +50,8 @@ class WeatherViewModelMock: WeatherViewModelProtocol {
     func cacheSwitchDidChange(isEnable: Bool) {
         requestForecastSuccessResult = WeatherViewModelData.mockMadrid
     }
-    
-    var addButtonIsHiden: Bool = true
-    
-    var cancelButtonIsHiden: Bool = true
+        
+    var isSaved: Bool  = false
     
     func navigateToCityList() {
         
@@ -63,7 +61,7 @@ class WeatherViewModelMock: WeatherViewModelProtocol {
         
     }
     
-    func saveCityIfNeeded() throws {
+    func updateCity() throws {
         
     }
 

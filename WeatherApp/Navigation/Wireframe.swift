@@ -67,12 +67,18 @@ class Wireframe: WireframeProtocol {
                                          provider: provider,
                                          wireframe: self)
         let viewController = WeatherViewController(viewModel: viewModel)
-
-        navigationController.pushViewController(viewController, animated: true)
+        
+        if viewModel.isSaved {
+            navigationController.pushViewController(viewController, animated: true)
+        } else {
+            let nav = UINavigationController(rootViewController: viewController)
+            navigationController.present(nav, animated: true)
+        }
     }
     
     func didPressCityListButton() {
-        navigationController.popViewController(animated: true)
+        navigationController.navigationBar.isHidden = true
+        navigationController.dismiss(animated: true)
     }
     
 }

@@ -65,9 +65,7 @@ class SpyWeatherViewModelProtocol: WeatherViewModelProtocol, TestSpy {
         }
     }
 
-    var addButtonIsHiden: Bool = true
-    
-    var cancelButtonIsHiden: Bool = true
+    var isNavigationBarHidden: Bool = false
     
     func navigateToCityList() {
         //TODO: Implement
@@ -77,7 +75,7 @@ class SpyWeatherViewModelProtocol: WeatherViewModelProtocol, TestSpy {
         //TODO: Implement
     }
     
-    func saveCityIfNeeded() throws {
+    func updateCity() throws {
         //TODO: Implement
     }
     

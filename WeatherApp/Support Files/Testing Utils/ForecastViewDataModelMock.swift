@@ -13,14 +13,14 @@ extension WeatherViewModelData {
         let APIResponse = OpenWeatherResponse.mockLondon
         let mapper = WeatherViewModelMapper()
         
-        return mapper.map(for: APIResponse)
+        return mapper.map(with: APIResponse)
     }
     
     static var mockMadrid: WeatherViewModelData {
         let APIResponse = OpenWeatherResponse.mockMadrid
         let mapper = WeatherViewModelMapper()
         
-        return mapper.map(for: APIResponse)
+        return mapper.map(with: APIResponse)
     }
     
     static var mockError: WeatherViewModelData {

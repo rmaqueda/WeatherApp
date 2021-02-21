@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 class WeatherViewModel: WeatherViewModelProtocol {
-    private let city: City
+    private var city: City
     private let mapper: WeatherViewModelMapper
     private let provider: WeahterProviderProtocol
     private let wireframe: WireframeProtocol
@@ -40,17 +40,13 @@ class WeatherViewModel: WeatherViewModelProtocol {
         try provider.save(city: city)
     }
     
-    func saveCityIfNeeded() throws {
+    func updateCity() throws {
         if provider.isSaved(city: city) {
             try provider.save(city: city)
         }
     }
     
-    var addButtonIsHiden: Bool {
-        provider.isSaved(city: city)
-    }
-    
-    var cancelButtonIsHiden: Bool {
+    var isSaved: Bool {
         provider.isSaved(city: city)
     }
 
@@ -58,7 +54,11 @@ class WeatherViewModel: WeatherViewModelProtocol {
         dataSource = WeatherViewModelData.activityIndicator()
         
         provider.forecast(for: city)
-            .map(mapper.map(for:))
+            .map({
+                self.city.temperature = MeasurementFormatter.string(from: $0.list.first?.main.temperature)
+                return $0
+            })
+            .map(mapper.map(with:))
             .sink(
                 receiveCompletion: { [weak self] completion in
                     if case let .failure(error) = completion {
@@ -66,6 +66,7 @@ class WeatherViewModel: WeatherViewModelProtocol {
                     }
                 },
                 receiveValue: { [weak self] forecast in
+                    
                     self?.dataSource = forecast
                 })
             .store(in: &cancellables)

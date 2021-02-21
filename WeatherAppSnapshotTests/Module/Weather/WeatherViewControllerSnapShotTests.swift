@@ -24,7 +24,7 @@ final class WeatherViewControllerSnapShotTests: XCTestCase {
         
         // given
         let mock = OpenWeatherResponse.mockMadrid
-        let mockMapped = WeatherViewModelMapper().map(for: mock)
+        let mockMapped = WeatherViewModelMapper().map(with: mock)
         spy.dataSource = mockMapped
         let nav = UINavigationController(rootViewController: sut)
         
@@ -40,7 +40,7 @@ final class WeatherViewControllerSnapShotTests: XCTestCase {
         
         // given
         let mock = OpenWeatherResponse.mockLondon
-        let mockMapped = WeatherViewModelMapper().map(for: mock)
+        let mockMapped = WeatherViewModelMapper().map(with: mock)
         spy.dataSource = mockMapped
         let nav = UINavigationController(rootViewController: sut)
         

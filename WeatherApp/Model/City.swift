@@ -11,7 +11,7 @@ struct City: Codable, Equatable {
     let name: String
     let coordinate: Coordenate
     let timeZone: TimeZone?
-    var temperature: Int?
+    var temperature: String?
     
     struct Coordenate: Codable, Equatable {
         let lat: Double

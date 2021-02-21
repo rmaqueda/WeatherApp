@@ -9,7 +9,7 @@ import Foundation
 
 class WeatherViewModelMapper {
     
-    func map(for response: OpenWeatherResponse) -> WeatherViewModelData {
+    func map(with response: OpenWeatherResponse) -> WeatherViewModelData {
         let city = WeatherViewModelData.City(name: response.city.name,
                                              curretWeatherText: response.list.first?.weather.first?.descriptionText)
         

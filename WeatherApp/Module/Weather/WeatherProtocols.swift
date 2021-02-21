@@ -17,15 +17,13 @@ protocol WeatherViewModelProtocol {
     var dataSourcePublished: Published<WeatherViewModelData> { get }
     var dataSourcePublisher: Published<WeatherViewModelData>.Publisher { get }
     
-    func requestForecast()
-    
-    var addButtonIsHiden: Bool { get }
-    var cancelButtonIsHiden: Bool { get }
-    
-    func navigateToCityList()
-    
+    var isSaved: Bool { get }
+
     func saveCity() throws
-    func saveCityIfNeeded() throws
+    func updateCity() throws
+    
+    func requestForecast()
+    func navigateToCityList()
 }
 
 // MARK: View Protocol

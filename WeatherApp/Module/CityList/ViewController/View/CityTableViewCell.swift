@@ -41,11 +41,7 @@ class CityTableViewCell: UITableViewCell {
         
         dateFormatter.timeZone = city.timeZone
         subTitle.text = dateFormatter.string(from: Date())
-        if let cityTemp = city.temperature {
-            temperature.text = "\(cityTemp)º"
-        } else {
-            temperature.text = "-"
-        }
+        temperature.text = city.temperature
     }
 
 }
