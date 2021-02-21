@@ -1076,7 +1076,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -x\n./Scripts/Build-Phases/sourcery.sh\n./Scripts/Build-Phases/copy_secrets.sh\n./Scripts/Build-Phases/swiftlint.sh\n";
+			shellScript = "./Scripts/Build-Phases/sourcery.sh\n./Scripts/Build-Phases/copy_secrets.sh\n./Scripts/Build-Phases/swiftlint.sh\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
