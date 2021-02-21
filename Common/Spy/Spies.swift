@@ -65,7 +65,7 @@ class SpyWeatherViewModelProtocol: WeatherViewModelProtocol, TestSpy {
         }
     }
 
-    var isNavigationBarHidden: Bool = false
+    var isSaved: Bool = false
     
     func navigateToCityList() {
         //TODO: Implement
