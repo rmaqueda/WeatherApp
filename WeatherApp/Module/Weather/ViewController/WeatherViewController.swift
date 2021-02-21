@@ -121,7 +121,7 @@ class WeatherViewController: UICollectionViewController {
     @objc func didTapAdd(_ sender: UIBarButtonItem) {
         do {
             try viewModel.saveCity()
-            navigationController?.navigationBar.isHidden = !viewModel.isSaved
+            navigationController?.navigationBar.isHidden = viewModel.isSaved
         } catch {
             print("Error saving city \(error)")
         }

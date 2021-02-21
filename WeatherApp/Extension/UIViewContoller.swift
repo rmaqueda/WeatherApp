@@ -26,3 +26,17 @@ extension UIViewController {
     }
 
 }
+
+extension UIViewController {
+    
+    func dismissOrPop() {
+        if presentingViewController != nil {
+            dismiss(animated: true)
+        } else if navigationController?.presentingViewController != nil, navigationController?.viewControllers.count == 1 {
+            navigationController?.dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
+}

@@ -39,8 +39,8 @@ class CityListViewController: UITableViewController, CityListFooterViewDelegate,
         configureTableView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         tableView.reloadData()
     }

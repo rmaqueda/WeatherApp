@@ -72,13 +72,14 @@ class Wireframe: WireframeProtocol {
             navigationController.pushViewController(viewController, animated: true)
         } else {
             let nav = UINavigationController(rootViewController: viewController)
+            nav.modalPresentationStyle = .fullScreen
             navigationController.present(nav, animated: true)
         }
     }
     
     func didPressCityListButton() {
         navigationController.navigationBar.isHidden = true
-        navigationController.dismiss(animated: true)
+        navigationController.visibleViewController?.dismissOrPop()
     }
     
 }
