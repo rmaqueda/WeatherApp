@@ -26,7 +26,6 @@ final class WeatherModuleUITests: XCTestCase {
         app.launch()
         
         // then
-        XCTAssertEqual(app.switches["CacheSwitch"].value as? String, "0")
         checkElementsHappyPath()
     }
     
@@ -40,32 +39,8 @@ final class WeatherModuleUITests: XCTestCase {
         // then
         checkElementsUnHappyPath()
     }
-    
-    // This's a system test, could be better move to another target
-    // and run just during regression.
-    func test_givenAppLaunch_thenAppLoadDefaultCity_thenSwichAndLoadCacheCity() throws {
-        // given
-        app.launchEnvironment = [UITestEnvironmentKey: UITestTag.weatherHappyPath.rawValue]
-        
-        // when
-        app.launch()
-        
-        // then
-        XCTAssertEqual(app.switches["CacheSwitch"].value as? String, "0")
-        checkElementsHappyPath()
-        
-        // when switch change
-        let prefSwitch = app.switches["CacheSwitch"]
-        prefSwitch.tap()
-        sleep(1)
-        XCTAssertEqual(app.switches["CacheSwitch"].value as? String, "1")
-        
-        checkElementsHappyPath()
-    }
-    
+      
     private func checkElementsHappyPath() {
-        XCTAssertEqual(app.staticTexts["CacheLabel"].label, "Use cache")
-        
         XCTAssertFalse(app.staticTexts["CityNameLabel"].label.isEmpty)
         XCTAssertFalse(app.staticTexts["ConditionsLabel"].label.isEmpty)
         
@@ -80,7 +55,7 @@ final class WeatherModuleUITests: XCTestCase {
         if ProcessInfo().operatingSystemVersion.majorVersion == 13 {
             XCTAssertFalse(app.images["DailyForecastImageView_0"].label.isEmpty)
         }
-        XCTAssertFalse(app.staticTexts["DailyForecastDate_0"].label.isEmpty)
+        XCTAssertFalse(app.staticTexts["DailyForecastPrecipitation_0"].label.isEmpty)
         XCTAssertFalse(app.staticTexts["DailyForecastSubtitle_0"].label.isEmpty)
     }
         

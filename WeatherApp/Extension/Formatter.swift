@@ -35,7 +35,19 @@ extension NumberFormatter {
 
         return formatter
     }()
-
+    
+    static let percentage: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 1
+        
+        return formatter
+    }()
+    
+    func string(from number: Double) -> String? {
+        self.string(from: number as NSNumber)
+    }
 }
 
 extension MeasurementFormatter {
@@ -48,7 +60,7 @@ extension MeasurementFormatter {
         return formatter
     }()
  
-    static func string(from: Float?) -> String {
+    static func string(from: Double?) -> String {
         guard let value = from else { return "-" }
         let formatter = MeasurementFormatter.temperature
         
@@ -56,9 +68,9 @@ extension MeasurementFormatter {
         // The Simulator doesn't respect the Temperature Unit setting, so force to work with celsius
         // https://openradar.appspot.com/radar?id=5042283099455488
         #if targetEnvironment(simulator)
-            let measurement = Measurement(value: Double(value), unit: UnitTemperature.fahrenheit)
+            let measurement = Measurement(value: value, unit: UnitTemperature.fahrenheit)
         #else
-            let measurement = Measurement(value: Double(value), unit: UnitTemperature.celsius)
+            let measurement = Measurement(value: value, unit: UnitTemperature.celsius)
         #endif
         // end FixBug Simulator
         

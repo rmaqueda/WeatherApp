@@ -38,8 +38,8 @@ final class WeatherProviderTests: XCTestCase {
         let didReceiveValue = expectation(description: "didReceiveValue")
         var response: OpenWeatherResponse?
         
-        let expectedAPIRequest: APIRequest<OpenWeatherResponse, TestError> = APIRequest.get("forecast",
-                                                                                            parameters: ["q": "stub"],
+        let expectedAPIRequest: APIRequest<OpenWeatherResponse, TestError> = APIRequest.get("onecall",
+                                                                                            parameters: ["lat": 0.0, "lon": 0.0],
                                                                                             jsonDecoder: JSONDecoder.openWeatherDecoder)
         let expectedRequest = URLRequest(baseURL: URLStub, apiRequest: expectedAPIRequest)
         
@@ -55,7 +55,7 @@ final class WeatherProviderTests: XCTestCase {
         wait(for: [didReceiveValue], timeout: 1)
         
         // then
-        XCTAssertEqual(response?.city.identifier, responseMock.city.identifier)
+        XCTAssertEqual(response?.lat, 51.5002)
         XCTAssertTrue(spy.check(method: .response(for: expectedRequest), predicate: CallstackMatcher.times(1)))
     }
     

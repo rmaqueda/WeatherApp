@@ -46,7 +46,7 @@ class HTTPStubProtocol: URLProtocol {
             return true
         } else {
             // Here Could be possible crash on system networks request during the tests, with:
-            //fatalError("Stub missing the request'll go to sysmte")
+            //fatalError("Stub missing the request'll go to system call.")
             return false
         }
     }
@@ -78,8 +78,9 @@ extension HTTPStubProtocol {
     
     static func stubForecastRequest() throws {
         let request = APIRequest<OpenWeatherResponse, OpenWeatherAPIError>
-            .get("forecast",
-                 parameters: ["q": AplicationPreferences.defaultCity,
+            .get("onecall",
+                 parameters: ["lat": "0.0",
+                              "lon": "0.0",
                               "appid": AplicationPreferences.APIKey,
                               "units": AplicationPreferences.openWeahterAPIUnit,
                               "lang": AplicationPreferences.language],
@@ -94,8 +95,9 @@ extension HTTPStubProtocol {
     
     static func stubForecastRequestError() throws {
         let request = APIRequest<OpenWeatherAPIError, OpenWeatherAPIError>
-            .get("forecast",
-                 parameters: ["q": AplicationPreferences.defaultCity,
+            .get("onecall",
+                 parameters: ["lat": "0.0",
+                              "lon": "0.0",
                               "appid": AplicationPreferences.APIKey,
                               "units": AplicationPreferences.openWeahterAPIUnit,
                               "lang": AplicationPreferences.language],

@@ -24,7 +24,7 @@ extension JSONDecoder {
             fatalError("Error getting data from file \(jsonFile).")
         }
         do {
-            return try JSONDecoder().decode(T.self, from: data)
+            return try JSONDecoder.openWeatherDecoder.decode(T.self, from: data)
         } catch {
             fatalError("Error decocing file \(jsonFile) for type \(T.self).")
         }

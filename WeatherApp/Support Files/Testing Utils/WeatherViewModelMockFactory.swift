@@ -48,7 +48,7 @@ class WeatherViewModelMock: WeatherViewModelProtocol {
     }
 
     func cacheSwitchDidChange(isEnable: Bool) {
-        requestForecastSuccessResult = WeatherViewModelData.mockMadrid
+        requestForecastSuccessResult = WeatherViewModelData.mockSuccess
     }
         
     var isSaved: Bool  = false

@@ -19,7 +19,9 @@ class WeatherProvider: WeahterProviderProtocol {
     }
     
     func forecast(for city: City) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>> {
-        apiClient.response(for: .get("forecast", parameters: ["q": city.name], jsonDecoder: JSONDecoder.openWeatherDecoder))
+        apiClient.response(for: .get("onecall",
+                                     parameters: ["lat": city.coordinate.lat, "lon": city.coordinate.lon],
+                                     jsonDecoder: JSONDecoder.openWeatherDecoder))
     }
     
     func isSaved(city: City) -> Bool {

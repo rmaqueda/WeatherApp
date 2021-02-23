@@ -7,11 +7,17 @@
 
 import Foundation
 
-extension OpenWeatherResponse {
-    
-    static var mockLondon: OpenWeatherResponse {
-        JSONDecoder.decode(jsonFile: "OpenWeatherResponseLondon.json")
+extension City {
+        
+    static var mockMadrid: City {
+        City(name: "Madrid",
+             coordinate: Coordenate.init(lat: 0.0, lon: 0.0),
+             timeZone: nil,
+             temperature: nil)
     }
+}
+
+extension OpenWeatherResponse {
     
     static var mockMadrid: OpenWeatherResponse {
         JSONDecoder.decode(jsonFile: "OpenWeatherResponseMadrid.json")

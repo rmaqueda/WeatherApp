@@ -26,7 +26,7 @@ struct WeatherViewModelData {
         let date: Date
         let title: String
         let subTitle: String
-        let dateString: String
+        let probabilityPrecipitation: String?
         let icon: ForecastIcon?
     }
     

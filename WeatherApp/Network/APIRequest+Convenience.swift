@@ -16,7 +16,10 @@ extension APIRequest where Output: Decodable, Error: Decodable {
         
         APIRequest(method: .get,
                    path: path,
-                   headers: [.accept: ContentType.json].merging(headers) { _, new in new },
+                   headers: [.accept: ContentType.json,
+                             .acceptEncoding: "gzip, deflate, br",
+                             .acceptLaguage: "en-us"]
+                    .merging(headers) { _, new in new },
                    parameters: parameters,
                    body: nil,
                    output: { try jsonDecoder.decode(Output.self, from: $0) },

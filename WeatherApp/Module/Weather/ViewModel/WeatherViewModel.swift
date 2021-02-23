@@ -54,14 +54,11 @@ class WeatherViewModel: WeatherViewModelProtocol {
         dataSource = WeatherViewModelData.activityIndicator()
         
         provider.forecast(for: city)
-            .map({
-                self.city.temperature = MeasurementFormatter.string(from: $0.list.first?.main.temperature)
-                return $0
-            })
-            .map(mapper.map(with:))
+            .map({ self.mapper.map(for: self.city, with: $0) })
             .sink(
                 receiveCompletion: { [weak self] completion in
                     if case let .failure(error) = completion {
+                        print(error)
                         self?.dataSource = WeatherViewModelData(error: error)
                     }
                 },

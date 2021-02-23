@@ -43,9 +43,7 @@ class AplicationPreferences {
         
         UIToolbar.appearance().barTintColor = UIColor(named: "BackgroundColor")
         UIToolbar.appearance().tintColor = UIColor(named: "ForeGroundColor")
-        
-        UILabel.appearance().textColor = UIColor(named: "ForeGroundColor")
-        
+
         UIImageView.appearance().tintColor = UIColor(named: "ForeGroundColor")
         
         UIActivityIndicatorView.appearance().color = UIColor(named: "ForeGroundColor")

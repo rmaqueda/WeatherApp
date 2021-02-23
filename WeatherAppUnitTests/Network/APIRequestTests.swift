@@ -44,6 +44,8 @@ final class APIRequestTests: XCTestCase {
         let expectedRequest = URLRequest(url: aURLWithPath)
             .addingHeaders([.authorization: "Bearer stub"])
             .addingHeaders([.accept: "application/json"])
+            .addingHeaders([.acceptEncoding: "gzip, deflate, br"])
+            .addingHeaders([.acceptLaguage: "en-us"])
         
         // when
         let request = APIRequest<String, TestError>.get(path, jsonDecoder: JSONDecoder.openWeatherDecoder)
@@ -58,7 +60,9 @@ final class APIRequestTests: XCTestCase {
         components.query = parameter
         
         let request = URLRequest(url: components.url!)
-            .addingHeaders([.accept: "application/json"])
+            .addingHeaders([.accept: "application/json",
+                            .acceptEncoding: "gzip, deflate, br",
+                            .acceptLaguage: "en-us"])
         
         return request
     }

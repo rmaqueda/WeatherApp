@@ -19,10 +19,7 @@ final class WeatherModuleIngrationTests: XCTestCase {
         let apiClient = APIClient(session: .stubbed)
         let storage = CityDiskStorage()
         let provider = WeatherProvider(apiClient: apiClient, storage: storage)
-        sut = WeatherViewModel(city: City(name: AplicationPreferences.defaultCity,
-                                          coordinate: City.Coordenate(lat: 0, lon: 0),
-                                          timeZone: nil,
-                                          temperature: nil),
+        sut = WeatherViewModel(city: City.mockMadrid,
                                mapper: WeatherViewModelMapper(),
                                provider: provider,
                                wireframe: SpyWireframeProtocol())
@@ -38,10 +35,8 @@ final class WeatherModuleIngrationTests: XCTestCase {
     func test_givenResponseSuccess_whenRequestForecast_thenReceiveExpectedForecastSections() throws {
         // given
         try HTTPStubProtocol.stubForecastRequest()
-        
         let didReceiveActivityIndicator = expectation(description: "didReceiveValue")
         let didReceiveSections = expectation(description: "didReceiveValue")
-        
         var expectedSections: [WeatherViewSectionData]?
         
         // when
