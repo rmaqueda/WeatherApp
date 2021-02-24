@@ -36,28 +36,27 @@ final class WeatherViewModelMapperTests: XCTestCase {
         
         if case let .city(info: city) = viewDataModel.sections[0] {
             XCTAssertEqual(city.name, "Madrid")
-            XCTAssertEqual(city.curretWeatherText, "overcast clouds")
+            XCTAssertEqual(city.currentWeatherText, "Overcast clouds")
         } else {
             XCTFail("Index 0 should be a city")
         }
         
         if case let .temperature(info: temperature) = viewDataModel.sections[1] {
             XCTAssertEqual(temperature.current, MeasurementFormatter.string(from: response.daily.first?.temp.eve))
-            XCTAssertEqual(temperature.high, MeasurementFormatter.string(from: response.daily.first?.temp.max))
-            XCTAssertEqual(temperature.low, MeasurementFormatter.string(from: response.daily.first?.temp.min))
+            XCTAssertEqual(temperature.highLow, "H: 12°  L: 8°")
         } else {
             XCTFail("Index 1 should be a city")
         }
         
         if case let .dailyForecast(info: dailyForecast) = viewDataModel.sections[2] {
-            XCTAssertEqual(dailyForecast.count, 48)
+            XCTAssertEqual(dailyForecast.count, 24)
             
             let firstForecast = dailyForecast[0]
             let firstElement = response.hourly[0]
             
             XCTAssertEqual(firstForecast.date.description, firstElement.dt.description)
-            XCTAssertEqual(firstForecast.title, MeasurementFormatter.string(from: firstElement.temp))
-            XCTAssertEqual(firstForecast.subTitle, DateFormatter.time.string(from: firstElement.dt))
+            XCTAssertEqual(firstForecast.title, "07")
+            XCTAssertEqual(firstForecast.subTitle, "9°")
             XCTAssertEqual(firstForecast.probabilityPrecipitation, NumberFormatter.percentage.string(from: firstElement.pop))
             XCTAssertEqual(firstForecast.icon, .brokenCloudsNight)
         } else {

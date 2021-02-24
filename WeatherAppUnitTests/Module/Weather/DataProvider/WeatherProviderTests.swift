@@ -44,7 +44,7 @@ final class WeatherProviderTests: XCTestCase {
         let expectedRequest = URLRequest(baseURL: URLStub, apiRequest: expectedAPIRequest)
         
         // when
-        sut.forecast(for: City(name: "stub", coordinate: City.Coordenate(lat: 0, lon: 0), timeZone: nil, temperature: nil))
+        sut.forecast(for: City(name: "stub", coordinate: City.Coordinate(lat: 0, lon: 0), timeZone: nil, temperature: nil))
             .assertNoFailure()
             .sink(receiveValue: {
                 response = $0

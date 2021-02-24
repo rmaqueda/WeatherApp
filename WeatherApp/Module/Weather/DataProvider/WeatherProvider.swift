@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class WeatherProvider: WeahterProviderProtocol {
+class WeatherProvider: WeatherProviderProtocol {
     private let apiClient: APIClientProtocol
     private let storage: CityStorage
     

@@ -35,7 +35,7 @@ protocol WeatherViewRepresentable: UICollectionViewCell {
 // MARK: Data Provider
 
 // sourcery: autoSpy
-protocol WeahterProviderProtocol {
+protocol WeatherProviderProtocol {
     func isSaved(city: City) -> Bool
     func save(city: City) throws
     func forecast(for city: City) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>>

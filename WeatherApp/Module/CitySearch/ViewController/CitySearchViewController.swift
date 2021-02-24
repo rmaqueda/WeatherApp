@@ -26,7 +26,7 @@ class CitySearchViewController: UITableViewController, UISearchBarDelegate, MKLo
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: View life cicly
+    // MARK: View life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +47,7 @@ class CitySearchViewController: UITableViewController, UISearchBarDelegate, MKLo
         stopProvidingCompletions()
     }
     
-    // MARK: Comfiguration
+    // MARK: Configuration
     
     private func configureSearchCompleter() {
         searchCompleter = MKLocalSearchCompleter()
@@ -159,7 +159,7 @@ class CitySearchViewController: UITableViewController, UISearchBarDelegate, MKLo
             if let item = response?.mapItems.first,
                let name = item.name {
                 let city = City(name: name,
-                                coordinate: City.Coordenate(lat: item.placemark.coordinate.latitude, lon: item.placemark.coordinate.longitude),
+                                coordinate: City.Coordinate(lat: item.placemark.coordinate.latitude, lon: item.placemark.coordinate.longitude),
                                 timeZone: item.timeZone,
                                 temperature: nil)
 

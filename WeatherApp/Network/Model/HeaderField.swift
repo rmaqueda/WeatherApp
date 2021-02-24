@@ -13,7 +13,7 @@ struct HeaderField: Hashable, Equatable, RawRepresentable {
 
 extension HeaderField {
     static let acceptEncoding = HeaderField(rawValue: "Accept-Encoding")
-    static let acceptLaguage = HeaderField(rawValue: "Accept-Language")
+    static let acceptLanguage = HeaderField(rawValue: "Accept-Language")
     static let accept = HeaderField(rawValue: "Accept")
     static let authorization = HeaderField(rawValue: "Authorization")
     static let contentType = HeaderField(rawValue: "Content-Type")

@@ -9,11 +9,11 @@ import Foundation
 
 struct City: Codable, Equatable {
     let name: String
-    let coordinate: Coordenate
+    let coordinate: Coordinate
     let timeZone: TimeZone?
     var temperature: String?
     
-    struct Coordenate: Codable, Equatable {
+    struct Coordinate: Codable, Equatable {
         let lat: Double
         let lon: Double
     }

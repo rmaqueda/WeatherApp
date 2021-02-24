@@ -81,16 +81,16 @@ extension HTTPStubProtocol {
             .get("onecall",
                  parameters: ["lat": "0.0",
                               "lon": "0.0",
-                              "appid": AplicationPreferences.APIKey,
-                              "units": AplicationPreferences.openWeahterAPIUnit,
-                              "lang": AplicationPreferences.language],
+                              "appid": ApplicationPreferences.APIKey,
+                              "units": ApplicationPreferences.openWeatherAPIUnit,
+                              "lang": ApplicationPreferences.language],
                  jsonDecoder: JSONDecoder.openWeatherDecoder
             )
         
         try HTTPStubProtocol.stub(output: OpenWeatherResponse.mockMadrid,
                                   statusCode: 200,
                                   for: request,
-                                  baseURL: AplicationPreferences.openWeahterAPIURL)
+                                  baseURL: ApplicationPreferences.openWeatherAPIURL)
     }
     
     static func stubForecastRequestError() throws {
@@ -98,16 +98,16 @@ extension HTTPStubProtocol {
             .get("onecall",
                  parameters: ["lat": "0.0",
                               "lon": "0.0",
-                              "appid": AplicationPreferences.APIKey,
-                              "units": AplicationPreferences.openWeahterAPIUnit,
-                              "lang": AplicationPreferences.language],
+                              "appid": ApplicationPreferences.APIKey,
+                              "units": ApplicationPreferences.openWeatherAPIUnit,
+                              "lang": ApplicationPreferences.language],
                  jsonDecoder: JSONDecoder.openWeatherDecoder
             )
         
         try HTTPStubProtocol.stub(output: OpenWeatherAPIError.mock,
                                   statusCode: 400,
                                   for: request,
-                                  baseURL: AplicationPreferences.openWeahterAPIURL)
+                                  baseURL: ApplicationPreferences.openWeatherAPIURL)
     }
     
 }

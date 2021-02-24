@@ -1,5 +1,5 @@
 //
-//  AplicationPreferences.swift
+//  ApplicationPreferences.swift
 //  WeatherApp
 //
 //  Created by Ricardo Maqueda Martinez on 04/02/2021.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class AplicationPreferences {
+class ApplicationPreferences {
     enum DataSourceType {
         case api
         case cache
@@ -19,20 +19,20 @@ class AplicationPreferences {
     
     // swiftlint:disable force_cast
     static var APIKey: String = {
-        var propertyListForamt =  PropertyListSerialization.PropertyListFormat.xml
+        var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
         let plistPath = Bundle.main.path(forResource: "Secrets", ofType: "plist")!
         let plistXML = FileManager.default.contents(atPath: plistPath)!
         let dict = try? PropertyListSerialization.propertyList(from: plistXML,
                                                                options: .mutableContainersAndLeaves,
-                                                               format: &propertyListForamt)
+                                                               format: &propertyListFormat)
         let castDictionary = dict as! [String: String]
         
         return castDictionary["OpenWeatherAPIKey"]!
     }()
     // swiftlint:enable force_cast
     
-    static let openWeahterAPIURL = URL(string: "https://api.openweathermap.org/data/2.5/")!
-    static let openWeahterAPIUnit = "metric"
+    static let openWeatherAPIURL = URL(string: "https://api.openweathermap.org/data/2.5/")!
+    static let openWeatherAPIUnit = "metric"
     
     static func setupAppearance() {
         UICollectionView.appearance().backgroundColor = UIColor(named: "BackgroundColor")

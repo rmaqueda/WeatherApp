@@ -18,7 +18,7 @@ extension APIRequest where Output: Decodable, Error: Decodable {
                    path: path,
                    headers: [.accept: ContentType.json,
                              .acceptEncoding: "gzip, deflate, br",
-                             .acceptLaguage: "en-us"]
+                             .acceptLanguage: "en-us"]
                     .merging(headers) { _, new in new },
                    parameters: parameters,
                    body: nil,

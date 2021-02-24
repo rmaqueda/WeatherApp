@@ -10,9 +10,9 @@ import Foundation
 extension JSONDecoder {
     
     static let openWeatherDecoder: JSONDecoder = {
-        let docoder = JSONDecoder()
-        docoder.dateDecodingStrategy = .secondsSince1970
-        return docoder
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        return decoder
     }()
 
     static func decode<T: Decodable>(jsonFile: String) -> T {
@@ -26,7 +26,7 @@ extension JSONDecoder {
         do {
             return try JSONDecoder.openWeatherDecoder.decode(T.self, from: data)
         } catch {
-            fatalError("Error decocing file \(jsonFile) for type \(T.self).")
+            fatalError("Error decoding file \(jsonFile) for type \(T.self).")
         }
     }
     

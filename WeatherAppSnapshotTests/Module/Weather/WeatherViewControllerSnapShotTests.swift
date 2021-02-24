@@ -1,3 +1,10 @@
+//
+//  WeatherViewControllerSnapShotTests.swift
+//  WeatherAppUITests
+//
+//  Created by Ricardo Maqueda Martinez on 06/02/2021.
+//
+
 @testable import WeatherApp
 import SnapshotTesting
 import XCTest

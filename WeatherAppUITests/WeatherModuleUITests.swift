@@ -47,7 +47,7 @@ final class WeatherModuleUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts["TemperatureLabel"].label.isEmpty)
         XCTAssertFalse(app.staticTexts["HighLowTemperatureLabel"].label.isEmpty)
 
-        // Scrool and check all the cells
+        // Scroll and check all the cells
         XCTAssertFalse(app.staticTexts["DailyForecastTitle_0"].label.isEmpty)
         if ProcessInfo().operatingSystemVersion.majorVersion == 14 {
             XCTAssertFalse(app.images["DailyForecastImageView_0"].label.isEmpty)

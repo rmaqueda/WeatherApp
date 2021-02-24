@@ -223,7 +223,7 @@ struct Rain: Codable {
 // MARK: - Minutely
 struct Minutely: Codable {
     let dt: Date
-    let precipitation: Int
+    let precipitation: Double
     
     enum CodingKeys: String, CodingKey {
         case dt = "dt"

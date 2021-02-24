@@ -9,6 +9,13 @@
 import Foundation
 
 extension DateFormatter {
+    
+    static let hour: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH"
+        
+        return formatter
+    }()
 
     static let time: DateFormatter = {
         let formatter = DateFormatter()
@@ -36,6 +43,14 @@ extension NumberFormatter {
         return formatter
     }()
     
+    static let noDecimal: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 0
+        
+        return formatter
+    }()
+    
     static let percentage: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .percent
@@ -55,13 +70,13 @@ extension MeasurementFormatter {
     static let temperature: MeasurementFormatter = {
         let formatter = MeasurementFormatter()
         formatter.unitStyle = .short
-        formatter.numberFormatter = .oneDecimal
+        formatter.numberFormatter = .noDecimal
         
         return formatter
     }()
  
     static func string(from: Double?) -> String {
-        guard let value = from else { return "-" }
+        guard let value = from else { return "--" }
         let formatter = MeasurementFormatter.temperature
         
         // FixBug Simulator and user temperature format

@@ -11,14 +11,14 @@ import Combine
 
 final class WeatherViewModelTests: XCTestCase {
     private var sut: WeatherViewModel!
-    private var spy: SpyWeahterProviderProtocol!
+    private var spy: SpyWeatherProviderProtocol!
     
     private var cancellables = Set<AnyCancellable>()
 
     override func setUp() {
         super.setUp()
         
-        spy = SpyWeahterProviderProtocol()
+        spy = SpyWeatherProviderProtocol()
         sut = WeatherViewModel(city: City.mockMadrid,
                                mapper: WeatherViewModelMapper(),
                                provider: spy,

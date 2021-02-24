@@ -11,7 +11,7 @@ import Combine
 class WeatherViewModel: WeatherViewModelProtocol {
     private var city: City
     private let mapper: WeatherViewModelMapper
-    private let provider: WeahterProviderProtocol
+    private let provider: WeatherProviderProtocol
     private let wireframe: WireframeProtocol
     
     @Published private(set) var dataSource: WeatherViewModelData = WeatherViewModelData.activityIndicator()
@@ -22,7 +22,7 @@ class WeatherViewModel: WeatherViewModelProtocol {
     
     required init(city: City,
                   mapper: WeatherViewModelMapper,
-                  provider: WeahterProviderProtocol,
+                  provider: WeatherProviderProtocol,
                   wireframe: WireframeProtocol) {
         self.city = city
         self.mapper = mapper
@@ -54,6 +54,10 @@ class WeatherViewModel: WeatherViewModelProtocol {
         dataSource = WeatherViewModelData.activityIndicator()
         
         provider.forecast(for: city)
+            .map({
+                self.city.temperature = MeasurementFormatter.string(from: $0.daily.first?.temp.eve)
+                return $0
+            })
             .map({ self.mapper.map(for: self.city, with: $0) })
             .sink(
                 receiveCompletion: { [weak self] completion in

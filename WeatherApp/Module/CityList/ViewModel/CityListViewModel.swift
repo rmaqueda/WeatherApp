@@ -18,7 +18,7 @@ class CityListViewModel: CityListViewModelProtocol, ObservableObject {
     
     var unitTemperature: UnitTemperature = .celsius
     
-    private var cancellables = Set<AnyCancellable>()
+    private var cancellable = Set<AnyCancellable>()
     
     required init(provider: CityListProviderProtocol, wireframe: Wireframe) {
         self.provider = provider

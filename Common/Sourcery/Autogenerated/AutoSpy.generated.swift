@@ -6,8 +6,8 @@ import Foundation
 import Combine
 @testable import WeatherApp
 
-// MARK: Spy for WeahterProviderProtocol
-public class SpyWeahterProviderProtocol: WeahterProviderProtocol, TestSpy {
+// MARK: Spy for WeatherProviderProtocol
+public class SpyWeatherProviderProtocol: WeatherProviderProtocol, TestSpy {
 	public enum Method: Equatable {
         case isSaved(city: City)
         case save(city: City)

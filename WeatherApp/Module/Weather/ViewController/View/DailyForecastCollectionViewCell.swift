@@ -40,9 +40,11 @@ class DailyForecastCollectionViewCell: UICollectionViewCell, WeatherViewRepresen
     
         if case let .dailyForecast(info) = section {
             let hourData = info[indexPath.row]
+            
             title.text = hourData.title
             probabilityPrecipitation.text = hourData.probabilityPrecipitation
             subTitle.text = hourData.subTitle
+            
             if let symbolName = hourData.icon?.SFSymbolName {
                 imageView.image = UIImage(systemName: symbolName)
             }

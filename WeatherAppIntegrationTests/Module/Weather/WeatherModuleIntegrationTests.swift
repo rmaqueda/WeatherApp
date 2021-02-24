@@ -1,5 +1,5 @@
 //
-//  WeatherModuleIngrationTests.swift
+//  WeatherModuleIntegrationTests.swift
 //  WeatherAppIntegrationTests
 //
 //  Created by Ricardo Maqueda Martinez on 06/02/2021.
@@ -9,7 +9,7 @@ import XCTest
 import Combine
 @testable import WeatherApp
 
-final class WeatherModuleIngrationTests: XCTestCase {
+final class WeatherModuleIntegrationTests: XCTestCase {
     private var sut: WeatherViewModel!
     private var cancellables = Set<AnyCancellable>()
         

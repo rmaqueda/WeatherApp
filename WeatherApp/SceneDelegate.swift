@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
             #endif
                     
-            AplicationPreferences.setupAppearance()
+            ApplicationPreferences.setupAppearance()
             
             let wireframe = Wireframe(window: window)
             wireframe.presentMainScreen()
