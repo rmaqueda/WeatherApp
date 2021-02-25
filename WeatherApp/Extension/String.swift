@@ -21,10 +21,10 @@ extension String {
     
     func highlightedString(rangeValues: [NSValue]) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: self,
-                                                          attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexString: "#4DFFFFFF")])
+                                                         attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "UnSelectedColor")!])
         
         let highlightAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold),
-                                 NSAttributedString.Key.foregroundColor: UIColor.white]
+                                   NSAttributedString.Key.foregroundColor: UIColor(named: "ForeGroundColor")!]
         let ranges = rangeValues.map { $0.rangeValue }
         ranges.forEach { (range) in
             attributedString.addAttributes(highlightAttributes, range: range)
