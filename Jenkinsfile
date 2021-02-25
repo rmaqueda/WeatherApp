@@ -22,7 +22,7 @@ pipeline {
       }
     }
 
-    stage('CocoaPod') {
+    stage('CocoaPods') {
       steps { sh 'pod install' }
     }
     
@@ -31,6 +31,7 @@ pipeline {
     }
 
     stage('Archive for test') {
+    	when { expression { isDevelop() || isRelease() || isMain() || isMaster() } }
       steps { sh 'bundle exec fastlane archive_for_tests' }
     }
 
