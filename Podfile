@@ -3,7 +3,8 @@ platform :ios, '13.0'
 target 'WeatherApp' do
   use_frameworks!
 
-  pod 'Firebase/Analytics', '~> 7.4.0'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics' 
 
   target 'WeatherAppIntegrationTests' do
     inherit! :search_paths
