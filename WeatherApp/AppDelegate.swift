@@ -11,9 +11,12 @@ import Firebase
 @main class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let firebaseOptions = FirebaseOptions.defaultOptions()!
-        firebaseOptions.apiKey = ApplicationPreferences.googleAPIKey
-        FirebaseApp.configure(options: firebaseOptions)
+        
+        if let googleAPIKey = ApplicationPreferences.googleAPIKey, !googleAPIKey.contains("Enter") {
+            let firebaseOptions = FirebaseOptions.defaultOptions()!
+            firebaseOptions.apiKey = googleAPIKey
+            FirebaseApp.configure(options: firebaseOptions)
+        }
         
         return true
     }

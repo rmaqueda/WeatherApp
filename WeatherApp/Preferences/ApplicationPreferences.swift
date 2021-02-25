@@ -33,8 +33,8 @@ class ApplicationPreferences {
         secrets["OpenWeatherAPIKey"]!
     }()
     
-    static var googleAPIKey: String = {
-        secrets["GoogleAPIKey"]!
+    static var googleAPIKey: String? = {
+        secrets["GoogleAPIKey"]
     }()
     
     static let openWeatherAPIURL = URL(string: "https://api.openweathermap.org/data/2.5/")!
