@@ -98,7 +98,7 @@ class CityListViewController: UITableViewController, CityListFooterViewDelegate,
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            try? viewModel.delete(at: indexPath.row)
+            try? viewModel.deleteCity(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -128,7 +128,7 @@ class CityListViewController: UITableViewController, CityListFooterViewDelegate,
         guard let source = coordinator.items.first?.sourceIndexPath else { return }
         guard let destination = coordinator.destinationIndexPath else { return }
        
-        try? viewModel.moveCity(sourceIndex: source.row, destinationIndex: destination.row)
+        try? viewModel.moveCity(from: source.row, to: destination.row)
         // TODO: could be possible avoid this reload?
         tableView.reloadData()
     }

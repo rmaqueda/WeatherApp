@@ -13,15 +13,15 @@ protocol CityListViewModelProtocol {
     var dataSource: [City] { get }
     var unitTemperature: UnitTemperature { get set }
     
-    func delete(at index: Int) throws
-    func moveCity(sourceIndex: Int, destinationIndex: Int) throws
+    func deleteCity(at index: Int) throws
+    func moveCity(from: Int, to: Int) throws
     
     func presentCitySearch()
     func presentForecast(for city: City)
 }
 
 protocol CityListProviderProtocol {
-    var savedCities: [City] { get }
+    var cities: [City] { get }
     
     func save(city: City) throws
     func delete(city: City) throws

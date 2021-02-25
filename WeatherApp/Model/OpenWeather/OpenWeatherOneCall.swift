@@ -4,7 +4,7 @@
 //
 //  Created by Ricardo Maqueda Martinez on 22/02/2021.
 //
-// swiftlint:disable identifier_name redundant_string_enum_value
+// swiftlint:disable redundant_string_enum_value
 import Foundation
 
 // MARK: - OpenWeatherAPIError

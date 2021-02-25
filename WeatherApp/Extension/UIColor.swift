@@ -11,7 +11,6 @@ import UIKit
 
 extension UIColor {
     
-    // swiftlint:disable identifier_name
     convenience init(hexString: String) {
         let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt64()
@@ -30,6 +29,5 @@ extension UIColor {
         }
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
-    // swiftlint:enable identifier_name
     
 }

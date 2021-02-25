@@ -11,7 +11,7 @@ import Combine
 class CityListProvider: CityListProviderProtocol {
     private let storage: CityStorage
     
-    var savedCities: [City] {
+    var cities: [City] {
         storage.savedCities
     }
     
