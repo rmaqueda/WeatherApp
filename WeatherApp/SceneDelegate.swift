@@ -10,71 +10,35 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        AplicationPreferences.setupAppearance()
-        
-        if let windowScene = scene as? UIWindowScene {
-            let viewController: UIViewController
-            #if DEBUG
-                // Avoid to start the app on unit testing
-                if isUnitTesting() {
-                    window = UIWindow(windowScene: windowScene)
-                    window?.makeKeyAndVisible()
-                    return
-                }
-                // Debug setup
-                viewController = setupDebugWeatherModule()
-            #else
-                // Release setup
-                viewController = setupWeatherModule()
-            #endif
-            
-            let navigationController = UINavigationController(rootViewController: viewController)
-            
-            window = UIWindow(windowScene: windowScene)
-            window?.rootViewController = navigationController
-            window?.makeKeyAndVisible()
-        }
-    }
-
-    private func setupWeatherModule() -> WeatherViewController {
-        let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.timeoutIntervalForRequest = 5.0
-        let session = URLSession(configuration: sessionConfig)
-        
-        let client = APIClient(session: session)
-        let APIProvider = WeatherAPIProvider(APIClient: client)
-        
-        let localProvider = WeatherLocalProvider()
-        let repository = WeatherRepository(APIProvider: APIProvider, localProvider: localProvider)
-        let mapper = WeatherViewModelMapper()
-        
-        let requestForecastInteractor = WeatherRequestInteractor(repository: repository)
-        let setDataSourceInteractor = WeatherSetDataSourceInteractor(repository: repository)
-        
-        let viewModel = WeatherViewModel(requestForecastInteractor: requestForecastInteractor,
-                                         setDataSourceInteractor: setDataSourceInteractor,
-                                         mapper: mapper)
-        
-        return WeatherViewController(viewModel: viewModel)
-    }
-        
     #if DEBUG
-    private func setupDebugWeatherModule() -> WeatherViewController {
-        // Check if UI testing is configured and setup module for UI testing
-        if let environment = ProcessInfo.processInfo.environment["UITestTag"],
-           let UITestTag = UITestTag(rawValue: environment) {
-            let viewModel =  WeatherViewModelMockFactory(UITestTag: UITestTag).create()
-
-            return WeatherViewController(viewModel: viewModel)
-        }
-        
-        return setupWeatherModule()
-    }
-    
-    private func isUnitTesting() -> Bool {
+    var isUnitTest: Bool {
         ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
     }
+    
+    var UITestTag: String? {
+        ProcessInfo.processInfo.environment["UITestTag"]
+    }
     #endif
+    
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        if let windowScene = scene as? UIWindowScene {
+            let window = UIWindow(windowScene: windowScene)
+            self.window = window
+        
+            #if DEBUG
+            guard !isUnitTest else { return }
+            if let tag = UITestTag {
+                let wireframe = UITestsWireframe(window: window)
+                wireframe.presentScreen(for: tag)
+                return
+            }
+            #endif
+                    
+            ApplicationPreferences.setupAppearance()
+            
+            let wireframe = Wireframe(window: window)
+            wireframe.presentMainScreen()
+        }
+    }
     
 }

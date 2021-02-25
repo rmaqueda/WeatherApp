@@ -16,7 +16,7 @@ struct WeatherViewModelMockFactory {
         self.UITestTag = UITestTag
     }
 
-    func create() -> WeatherViewModelProtocol {
+    func build() -> WeatherViewModelProtocol {
         let viewModel = WeatherViewModelMock()
         
         switch UITestTag {
@@ -39,7 +39,7 @@ class WeatherViewModelMock: WeatherViewModelProtocol {
     var requestForecastSuccessResult: WeatherViewModelData?
     var requestForecastErrorResult: WeatherViewModelData?
 
-    func requestForecast(for city: String?) {
+    func requestForecast() {
         if let response = requestForecastSuccessResult {
             dataSource = response
         } else if let error = requestForecastErrorResult {
@@ -48,7 +48,21 @@ class WeatherViewModelMock: WeatherViewModelProtocol {
     }
 
     func cacheSwitchDidChange(isEnable: Bool) {
-        requestForecastSuccessResult = WeatherViewModelData.mockMadrid
+        requestForecastSuccessResult = WeatherViewModelData.mockSuccess
+    }
+        
+    var isSaved: Bool  = false
+    
+    func navigateToCityList() {
+        
+    }
+    
+    func saveCity() throws {
+        
+    }
+    
+    func updateCity() throws {
+        
     }
 
 }

@@ -10,60 +10,61 @@ import XCTest
 
 final class APIRequestTests: XCTestCase {
     let aURL = URL(string: "http://stub.com")!
+    let path = "/path"
+    lazy var aURLWithPath = aURL.appendingPathComponent(path)
     
     func test_givenAURLPath_whenCreateRequest_thenRequestHasConfiguredURLPath() {
         // given
-        let URLWithPath = aURL.appendingPathComponent("/path")
-        
-        var components = URLComponents(url: URLWithPath, resolvingAgainstBaseURL: false)!
-        components.query = "appid=value"
-        
-        var expected = URLRequest(url: components.url!)
-        expected.addValue("application/json", forHTTPHeaderField: "Accept")
-        expected.httpMethod = "GET"
+        let expectedRequest = request(with: "appid=value")
         
         // when
-        let request = APIRequest<String, TestError>.get("/path", parameters: ["appid": "value"])
+        let request = APIRequest<String, TestError>.get(path,
+                                                        parameters: ["appid": "value"],
+                                                        jsonDecoder: JSONDecoder.openWeatherDecoder)
         let result = URLRequest(baseURL: aURL, apiRequest: request)
         
         // then
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result, expectedRequest)
     }
     
     func test_givenAURLPath_andAParameter_whenCreateRequest_thenRequestHasConfiguredParameter() {
         // given
-        let URLWithPath = aURL.appendingPathComponent("/path")
-        
-        var components = URLComponents(url: URLWithPath, resolvingAgainstBaseURL: false)!
-        components.query = "lang=en"
-        
-        var expected = URLRequest(url: components.url!)
-        expected.addValue("application/json", forHTTPHeaderField: "Accept")
-        expected.httpMethod = "GET"
+        let expectedRequest = request(with: "lang=en")
         
         // when
-        let request = APIRequest<String, TestError>.get("/path")
+        let request = APIRequest<String, TestError>.get(path, jsonDecoder: JSONDecoder.openWeatherDecoder)
         let result = URLRequest(baseURL: aURL, apiRequest: request).addingParameters(["lang": "en"])
         
         // then
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result, expectedRequest)
     }
     
     func test_givenAURLPath_andHeaders_whenCreateRequest_thenRequestHasConfiguredHeaders() {
         // given
-        let URLWithPath = aURL.appendingPathComponent("/path")
-        
-        var expected = URLRequest(url: URLWithPath)
-        expected.addValue("Bearer stub", forHTTPHeaderField: "Authorization")
-        expected.addValue("application/json", forHTTPHeaderField: "Accept")
-        expected.httpMethod = "GET"
+        let expectedRequest = URLRequest(url: aURLWithPath)
+            .addingHeaders([.authorization: "Bearer stub"])
+            .addingHeaders([.accept: "application/json"])
+            .addingHeaders([.acceptEncoding: "gzip, deflate, br"])
+            .addingHeaders([.acceptLanguage: "en-us"])
         
         // when
-        let request = APIRequest<String, TestError>.get("/path")
+        let request = APIRequest<String, TestError>.get(path, jsonDecoder: JSONDecoder.openWeatherDecoder)
         let result = URLRequest(baseURL: aURL, apiRequest: request).addingHeaders([.authorization: "Bearer stub"])
         
         // then
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result, expectedRequest)
     }
 
+    private func request(with parameter: String) -> URLRequest {
+        var components = URLComponents(url: aURLWithPath, resolvingAgainstBaseURL: false)!
+        components.query = parameter
+        
+        let request = URLRequest(url: components.url!)
+            .addingHeaders([.accept: "application/json",
+                            .acceptEncoding: "gzip, deflate, br",
+                            .acceptLanguage: "en-us"])
+        
+        return request
+    }
+    
 }

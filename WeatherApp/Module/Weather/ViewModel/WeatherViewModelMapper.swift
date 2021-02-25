@@ -9,26 +9,28 @@ import Foundation
 
 class WeatherViewModelMapper {
     
-    func map(for response: OpenWeatherResponse) -> WeatherViewModelData {
-        let city = WeatherViewModelData.City(name: response.city.name,
-                                             curretWeatherText: response.list.first?.weather.first?.descriptionText)
+    func map(for city: City, with response: OpenWeatherResponse) -> WeatherViewModelData {
+        let city = WeatherViewModelData.City(name: city.name,
+                                             currentWeatherText: response.current.weather.first?.weatherDescription.capitalizingFirstLetter())
         
-        let daily = response.list.map {
-            WeatherViewModelData.HourCondition(date: $0.date,
-                                               title: MeasurementFormatter.string(from: $0.main.temperature),
-                                               subTitle: DateFormatter.time.string(from: $0.date),
-                                               dateString: DateFormatter.date.string(from: $0.date),
+        let hourlyLimited = response.hourly.prefix(24)
+        let hourly = hourlyLimited.map {
+            WeatherViewModelData.HourCondition(date: $0.dt,
+                                               title: DateFormatter.hour.string(from: $0.dt),
+                                               subTitle: MeasurementFormatter.string(from: $0.temp),
+                                               probabilityPrecipitation: $0.pop > 0.30 ? NumberFormatter.percentage.string(from: $0.pop) : nil,
                                                icon: ForecastIcon(rawValue: $0.weather.first?.icon ?? "") ?? .unknown
             )
         }
         
-        let temperature = MeasurementFormatter.string(from: response.list.first?.main.temperature)
-        let temperatureMax = MeasurementFormatter.string(from: response.list.first?.main.temperatureMax)
-        let temperatureMin = MeasurementFormatter.string(from: response.list.first?.main.temperatureMin)
-        let temperatureData = WeatherViewModelData.Temprature(current: temperature, high: temperatureMax, low: temperatureMin)
+        let temperature = MeasurementFormatter.string(from: response.daily.first?.temp.eve)
+        let temperatureMax = MeasurementFormatter.string(from: response.daily.first?.temp.max)
+        let temperatureMin = MeasurementFormatter.string(from: response.daily.first?.temp.min)
+        let temperatureData = WeatherViewModelData.Temperature(current: temperature,
+                                                              highLow: "H: \(temperatureMax)  L: \(temperatureMin)")
         
         return WeatherViewModelData(
-            sections: [.city(info: city), .temperature(info: temperatureData), .dailyForecast(info: daily)]
+            sections: [.city(info: city), .temperature(info: temperatureData), .dailyForecast(info: hourly)]
         )
     }
     

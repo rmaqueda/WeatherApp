@@ -6,5 +6,8 @@ logs
 build
 WeatherAppUITests-Runner.app.zip
 
+// Reports
+cpd-output.xml
+
 // Files containing secrets 
 WeatherApp/Preferences/Secrets.plist

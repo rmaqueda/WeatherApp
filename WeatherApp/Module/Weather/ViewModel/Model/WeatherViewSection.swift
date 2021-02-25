@@ -17,7 +17,7 @@ enum WeatherViewSectionType: Int, CaseIterable {
     
     var numberOfItems: Int {
         if case .dailyForecast = self {
-            return 40
+            return 24
         }
         return 1
     }
@@ -51,7 +51,7 @@ enum WeatherViewSectionType: Int, CaseIterable {
 
 enum WeatherViewSectionData {
     case city(info: WeatherViewModelData.City)
-    case temperature(info: WeatherViewModelData.Temprature)
+    case temperature(info: WeatherViewModelData.Temperature)
     case dailyForecast(info: [WeatherViewModelData.HourCondition])
     case activityIndicator
     

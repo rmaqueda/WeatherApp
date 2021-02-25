@@ -22,7 +22,7 @@ class WeatherCollectionViewLayout {
             case 1:
                 return self.oneItemLayout(itemHeight: section.size.height)
             case 2:
-                return self.horizoltalScrollLayout(iteSize: section.size, numberItems: section.numberOfItems)
+                return self.horizontalScrollLayout(itemSize: section.size, numberItems: section.numberOfItems)
             case 3:
                 return self.oneItemLayout(itemHeight: section.size.height)
             default:
@@ -42,10 +42,10 @@ class WeatherCollectionViewLayout {
         return section
     }
     
-    func horizoltalScrollLayout(iteSize: CGSize, numberItems: Int) -> NSCollectionLayoutSection {
+    func horizontalScrollLayout(itemSize: CGSize, numberItems: Int) -> NSCollectionLayoutSection {
         let group = ForecastLayoutGroup(items: numberItems,
-                                        itemWidth: .absolute(iteSize.width),
-                                        itemHeight: .absolute(iteSize.height),
+                                        itemWidth: .absolute(itemSize.width),
+                                        itemHeight: .absolute(itemSize.height),
                                         direction: .horizontal,
                                         contentInsets: NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2))
         

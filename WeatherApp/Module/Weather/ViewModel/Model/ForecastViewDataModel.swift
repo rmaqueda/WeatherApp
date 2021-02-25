@@ -13,20 +13,19 @@ struct WeatherViewModelData {
     
     struct City {
         let name: String
-        let curretWeatherText: String?
+        let currentWeatherText: String?
     }
     
-    struct Temprature {
+    struct Temperature {
         let current: String
-        let high: String
-        let low: String
+        let highLow: String
     }
     
     struct HourCondition {
         let date: Date
         let title: String
         let subTitle: String
-        let dateString: String
+        let probabilityPrecipitation: String?
         let icon: ForecastIcon?
     }
     

@@ -37,7 +37,7 @@ class TemperatureCollectionViewCell: UICollectionViewCell, WeatherViewRepresenta
         if case let .temperature(info) = section {
             let temp = info
             temperature.text = temp.current
-            highLowTemperature.text = "H: \(temp.high) L: \(temp.low)"
+            highLowTemperature.text = temp.highLow
         }
     }
 

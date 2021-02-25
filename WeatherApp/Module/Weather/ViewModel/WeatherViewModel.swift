@@ -9,9 +9,10 @@ import Foundation
 import Combine
 
 class WeatherViewModel: WeatherViewModelProtocol {
-    private let requestForecastInteractor: WeatherRequestInteractorProtocol
-    private let setDataSourceInteractor: WeatherSetDataSourceInteractorProtocol
+    private var city: City
     private let mapper: WeatherViewModelMapper
+    private let provider: WeatherProviderProtocol
+    private let wireframe: WireframeProtocol
     
     @Published private(set) var dataSource: WeatherViewModelData = WeatherViewModelData.activityIndicator()
     var dataSourcePublished: Published<WeatherViewModelData> { _dataSource }
@@ -19,35 +20,57 @@ class WeatherViewModel: WeatherViewModelProtocol {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(requestForecastInteractor: WeatherRequestInteractorProtocol,
-         setDataSourceInteractor: WeatherSetDataSourceInteractorProtocol,
-         mapper: WeatherViewModelMapper) {
-        self.requestForecastInteractor = requestForecastInteractor
-        self.setDataSourceInteractor = setDataSourceInteractor
+    required init(city: City,
+                  mapper: WeatherViewModelMapper,
+                  provider: WeatherProviderProtocol,
+                  wireframe: WireframeProtocol) {
+        self.city = city
         self.mapper = mapper
+        self.provider = provider
+        self.wireframe = wireframe
     }
     
     // MARK: WeatherViewModelProtocol
     
-    func requestForecast(for city: String?) {
+    func navigateToCityList() {
+        wireframe.didPressCityListButton()
+    }
+    
+    func saveCity() throws {
+        try provider.save(city: city)
+    }
+    
+    func updateCity() throws {
+        if provider.isSaved(city: city) {
+            try provider.save(city: city)
+        }
+    }
+    
+    var isSaved: Bool {
+        provider.isSaved(city: city)
+    }
+
+    func requestForecast() {
         dataSource = WeatherViewModelData.activityIndicator()
         
-        requestForecastInteractor.requestForecast(for: city)
-            .map(mapper.map(for:))
+        provider.forecast(for: city)
+            .map({
+                self.city.temperature = MeasurementFormatter.string(from: $0.daily.first?.temp.eve)
+                return $0
+            })
+            .map({ self.mapper.map(for: self.city, with: $0) })
             .sink(
                 receiveCompletion: { [weak self] completion in
                     if case let .failure(error) = completion {
+                        print(error)
                         self?.dataSource = WeatherViewModelData(error: error)
                     }
                 },
                 receiveValue: { [weak self] forecast in
+                    
                     self?.dataSource = forecast
                 })
             .store(in: &cancellables)
-    }
-    
-    func cacheSwitchDidChange(isEnable: Bool) {
-        setDataSourceInteractor.changeDataSource(isCacheEnabled: isEnable)
     }
     
 }

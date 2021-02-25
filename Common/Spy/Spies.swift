@@ -42,31 +42,41 @@ class APIClientSpy<T>: APIClientProtocol, TestSpy {
     
 }
 
-public class SpyWeatherViewModelProtocol: WeatherViewModelProtocol, TestSpy {
-    public enum Method: Equatable {
-        case requestForecast(city: String?)
-        case cacheSwitchDidChange(isEnable: Bool)
+class SpyWeatherViewModelProtocol: WeatherViewModelProtocol, TestSpy {
+    enum Method: Equatable {
+        case requestForecast
     }
 
-    @Published public var dataSource: WeatherViewModelData = WeatherViewModelData.activityIndicator()
-    public var dataSourcePublished: Published<WeatherViewModelData> { _dataSource }
-    public var dataSourcePublisher: Published<WeatherViewModelData>.Publisher { $dataSource }
+    @Published var dataSource: WeatherViewModelData = WeatherViewModelData.activityIndicator()
+    var dataSourcePublished: Published<WeatherViewModelData> { _dataSource }
+    var dataSourcePublisher: Published<WeatherViewModelData>.Publisher { $dataSource }
 
-    public var requestForecastResult: WeatherViewModelData?
+    var requestForecastResult: WeatherViewModelData?
     
-    public var callstack = CallstackContainer<Method>()
+    var callstack = CallstackContainer<Method>()
     
     // MARK: WeatherViewModelProtocol
     
-    public func requestForecast(for city: String?) {
-        callstack.record(.requestForecast(city: city ))
+    func requestForecast() {
+        callstack.record(.requestForecast)
 
         if let requestForecastResult = requestForecastResult {
             dataSource = requestForecastResult
         }
     }
 
-    public func cacheSwitchDidChange(isEnable: Bool) {
-        callstack.record(.cacheSwitchDidChange(isEnable: isEnable ))
+    var isSaved: Bool = false
+    
+    func navigateToCityList() {
+        //TODO: Implement
     }
+    
+    func saveCity() throws {
+        //TODO: Implement
+    }
+    
+    func updateCity() throws {
+        //TODO: Implement
+    }
+    
 }
