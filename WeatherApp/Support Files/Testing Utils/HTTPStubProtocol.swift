@@ -81,7 +81,7 @@ extension HTTPStubProtocol {
             .get("onecall",
                  parameters: ["lat": "0.0",
                               "lon": "0.0",
-                              "appid": ApplicationPreferences.APIKey,
+                              "appid": ApplicationPreferences.openWeatherAPIKey,
                               "units": ApplicationPreferences.openWeatherAPIUnit,
                               "lang": ApplicationPreferences.language],
                  jsonDecoder: JSONDecoder.openWeatherDecoder
@@ -98,7 +98,7 @@ extension HTTPStubProtocol {
             .get("onecall",
                  parameters: ["lat": "0.0",
                               "lon": "0.0",
-                              "appid": ApplicationPreferences.APIKey,
+                              "appid": ApplicationPreferences.openWeatherAPIKey,
                               "units": ApplicationPreferences.openWeatherAPIUnit,
                               "lang": ApplicationPreferences.language],
                  jsonDecoder: JSONDecoder.openWeatherDecoder

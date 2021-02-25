@@ -18,18 +18,24 @@ class ApplicationPreferences {
     static let language = Locale.current.languageCode ?? "en"
     
     // swiftlint:disable force_cast
-    static var APIKey: String = {
+    static var secrets: [String: String] = {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
         let plistPath = Bundle.main.path(forResource: "Secrets", ofType: "plist")!
         let plistXML = FileManager.default.contents(atPath: plistPath)!
         let dict = try? PropertyListSerialization.propertyList(from: plistXML,
                                                                options: .mutableContainersAndLeaves,
                                                                format: &propertyListFormat)
-        let castDictionary = dict as! [String: String]
-        
-        return castDictionary["OpenWeatherAPIKey"]!
+        return dict as! [String: String]
     }()
     // swiftlint:enable force_cast
+    
+    static var openWeatherAPIKey: String = {
+        secrets["OpenWeatherAPIKey"]!
+    }()
+    
+    static var googleAPIKey: String = {
+        secrets["GoogleAPIKey"]!
+    }()
     
     static let openWeatherAPIURL = URL(string: "https://api.openweathermap.org/data/2.5/")!
     static let openWeatherAPIUnit = "metric"
