@@ -84,7 +84,6 @@
 		8C71588525E0D41500583CB6 /* CitySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C71588425E0D41500583CB6 /* CitySearchViewController.swift */; };
 		8C71588C25E0D41B00583CB6 /* CitySearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C71588B25E0D41B00583CB6 /* CitySearchViewModel.swift */; };
 		8C71589325E0D42200583CB6 /* CitySearchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C71589225E0D42200583CB6 /* CitySearchProvider.swift */; };
-		8C71589A25E0D4C500583CB6 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C71589925E0D4C500583CB6 /* UIColor.swift */; };
 		8C7158AB25E0D8E900583CB6 /* WeatherProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7158AA25E0D8E900583CB6 /* WeatherProvider.swift */; };
 		8C8E1D3325D6632D006D8E73 /* ApplicationPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8E1D3225D6632D006D8E73 /* ApplicationPreferences.swift */; };
 		8C8E1D5225D664B8006D8E73 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C8E1D5125D664B8006D8E73 /* Secrets.plist */; };
@@ -205,7 +204,6 @@
 		8C71588425E0D41500583CB6 /* CitySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitySearchViewController.swift; sourceTree = "<group>"; };
 		8C71588B25E0D41B00583CB6 /* CitySearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitySearchViewModel.swift; sourceTree = "<group>"; };
 		8C71589225E0D42200583CB6 /* CitySearchProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitySearchProvider.swift; sourceTree = "<group>"; };
-		8C71589925E0D4C500583CB6 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		8C7158AA25E0D8E900583CB6 /* WeatherProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherProvider.swift; sourceTree = "<group>"; };
 		8C8E1CFA25D651D2006D8E73 /* AutoSpy.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoSpy.stencil; sourceTree = "<group>"; };
 		8C8E1D1D25D65629006D8E73 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -394,7 +392,6 @@
 		8C1048C625CBB05000282A3E /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				8C71589925E0D4C500583CB6 /* UIColor.swift */,
 				8C39EBFE25CC371D00265F3E /* String.swift */,
 				8C1048C725CBB06F00282A3E /* Formatter.swift */,
 				8C39EC3125CC5D0D00265F3E /* UIViewContoller.swift */,
@@ -1058,7 +1055,6 @@
 				8C71587325E0D37500583CB6 /* CityListProvider.swift in Sources */,
 				8C71585825E0D35A00583CB6 /* CityListViewController.swift in Sources */,
 				8C1048DD25CBB09500282A3E /* ContentType.swift in Sources */,
-				8C71589A25E0D4C500583CB6 /* UIColor.swift in Sources */,
 				8C71583225E0C9E400583CB6 /* UITestsWireframe.swift in Sources */,
 				8C39EC3225CC5D0D00265F3E /* UIViewContoller.swift in Sources */,
 				8C39EBD925CBED5900265F3E /* WeatherCollectionViewLayout.swift in Sources */,
