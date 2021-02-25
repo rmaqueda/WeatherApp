@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CityListFooterView" customModule="OpenWeather" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="513" height="70"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="oEh-FC-57H">
+                    <rect key="frame" x="20" y="4" width="473" height="32"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ce-gQ-h6H">
+                            <rect key="frame" x="0.0" y="0.0" width="55" height="32"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <state key="normal" title="ºC / ºF">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="didPressMagnitudeButton:" destination="-1" eventType="touchUpInside" id="U4B-oM-DJ7"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xs6-vL-2B4">
+                            <rect key="frame" x="229.5" y="0.0" width="32" height="32"/>
+                            <state key="normal" image="twc"/>
+                            <connections>
+                                <action selector="didPressTWCButton:" destination="-1" eventType="touchUpInside" id="gtm-sG-Vec"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mh8-Cc-Z9G">
+                            <rect key="frame" x="453" y="0.0" width="20" height="32"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <state key="normal" image="magnifyingglass" catalog="system">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="didPressSearchButton:" destination="-1" eventType="touchUpInside" id="fJr-Ba-c9m"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <constraints>
+                <constraint firstItem="oEh-FC-57H" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="ed8-1d-siU"/>
+                <constraint firstItem="oEh-FC-57H" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fjO-XJ-sZ7"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="oEh-FC-57H" secondAttribute="bottom" id="tNE-8N-ttt"/>
+                <constraint firstAttribute="trailing" secondItem="oEh-FC-57H" secondAttribute="trailing" constant="20" symbolic="YES" id="xWx-oX-Zpa"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="magnitudeButton" destination="2ce-gQ-h6H" id="ZSe-Cb-fOC"/>
+                <outlet property="searchButton" destination="Mh8-Cc-Z9G" id="o2x-G6-i9j"/>
+                <outlet property="twcButton" destination="Xs6-vL-2B4" id="gjs-zg-bAk"/>
+            </connections>
+            <point key="canvasLocation" x="18.115942028985508" y="26.116071428571427"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+        <image name="twc" width="32" height="32"/>
+    </resources>
+</document>

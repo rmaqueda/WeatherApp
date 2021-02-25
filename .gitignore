@@ -1,4 +1,4 @@
-// Files generated during continuous integration
+# Files generated during continuous integration
 swiftlint.json
 *.ipa
 archive
@@ -6,5 +6,31 @@ logs
 build
 WeatherAppUITests-Runner.app.zip
 
-// Files containing secrets 
+# Reports
+cpd-output.xml
+
+# Files containing secrets 
 WeatherApp/Preferences/Secrets.plist
+
+# Xcode
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+
+# CocoaPods
+Podfile.lock
+Pods
+*.xcworkspace

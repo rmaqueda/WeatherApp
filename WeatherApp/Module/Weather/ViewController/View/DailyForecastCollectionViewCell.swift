@@ -11,7 +11,7 @@ import UIKit
 class DailyForecastCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable, NibLoadableView, ReusableView {
     @IBOutlet weak private var title: UILabel!
     @IBOutlet weak private var imageView: UIImageView!
-    @IBOutlet weak private var date: UILabel!
+    @IBOutlet weak private var probabilityPrecipitation: UILabel!
     @IBOutlet weak private var subTitle: UILabel!
     
     override func awakeFromNib() {
@@ -35,14 +35,16 @@ class DailyForecastCollectionViewCell: UICollectionViewCell, WeatherViewRepresen
     func configure(with section: WeatherViewSectionData, indexPath: IndexPath) {
         title.accessibilityIdentifier = "DailyForecastTitle_\(indexPath.row)"
         imageView.accessibilityIdentifier = "DailyForecastImageView_\(indexPath.row)"
-        date.accessibilityIdentifier = "DailyForecastDate_\(indexPath.row)"
+        probabilityPrecipitation.accessibilityIdentifier = "DailyForecastPrecipitation_\(indexPath.row)"
         subTitle.accessibilityIdentifier = "DailyForecastSubtitle_\(indexPath.row)"
     
         if case let .dailyForecast(info) = section {
             let hourData = info[indexPath.row]
+            
             title.text = hourData.title
-            date.text = DateFormatter.date.string(from: hourData.date)
+            probabilityPrecipitation.text = hourData.probabilityPrecipitation
             subTitle.text = hourData.subTitle
+            
             if let symbolName = hourData.icon?.SFSymbolName {
                 imageView.image = UIImage(systemName: symbolName)
             }

@@ -30,7 +30,7 @@ final class APIClientTest: XCTestCase {
     
     func test_givenAnyValidResponse_whenResponse_thenReturnsOutput() throws {
         // given
-        let request = APIRequest<String, TestError>.get("/user")
+        let request = APIRequest<String, TestError>.get("/user", jsonDecoder: JSONDecoder.openWeatherDecoder)
         try HTTPStubProtocol.stub(output: "stub", statusCode: 200, for: request, baseURL: stubURL)
         let didReceiveValue = expectation(description: "didReceiveValue")
         var result: String?

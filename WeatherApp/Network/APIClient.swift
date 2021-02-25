@@ -62,13 +62,13 @@ class APIClient: APIClientProtocol {
 extension APIClient {
 
     convenience init(session: URLSession = URLSession.shared) {
-        let parameters =  ["appid": AplicationPreferences.APIKey,
-                           "units": AplicationPreferences.openWeahterAPIUnit,
-                           "lang": AplicationPreferences.language]
+        let parameters =  ["appid": ApplicationPreferences.openWeatherAPIKey,
+                           "units": ApplicationPreferences.openWeatherAPIUnit,
+                           "lang": ApplicationPreferences.language]
 
         let configuration = APIClientConfiguration(additionalParameters: parameters)
 
-        self.init(baseURL: AplicationPreferences.openWeahterAPIURL,
+        self.init(baseURL: ApplicationPreferences.openWeatherAPIURL,
                   configuration: configuration,
                   session: session)
     }

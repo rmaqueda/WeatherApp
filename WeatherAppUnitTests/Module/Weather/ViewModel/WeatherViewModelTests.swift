@@ -11,22 +11,22 @@ import Combine
 
 final class WeatherViewModelTests: XCTestCase {
     private var sut: WeatherViewModel!
-
-    private let requestForecastInteractorSpy = SpyWeatherRequestInteractorProtocol()
-    private let setDataSourceInteractorSpy = SpyWeatherSetDataSourceInteractorProtocol()
-    private let mapper = WeatherViewModelMapper()
+    private var spy: SpyWeatherProviderProtocol!
     
     private var cancellables = Set<AnyCancellable>()
 
     override func setUp() {
         super.setUp()
         
-        sut = WeatherViewModel(requestForecastInteractor: requestForecastInteractorSpy,
-                               setDataSourceInteractor: setDataSourceInteractorSpy,
-                               mapper: mapper)
+        spy = SpyWeatherProviderProtocol()
+        sut = WeatherViewModel(city: City.mockMadrid,
+                               mapper: WeatherViewModelMapper(),
+                               provider: spy,
+                               wireframe: SpyWireframeProtocol())
     }
     
     override func tearDown() {
+        spy = nil
         sut = nil
         
         super.tearDown()
@@ -38,11 +38,10 @@ final class WeatherViewModelTests: XCTestCase {
         var response: WeatherViewModelData?
         
         let mock = Just(OpenWeatherResponse.mockMadrid).setFailureType(to: APIClientError<OpenWeatherAPIError>.self).eraseToAnyPublisher()
-        requestForecastInteractorSpy.requestForecastResult = mock
+        spy.forecastResult = mock
         
         // when
-      
-        sut.requestForecast(for: nil)
+        sut.requestForecast()
 
         sut.dataSourcePublisher
             .assertNoFailure()
@@ -55,36 +54,7 @@ final class WeatherViewModelTests: XCTestCase {
         wait(for: [didReceiveValue], timeout: 1)
         
         // then
-        XCTAssertTrue(requestForecastInteractorSpy.check(method: .requestForecast(city: nil), predicate: CallstackMatcher.times(1)))
-        
-        XCTAssertNotNil(response?.sections)
-        XCTAssertTrue(response?.sections.count == 3)
-        XCTAssertNil(response?.error)
-    }
-    
-    func test_givenCityForecastRequest_whenRequestForecast_thenReceiveExpectedCity() {
-        // given
-        let didReceiveValue = expectation(description: "didReceiveValue")
-        var response: WeatherViewModelData?
-        
-        let mock = Just(OpenWeatherResponse.mockMadrid).setFailureType(to: APIClientError<OpenWeatherAPIError>.self).eraseToAnyPublisher()
-        requestForecastInteractorSpy.requestForecastResult = mock
-        
-        // when
-        sut.requestForecast(for: "stub")
-        
-        sut.dataSourcePublisher
-            .assertNoFailure()
-            .sink { viewModel in
-                response = viewModel
-                didReceiveValue.fulfill()
-            }
-            .store(in: &cancellables)
-        
-        wait(for: [didReceiveValue], timeout: 1)
-        
-        // then
-        XCTAssertTrue(requestForecastInteractorSpy.check(method: .requestForecast(city: "stub"), predicate: CallstackMatcher.times(1)))
+        XCTAssertTrue(spy.check(method: .forecast(city: City.mockMadrid), predicate: CallstackMatcher.times(1)))
         
         XCTAssertNotNil(response?.sections)
         XCTAssertTrue(response?.sections.count == 3)
@@ -95,13 +65,13 @@ final class WeatherViewModelTests: XCTestCase {
         // given
         let didReceiveValue = expectation(description: "didReceiveValue")
         var response: WeatherViewModelData?
-        
+
         let mockError = APIClientError.apiError(APIError(statusCode: 400, error: OpenWeatherAPIError(cod: "400", message: "stub")))
-        requestForecastInteractorSpy.requestForecastResult = Fail(error: mockError).eraseToAnyPublisher()
-        
+        spy.forecastResult = Fail(error: mockError).eraseToAnyPublisher()
+
         // when
-        sut.requestForecast(for: "stub")
-        
+        sut.requestForecast()
+
         sut.dataSourcePublisher
             .assertNoFailure()
             .sink { viewModel in
@@ -109,36 +79,14 @@ final class WeatherViewModelTests: XCTestCase {
                 didReceiveValue.fulfill()
             }
             .store(in: &cancellables)
-        
+
         wait(for: [didReceiveValue], timeout: 1)
-        
+
         // then
-        XCTAssertTrue(requestForecastInteractorSpy.check(method: .requestForecast(city: "stub"), predicate: CallstackMatcher.times(1)))
-        
+        XCTAssertTrue(spy.check(method: .forecast(city: City.mockMadrid), predicate: CallstackMatcher.times(1)))
+
         XCTAssertNotNil(response?.error)
         XCTAssertTrue(response?.sections.count == 0)
     }
     
-    func test_cacheSwitchDidChange_true_interactorCalled() {
-        // given
-
-        // when
-        sut.cacheSwitchDidChange(isEnable: true)
-        
-        // then
-        XCTAssertTrue(setDataSourceInteractorSpy.check(method: .changeDataSource(isCacheEnabled: true),
-                                                       predicate: CallstackMatcher.times(1)))
-    }
-    
-    func test_cacheSwitchDidChange_false_interactorCalled() {
-        // given
-        
-        // when
-        sut.cacheSwitchDidChange(isEnable: false)
-        
-        // then
-        XCTAssertTrue(setDataSourceInteractorSpy.check(method: .changeDataSource(isCacheEnabled: false),
-                                                       predicate: CallstackMatcher.times(1)))
-    }
-        
 }

@@ -35,7 +35,7 @@ class CityCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable, Ni
         if case let .city(info) = section {
             let city = info
             cityName.text = city.name
-            conditions.text = city.curretWeatherText?.capitalizingFirstLetter()
+            conditions.text = city.currentWeatherText
         }
     }
     

@@ -21,12 +21,17 @@ pipeline {
         sh '/usr/libexec/PlistBuddy -c "Set :OpenWeatherAPIKey ${OPEN_WEATHER_API_KEY}" WeatherApp/Preferences/Secrets.plist'
       }
     }
+
+    stage('CocoaPods') {
+      steps { sh 'pod install' }
+    }
     
     stage('Lint') {
       steps { sh 'bundle exec fastlane lint' }
     }
 
     stage('Archive for test') {
+    	when { expression { isDevelop() || isRelease() || isMain() || isMaster() } }
       steps { sh 'bundle exec fastlane archive_for_tests' }
     }
 

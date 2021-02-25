@@ -6,11 +6,29 @@
 //
 
 import UIKit
+import Firebase
 
 @main class AppDelegate: UIResponder, UIApplicationDelegate {
+    #if DEBUG
+    var isUnitTest: Bool {
+        ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+    }
+    #endif
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        true
+        #if DEBUG
+        guard !isUnitTest else {
+            return true
+        }
+        #endif
+        
+        if let googleAPIKey = ApplicationPreferences.googleAPIKey, !googleAPIKey.contains("Enter") {
+            let firebaseOptions = FirebaseOptions.defaultOptions()!
+            firebaseOptions.apiKey = googleAPIKey
+            FirebaseApp.configure(options: firebaseOptions)
+        }
+        
+        return true
     }
 
     // MARK: UISceneSession Lifecycle

@@ -9,6 +9,13 @@
 import Foundation
 
 extension DateFormatter {
+    
+    static let hour: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH"
+        
+        return formatter
+    }()
 
     static let time: DateFormatter = {
         let formatter = DateFormatter()
@@ -35,7 +42,27 @@ extension NumberFormatter {
 
         return formatter
     }()
-
+    
+    static let noDecimal: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 0
+        
+        return formatter
+    }()
+    
+    static let percentage: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 1
+        
+        return formatter
+    }()
+    
+    func string(from number: Double) -> String? {
+        self.string(from: number as NSNumber)
+    }
 }
 
 extension MeasurementFormatter {
@@ -43,22 +70,22 @@ extension MeasurementFormatter {
     static let temperature: MeasurementFormatter = {
         let formatter = MeasurementFormatter()
         formatter.unitStyle = .short
-        formatter.numberFormatter = .oneDecimal
+        formatter.numberFormatter = .noDecimal
         
         return formatter
     }()
  
-    static func string(from: Float?) -> String {
-        guard let value = from else { return "-" }
+    static func string(from: Double?) -> String {
+        guard let value = from else { return "--" }
         let formatter = MeasurementFormatter.temperature
         
         // FixBug Simulator and user temperature format
         // The Simulator doesn't respect the Temperature Unit setting, so force to work with celsius
         // https://openradar.appspot.com/radar?id=5042283099455488
         #if targetEnvironment(simulator)
-            let measurement = Measurement(value: Double(value), unit: UnitTemperature.fahrenheit)
+            let measurement = Measurement(value: value, unit: UnitTemperature.fahrenheit)
         #else
-            let measurement = Measurement(value: Double(value), unit: UnitTemperature.celsius)
+            let measurement = Measurement(value: value, unit: UnitTemperature.celsius)
         #endif
         // end FixBug Simulator
         

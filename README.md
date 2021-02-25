@@ -4,6 +4,19 @@ It's an IOS project written in Swift. The challenge is to develop a weather appl
 
 If you have any feedback I would love to hear it!
 
+## How to build
+
+The project uses Cocoapod to manage the dependecies, so to build the project you will need:
+
+```
+# git clone https://github.com/rmaqueda/WeatherApp
+# cd WeatherApp
+# pod install
+# open WeatherApp.xcworkspace
+```
+
+The first build will be fail and ask you to enter the Open Weather API Key, you can get one [here](https://openweathermap.org/api)
+
 Here a brief description of the main topics:
 
 ## Architecture
@@ -73,14 +86,14 @@ The project is integrated with [Sonar Cloud](https://sonarcloud.io/dashboard?id=
 This's the dashboard:
 
 <p align="center">
-	<a href="https://sonarcloud.io/dashboard?id=rmaqueda_WeatherApp">
-   		<img title="" src="https://github.com/rmaqueda/WeatherApp/raw/main/Documentation/Sonar.png" width="508">
-   </a>
+    <a href="https://sonarcloud.io/dashboard?id=rmaqueda_WeatherApp">
+        <img title="" src="https://github.com/rmaqueda/WeatherApp/raw/main/Documentation/Sonar.png" width="508">
+    </a>
 </p>
 
 SwiftLint is set up in all targets. [👀 rules](https://github.com/rmaqueda/WeatherApp/blob/main/.swiftlint.yml)
 
-I've used [CPD](https://pmd.github.io/latest/pmd_userdocs_cpd.html) to detect duplicate code blocks automatically inline. [👀 build script](https://github.com/rmaqueda/WeatherApp/blob/main/Scripts/Build-Phases/copy_paste_detector.sh)
+I've used [CPD](https://pmd.github.io/latest/pmd_userdocs_cpd.html) to detect duplicate code blocks automatically inline.
 
 ## Continuous Integration
 
