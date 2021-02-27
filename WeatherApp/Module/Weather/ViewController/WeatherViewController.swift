@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class WeatherViewController: UICollectionViewController {
+class WeatherViewController: BaseCollectionViewController {
     private let layout = WeatherCollectionViewLayout()
     private let viewModel: WeatherViewModelProtocol
     private var cancellables = Set<AnyCancellable>()
@@ -17,11 +17,6 @@ class WeatherViewController: UICollectionViewController {
         self.viewModel = viewModel
         
         super.init(collectionViewLayout: layout.createLayout())
-    }
-    
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented, use: init(viewModel:)")
     }
         
     // MARK: View life cycle
@@ -48,7 +43,7 @@ class WeatherViewController: UICollectionViewController {
     private func configureCollectionView() {
         collectionView.register(CityCollectionViewCell.self)
         collectionView.register(TemperatureCollectionViewCell.self)
-        collectionView.register(DailyForecastCollectionViewCell.self)
+        collectionView.register(HourForecastCollectionViewCell.self)
         collectionView.register(ActivityIndicatorCollectionViewCell.self)
     }
     
@@ -99,11 +94,12 @@ class WeatherViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let section = viewModel.dataSource.sections[indexPath.section]
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: section.metadata.reuseIdentifier,
-                                                            for: indexPath) as? WeatherViewRepresentable else {
-            fatalError("Invalid reuse identifier: \(section.metadata.reuseIdentifier)")
-        }
-        
+        // swiftlint:disable force_cast
+        // Should dequeue a cell if the nib was previously register, so force unwrap is safe
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: section.metadata.cellClass.reuseIdentifier,
+                                                      for: indexPath) as! WeatherViewRepresentable
+        // swiftlint:enable force_cast
+                    
         cell.configure(with: section, indexPath: indexPath)
         
         return cell
@@ -112,10 +108,7 @@ class WeatherViewController: UICollectionViewController {
     // MARK: Actions
     
     @objc func didTapTWC(_ sender: UIBarButtonItem) {
-        // TODO: move to viewModel
-        if let url = URL(string: "https://www.weather.com") {
-            UIApplication.shared.open(url)
-        }
+        viewModel.didPressTWC()
     }
     
     @objc func didTapAdd(_ sender: UIBarButtonItem) {
@@ -128,7 +121,7 @@ class WeatherViewController: UICollectionViewController {
     }
     
     @objc func didTapCancel(_ sender: UIBarButtonItem) {
-        viewModel.navigateToCityList()
+        viewModel.didPressCityList()
     }
             
     private func handleError(error: APIClientError<OpenWeatherAPIError>) {

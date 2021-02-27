@@ -10,15 +10,18 @@ import UIKit
 
 // sourcery: autoSpy
 protocol WireframeProtocol {
+    var window: UIWindow { get }
+    
     func presentMainScreen()
     func presentCityList()
     func presentCitySearch()
     func presentForecast(for city: City)
+    func presentTWCWeb()
     func didPressCityListButton()
 }
 
-class Wireframe: WireframeProtocol {
-    private let window: UIWindow
+struct Wireframe: WireframeProtocol {
+    let window: UIWindow
     private let apiClient: APIClient = {
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.timeoutIntervalForRequest = 5.0
@@ -28,10 +31,6 @@ class Wireframe: WireframeProtocol {
     }()
     private let storage = CityDiskStorage()
     private let navigationController = UINavigationController()
-    
-    init(window: UIWindow) {
-        self.window = window
-    }
     
     func presentMainScreen() {
         presentCityList()
@@ -74,6 +73,12 @@ class Wireframe: WireframeProtocol {
             let nav = UINavigationController(rootViewController: viewController)
             nav.modalPresentationStyle = .fullScreen
             navigationController.present(nav, animated: true)
+        }
+    }
+    
+    func presentTWCWeb() {
+        if let url = URL(string: "https://www.weather.com") {
+            UIApplication.shared.open(url)
         }
     }
     

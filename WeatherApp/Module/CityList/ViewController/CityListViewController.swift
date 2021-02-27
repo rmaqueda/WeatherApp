@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class CityListViewController: UITableViewController, CityListFooterViewDelegate, UITableViewDragDelegate, UITableViewDropDelegate {
+class CityListViewController: BaseTableViewController, CityListFooterViewDelegate, UITableViewDragDelegate, UITableViewDropDelegate {
     private let viewModel: CityListViewModelProtocol
     
     private var dateFormatter: DateFormatter = {
@@ -23,14 +23,10 @@ class CityListViewController: UITableViewController, CityListFooterViewDelegate,
     
     required init(viewModel: CityListViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: View life cicly
+
+    // MARK: View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,8 +46,8 @@ class CityListViewController: UITableViewController, CityListFooterViewDelegate,
     }
     
     private func configureTableView() {
-        tableView.register(UINib(nibName: "CityTableViewCell", bundle: nil), forCellReuseIdentifier: "CityTableViewReuseIdentifier")
-        tableView.register(UINib(nibName: "CityListFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "CityListFooterView")
+        tableView.register(CityTableViewCell.self)
+        tableView.registerHeaderFooter(CityListFooterView.self)
         
         tableView.dragInteractionEnabled = true
         tableView.dragDelegate = self
@@ -66,19 +62,18 @@ class CityListViewController: UITableViewController, CityListFooterViewDelegate,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let city = viewModel.dataSource[indexPath.row]
+        let cell: CityTableViewCell = tableView.dequeueReusableCell()
+        cell.configure(with: city, dateFormatter: dateFormatter)
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CityTableViewReuseIdentifier") as? CityTableViewCell
-        cell?.configure(with: city, dateFormatter: dateFormatter)
-        
-        return cell!
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CityListFooterView") as? CityListFooterView
-        footerView?.delegate = self
-        footerView?.configure(for: viewModel.unitTemperature)
+        let footerView: CityListFooterView = tableView.dequeueReusableHeaderFooterView()
+        footerView.delegate = self
+        footerView.configure(for: viewModel.unitTemperature)
         
-        return footerView!
+        return footerView
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -106,7 +101,6 @@ class CityListViewController: UITableViewController, CityListFooterViewDelegate,
     // MARK: TableView Drag & Drop Delegate
     
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        if indexPath.row == 0 { return [] }
         let generator = UIImpactFeedbackGenerator(style: .heavy)
         generator.impactOccurred()
         
@@ -125,8 +119,10 @@ class CityListViewController: UITableViewController, CityListFooterViewDelegate,
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        guard let source = coordinator.items.first?.sourceIndexPath else { return }
-        guard let destination = coordinator.destinationIndexPath else { return }
+        guard let source = coordinator.items.first?.sourceIndexPath,
+              let destination = coordinator.destinationIndexPath else {
+            return
+        }
        
         try? viewModel.moveCity(from: source.row, to: destination.row)
         // TODO: could be possible avoid this reload?

@@ -9,11 +9,7 @@
 import Foundation
 import Combine
 
-class CitySearchProvider: CitySearchProviderProtocol {
-    private let wireframe: Wireframe
-    
-    init(wireframe: Wireframe) {
-        self.wireframe = wireframe
-    }
-    
+// TODO: Implement
+struct CitySearchProvider: CitySearchProviderProtocol {
+    let wireframe: Wireframe
 }
