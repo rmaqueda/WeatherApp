@@ -101,7 +101,6 @@ class CityListViewController: BaseTableViewController, CityListFooterViewDelegat
     // MARK: TableView Drag & Drop Delegate
     
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        if indexPath.row == 0 { return [] }
         let generator = UIImpactFeedbackGenerator(style: .heavy)
         generator.impactOccurred()
         
@@ -120,8 +119,10 @@ class CityListViewController: BaseTableViewController, CityListFooterViewDelegat
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        guard let source = coordinator.items.first?.sourceIndexPath else { return }
-        guard let destination = coordinator.destinationIndexPath else { return }
+        guard let source = coordinator.items.first?.sourceIndexPath,
+              let destination = coordinator.destinationIndexPath else {
+            return
+        }
        
         try? viewModel.moveCity(from: source.row, to: destination.row)
         // TODO: could be possible avoid this reload?

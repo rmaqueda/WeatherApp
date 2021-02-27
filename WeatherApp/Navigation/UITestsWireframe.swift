@@ -13,7 +13,9 @@ struct UITestsWireframe {
     let window: UIWindow
     
     func presentScreen(for tag: String) {
-        guard let UITestTag = UITestTag(rawValue: tag) else { return }
+        guard let UITestTag = UITestTag(rawValue: tag) else {
+            return
+        }
         
         let viewModel =  WeatherViewModelMockFactory(UITestTag: UITestTag).build()
         let viewController = WeatherViewController(viewModel: viewModel)

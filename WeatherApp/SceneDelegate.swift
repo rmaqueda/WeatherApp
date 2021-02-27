@@ -12,8 +12,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
-            let window = UIWindow(windowScene: windowScene)
-            self.window = window
+            let aWindow = UIWindow(windowScene: windowScene)
+            self.window = aWindow
 
             #if DEBUG
             if AppDelegate.isUnitTest {
@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 return
             }
             if let tag = AppDelegate.UITestTag {
-                let wireframe = UITestsWireframe(window: window)
+                let wireframe = UITestsWireframe(window: aWindow)
                 wireframe.presentScreen(for: tag)
                 
                 return
@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     
             ApplicationPreferences.setupAppearance()
             
-            let wireframe = Wireframe(window: window)
+            let wireframe = Wireframe(window: aWindow)
             wireframe.presentMainScreen()
         }
     }

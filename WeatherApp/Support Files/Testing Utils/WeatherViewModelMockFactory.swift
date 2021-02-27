@@ -54,19 +54,19 @@ class WeatherViewModelMock: WeatherViewModelProtocol {
     var isSaved: Bool  = false
     
     func didPressCityList() {
-        
+        // Intentionally unimplemented
     }
     
     func saveCity() throws {
-        
+        // Intentionally unimplemented
     }
     
     func updateCity() throws {
-        
+        // Intentionally unimplemented
     }
     
     func didPressTWC() {
-        
+        // Intentionally unimplemented
     }
 
 }
