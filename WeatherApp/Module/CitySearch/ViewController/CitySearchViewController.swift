@@ -11,7 +11,7 @@ import UIKit
 import Combine
 import MapKit
 
-class CitySearchViewController: UITableViewController, UISearchBarDelegate, MKLocalSearchCompleterDelegate {
+class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MKLocalSearchCompleterDelegate {
     private let viewModel: CitySearchViewModel
     private let searchController = UISearchController(searchResultsController: nil)
     private var searchCompleter: MKLocalSearchCompleter?
@@ -19,11 +19,7 @@ class CitySearchViewController: UITableViewController, UISearchBarDelegate, MKLo
 
     required init(viewModel: CitySearchViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init()
     }
     
     // MARK: View life cycle

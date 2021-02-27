@@ -8,15 +8,11 @@
 
 import Combine
 
-class CityListProvider: CityListProviderProtocol {
-    private let storage: CityStorage
+struct CityListProvider: CityListProviderProtocol {
+    let storage: CityStorage
     
     var cities: [City] {
         storage.savedCities
-    }
-    
-    required init(storage: CityStorage) {
-        self.storage = storage
     }
     
     func save(city: City) throws {

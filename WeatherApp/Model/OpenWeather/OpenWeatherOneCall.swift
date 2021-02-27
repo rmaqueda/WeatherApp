@@ -5,6 +5,7 @@
 //  Created by Ricardo Maqueda Martinez on 22/02/2021.
 //
 // swiftlint:disable redundant_string_enum_value
+// This structs are generated automatically with https://app.quicktype.io
 import Foundation
 
 // MARK: - OpenWeatherAPIError

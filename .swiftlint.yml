@@ -21,3 +21,4 @@ included:
   - WeatherAppUnitTests
   - WeatherAppUITests
   - WeatherAppSnapshotTests
+  - Common
