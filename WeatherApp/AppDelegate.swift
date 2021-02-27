@@ -10,14 +10,13 @@ import Firebase
 
 @main class AppDelegate: UIResponder, UIApplicationDelegate {
     #if DEBUG
-    var isUnitTest: Bool {
-        ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-    }
+    static let isUnitTest: Bool = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+    static let UITestTag: String? = ProcessInfo.processInfo.environment["UITestTag"]
     #endif
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         #if DEBUG
-        guard !isUnitTest else {
+        guard !AppDelegate.isUnitTest else {
             return true
         }
         #endif

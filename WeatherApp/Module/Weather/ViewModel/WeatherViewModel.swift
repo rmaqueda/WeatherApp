@@ -32,8 +32,8 @@ class WeatherViewModel: WeatherViewModelProtocol {
     
     // MARK: WeatherViewModelProtocol
     
-    func navigateToCityList() {
-        wireframe.didPressCityListButton()
+    var isSaved: Bool {
+        provider.isSaved(city: city)
     }
     
     func saveCity() throws {
@@ -46,10 +46,6 @@ class WeatherViewModel: WeatherViewModelProtocol {
         }
     }
     
-    var isSaved: Bool {
-        provider.isSaved(city: city)
-    }
-
     func requestForecast() {
         dataSource = WeatherViewModelData.activityIndicator()
         
@@ -71,6 +67,14 @@ class WeatherViewModel: WeatherViewModelProtocol {
                     self?.dataSource = forecast
                 })
             .store(in: &cancellables)
+    }
+    
+    func didPressCityList() {
+        wireframe.didPressCityListButton()
+    }
+    
+    func didPressTWC() {
+        wireframe.presentTWCWeb()
     }
     
 }

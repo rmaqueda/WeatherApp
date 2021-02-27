@@ -14,6 +14,7 @@ protocol WireframeProtocol {
     func presentCityList()
     func presentCitySearch()
     func presentForecast(for city: City)
+    func presentTWCWeb()
     func didPressCityListButton()
 }
 
@@ -74,6 +75,12 @@ class Wireframe: WireframeProtocol {
             let nav = UINavigationController(rootViewController: viewController)
             nav.modalPresentationStyle = .fullScreen
             navigationController.present(nav, animated: true)
+        }
+    }
+    
+    func presentTWCWeb() {
+        if let url = URL(string: "https://www.weather.com") {
+            UIApplication.shared.open(url)
         }
     }
     

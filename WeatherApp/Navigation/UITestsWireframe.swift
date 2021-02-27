@@ -9,12 +9,8 @@ import Foundation
 import UIKit
 
 #if DEBUG
-class UITestsWireframe {
-    private let window: UIWindow
-    
-    init(window: UIWindow) {
-        self.window = window
-    }
+struct UITestsWireframe {
+    let window: UIWindow
     
     func presentScreen(for tag: String) {
         guard let UITestTag = UITestTag(rawValue: tag) else { return }

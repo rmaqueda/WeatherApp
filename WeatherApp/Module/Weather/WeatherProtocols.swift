@@ -23,7 +23,9 @@ protocol WeatherViewModelProtocol {
     func updateCity() throws
     
     func requestForecast()
-    func navigateToCityList()
+    
+    func didPressCityList()
+    func didPressTWC()
 }
 
 // MARK: View Protocol

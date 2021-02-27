@@ -43,6 +43,7 @@ public class SpyWireframeProtocol: WireframeProtocol, TestSpy {
         case presentCityList
         case presentCitySearch
         case presentForecast(city: City)
+        case presentTWCWeb
         case didPressCityListButton
 	}
 
@@ -64,6 +65,9 @@ public class SpyWireframeProtocol: WireframeProtocol, TestSpy {
     }
     public func presentForecast(for city: City) {
         callstack.record(.presentForecast(city: city ))
+    }
+    public func presentTWCWeb() {
+        callstack.record(.presentTWCWeb)
     }
     public func didPressCityListButton() {
         callstack.record(.didPressCityListButton)

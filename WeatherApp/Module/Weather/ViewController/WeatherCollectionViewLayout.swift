@@ -16,17 +16,15 @@ class WeatherCollectionViewLayout {
         UICollectionViewCompositionalLayout { sectionIndex, _ in
             let section = WeatherViewSectionType.allCases[sectionIndex]
             
-            switch sectionIndex {
-            case 0:
+            switch section {
+            case .city:
                 return self.oneItemLayout(itemHeight: section.size.height)
-            case 1:
+            case .temperature:
                 return self.oneItemLayout(itemHeight: section.size.height)
-            case 2:
+            case .dailyForecast:
                 return self.horizontalScrollLayout(itemSize: section.size, numberItems: section.numberOfItems)
-            case 3:
+            case .activityIndicator:
                 return self.oneItemLayout(itemHeight: section.size.height)
-            default:
-                return nil
             }
         }
     }

@@ -1,5 +1,5 @@
 //
-//  DailyForecastCollectionViewCell.swift
+//  HourForecastCollectionViewCell.swift
 //  WeatherApp
 //
 //  Created by Ricardo Maqueda Martinez on 03/02/2021.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DailyForecastCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable, NibLoadableView, ReusableView {
+class HourForecastCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable, NibLoadableView, ReusableView {
     @IBOutlet weak private var title: UILabel!
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var probabilityPrecipitation: UILabel!

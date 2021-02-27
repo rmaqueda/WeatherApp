@@ -8,17 +8,9 @@
 import Foundation
 import UIKit
 
-class ApplicationPreferences {
-    enum DataSourceType {
-        case api
-        case cache
-    }
-    
-    static let defaultCity = "Munich"
-    static let language = Locale.current.languageCode ?? "en"
-    
+struct ApplicationPreferences {
     // swiftlint:disable force_cast
-    static var secrets: [String: String] = {
+    private static var secrets: [String: String] = {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
         let plistPath = Bundle.main.path(forResource: "Secrets", ofType: "plist")!
         let plistXML = FileManager.default.contents(atPath: plistPath)!
@@ -29,16 +21,12 @@ class ApplicationPreferences {
     }()
     // swiftlint:enable force_cast
     
-    static var openWeatherAPIKey: String = {
-        secrets["OpenWeatherAPIKey"]!
-    }()
-    
-    static var googleAPIKey: String? = {
-        secrets["GoogleAPIKey"]
-    }()
-    
+    static let googleAPIKey: String? = secrets["GoogleAPIKey"]
+    static let openWeatherAPIKey: String = secrets["OpenWeatherAPIKey"]!
     static let openWeatherAPIURL = URL(string: "https://api.openweathermap.org/data/2.5/")!
     static let openWeatherAPIUnit = "metric"
+    
+    static let language = Locale.current.languageCode ?? "en"
     
     static func setupAppearance() {
         UICollectionView.appearance().backgroundColor = UIColor(named: "BackgroundColor")
@@ -54,4 +42,5 @@ class ApplicationPreferences {
         
         UIActivityIndicatorView.appearance().color = UIColor(named: "ForeGroundColor")
     }
+    
 }

@@ -53,7 +53,7 @@ class WeatherViewModelMock: WeatherViewModelProtocol {
         
     var isSaved: Bool  = false
     
-    func navigateToCityList() {
+    func didPressCityList() {
         
     }
     
@@ -62,6 +62,10 @@ class WeatherViewModelMock: WeatherViewModelProtocol {
     }
     
     func updateCity() throws {
+        
+    }
+    
+    func didPressTWC() {
         
     }
 
