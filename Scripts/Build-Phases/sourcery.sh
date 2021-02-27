@@ -7,5 +7,5 @@ if which sourcery >/dev/null; then
   sourcery --sources "$SOURCESPATH" \
     --templates "$TEMPLATESPATH" \
     --output "$OUTPUTPATH" \
-    --args module="$CURRENTFRAMEWORKNAME",import="Foundation",import="Combine"
+    --args module="$CURRENTFRAMEWORKNAME",import="Foundation",import="Combine",import="UIKit"
 fi

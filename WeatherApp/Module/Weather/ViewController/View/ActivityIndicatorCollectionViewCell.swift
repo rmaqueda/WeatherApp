@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ActivityIndicatorCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable, NibLoadableView, ReusableView {
+class ActivityIndicatorCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable {
     @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
     
     func configure(with section: WeatherViewSectionData, indexPath: IndexPath) {

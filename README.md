@@ -131,4 +131,5 @@ Browserstack project:
 
 [Swift snapshot testing](https://github.com/pointfreeco/swift-snapshot-testing)
 
+[iOS Cell Registration & Reusing with Swift Protocol Extensions and Generics](https://gist.github.com/gonzalezreal/92507b53d2b1e267d49a)
 

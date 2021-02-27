@@ -12,7 +12,6 @@ import UIKit
 // MARK: ViewModel
 
 protocol WeatherViewModelProtocol {
-    // Combine @Published property wrappers in protocols, see link above.
     var dataSource: WeatherViewModelData { get }
     var dataSourcePublished: Published<WeatherViewModelData> { get }
     var dataSourcePublisher: Published<WeatherViewModelData>.Publisher { get }
@@ -38,6 +37,9 @@ protocol WeatherViewRepresentable: UICollectionViewCell {
 
 // sourcery: autoSpy
 protocol WeatherProviderProtocol {
+    var apiClient: APIClientProtocol { get }
+    var storage: CityStorage { get }
+    
     func isSaved(city: City) -> Bool
     func save(city: City) throws
     func forecast(for city: City) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>>

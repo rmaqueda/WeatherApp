@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CityCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable, NibLoadableView, ReusableView {
+class CityCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable {
     @IBOutlet weak private var cityName: UILabel!
     @IBOutlet weak private var conditions: UILabel!
     

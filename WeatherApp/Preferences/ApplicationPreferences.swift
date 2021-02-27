@@ -10,6 +10,7 @@ import UIKit
 
 struct ApplicationPreferences {
     // swiftlint:disable force_cast
+    // The file should be included, so force unwrap is safe.
     private static var secrets: [String: String] = {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
         let plistPath = Bundle.main.path(forResource: "Secrets", ofType: "plist")!

@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-class WeatherCollectionViewLayout {
+struct WeatherCollectionViewLayout {
     
     func createLayout() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout { sectionIndex, _ in

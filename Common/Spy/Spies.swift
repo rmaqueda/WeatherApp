@@ -10,6 +10,9 @@ import Combine
 @testable import WeatherApp
 
 class APIClientSpy<T>: APIClientProtocol, TestSpy {
+    var configuration = APIClientConfiguration()
+    var session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
+    
     var callstack = CallstackContainer<Method>()
     let baseURL: URL
     var response: T?
