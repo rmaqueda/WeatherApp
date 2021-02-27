@@ -13,11 +13,11 @@ struct UITestsWireframe {
     let window: UIWindow
     
     func presentScreen(for tag: String) {
-        guard let UITestTag = UITestTag(rawValue: tag) else {
+        guard let uiTestTag = UITestTag(rawValue: tag) else {
             return
         }
         
-        let viewModel =  WeatherViewModelMockFactory(UITestTag: UITestTag).build()
+        let viewModel =  WeatherViewModelMockFactory(uiTestTag: uiTestTag).build()
         let viewController = WeatherViewController(viewModel: viewModel)
         let navigationController = UINavigationController(rootViewController: viewController)
         

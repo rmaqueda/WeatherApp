@@ -10,16 +10,16 @@ import Foundation
 #if DEBUG
 
 struct WeatherViewModelMockFactory {
-    private let UITestTag: UITestTag
+    private let uiTestTag: UITestTag
     
-    init(UITestTag: UITestTag) {
-        self.UITestTag = UITestTag
+    init(uiTestTag: UITestTag) {
+        self.uiTestTag = uiTestTag
     }
 
     func build() -> WeatherViewModelProtocol {
         let viewModel = WeatherViewModelMock()
         
-        switch UITestTag {
+        switch uiTestTag {
         case .weatherHappyPath:
             viewModel.requestForecastSuccessResult = WeatherViewModelData.mockSuccess
         case .weatherErrorPath:

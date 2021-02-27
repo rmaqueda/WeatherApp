@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 self.window?.makeKeyAndVisible()
                 return
             }
-            if let tag = AppDelegate.UITestTag {
+            if let tag = AppDelegate.uiTestTag {
                 let wireframe = UITestsWireframe(window: aWindow)
                 wireframe.presentScreen(for: tag)
                 
