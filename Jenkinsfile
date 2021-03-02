@@ -43,6 +43,7 @@ pipeline {
             always {
               script {
                 junit 'fastlane/test_output/report.junit'
+                archiveArtifacts artifacts: 'logs/**/**.log', fingerprint: true
               }
             }
           }

@@ -5,6 +5,7 @@ archive
 logs
 build
 WeatherAppUITests-Runner.app.zip
+test
 
 # Reports
 cpd-output.xml
