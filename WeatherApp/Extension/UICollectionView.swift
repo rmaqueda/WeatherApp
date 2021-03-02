@@ -8,33 +8,34 @@
 import Foundation
 import UIKit
 
-protocol ReusableView {
-    static var reuseIdentifier: String { get }
-}
-
-extension ReusableView {
-    static var reuseIdentifier: String { String(describing: self) }
-}
-
-protocol NibLoadableView {
-    static var nibName: String { get }
-}
-
-extension NibLoadableView {
-    static var nibName: String { String(describing: self) }
-}
-
-extension UICollectionView {
-    
-    func register<T: UICollectionViewCell>(_: T.Type) where T: ReusableView {
-        register(T.self, forCellWithReuseIdentifier: T.reuseIdentifier)
+class BaseCollectionViewController: UICollectionViewController {
+    override init(collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(collectionViewLayout: layout)
     }
     
-    func register<T: UICollectionViewCell>(_: T.Type) where T: ReusableView, T: NibLoadableView {
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension UICollectionViewCell: NibLoadableView, ReusableView { }
+
+extension UICollectionView {
+
+    func register<T: UICollectionViewCell>(_: T.Type) {
         let bundle = Bundle(for: T.self)
         let nib = UINib(nibName: T.nibName, bundle: bundle)
         
         register(nib, forCellWithReuseIdentifier: T.reuseIdentifier)
+    }
+    
+    func dequeueReusableCell<T: UICollectionViewCell>(forIndexPath indexPath: IndexPath) -> T {
+        guard let cell = dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+            fatalError("Could not dequeue cell with identifier: \(T.reuseIdentifier)")
+        }
+        
+        return cell
     }
     
 }

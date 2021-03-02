@@ -8,21 +8,21 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    #if DEBUG
-    var UITestTag: String? {
-        ProcessInfo.processInfo.environment["UITestTag"]
-    }
-    #endif
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
-            let window = UIWindow(windowScene: windowScene)
-            self.window = window
-        
+            let aWindow = UIWindow(windowScene: windowScene)
+            self.window = aWindow
+
             #if DEBUG
-            if let tag = UITestTag {
-                let wireframe = UITestsWireframe(window: window)
+            if AppDelegate.isUnitTest {
+                self.window = UIWindow(windowScene: windowScene)
+                self.window?.makeKeyAndVisible()
+                return
+            }
+            if let tag = AppDelegate.uiTestTag {
+                let wireframe = UITestsWireframe(window: aWindow)
                 wireframe.presentScreen(for: tag)
                 
                 return
@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     
             ApplicationPreferences.setupAppearance()
             
-            let wireframe = Wireframe(window: window)
+            let wireframe = Wireframe(window: aWindow)
             wireframe.presentMainScreen()
         }
     }
