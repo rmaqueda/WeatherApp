@@ -42,7 +42,7 @@ pipeline {
           post {
             always {
               script {
-                junit 'fastlane/test_output/report.junit'
+                junit 'test/report.junit'
                 archiveArtifacts artifacts: 'logs/**/**.log', fingerprint: true
               }
             }
