@@ -10,6 +10,9 @@ import Combine
 @testable import WeatherApp
 
 class APIClientSpy<T>: APIClientProtocol, TestSpy {
+    var configuration = APIClientConfiguration()
+    var session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
+    
     var callstack = CallstackContainer<Method>()
     let baseURL: URL
     var response: T?
@@ -45,6 +48,10 @@ class APIClientSpy<T>: APIClientProtocol, TestSpy {
 class SpyWeatherViewModelProtocol: WeatherViewModelProtocol, TestSpy {
     enum Method: Equatable {
         case requestForecast
+        case saveCity
+        case updateCity
+        case didPressCityList
+        case didPressTWC
     }
 
     @Published var dataSource: WeatherViewModelData = WeatherViewModelData.activityIndicator()
@@ -67,16 +74,20 @@ class SpyWeatherViewModelProtocol: WeatherViewModelProtocol, TestSpy {
 
     var isSaved: Bool = false
     
-    func navigateToCityList() {
-        //TODO: Implement
-    }
-    
     func saveCity() throws {
-        //TODO: Implement
+        callstack.record(.saveCity)
     }
     
     func updateCity() throws {
-        //TODO: Implement
+        callstack.record(.updateCity)
+    }
+    
+    func didPressCityList() {
+        callstack.record(.didPressCityList)
+    }
+    
+    func didPressTWC() {
+        callstack.record(.didPressTWC)
     }
     
 }

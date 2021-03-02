@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TemperatureCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable, NibLoadableView, ReusableView {
+class TemperatureCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable {
     @IBOutlet weak private var temperature: UILabel!
     @IBOutlet weak private var highLowTemperature: UILabel!
    
@@ -28,7 +28,6 @@ class TemperatureCollectionViewCell: UICollectionViewCell, WeatherViewRepresenta
     }
     
     private func resetCell() {
-    
         temperature.text = nil
         highLowTemperature.text = nil
     }

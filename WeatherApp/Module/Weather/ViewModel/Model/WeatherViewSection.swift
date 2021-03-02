@@ -29,22 +29,22 @@ enum WeatherViewSectionType: Int, CaseIterable {
         case .temperature:
             return CGSize(width: 200, height: 140)
         case .dailyForecast:
-            return CGSize(width: 80, height: 100)
+            return CGSize(width: 50, height: 100)
         case .activityIndicator:
             return CGSize(width: 200, height: 300)
         }
     }
     
-    var reuseIdentifier: String {
+    var cellClass: ReusableView.Type {
         switch self {
         case .city:
-            return "CityCollectionViewCell"
+            return CityCollectionViewCell.self
         case .temperature:
-            return "TemperatureCollectionViewCell"
+            return TemperatureCollectionViewCell.self
         case .dailyForecast:
-            return "DailyForecastCollectionViewCell"
+            return HourForecastCollectionViewCell.self
         case .activityIndicator:
-            return "ActivityIndicatorCollectionViewCell"
+            return ActivityIndicatorCollectionViewCell.self
         }
     }
 }

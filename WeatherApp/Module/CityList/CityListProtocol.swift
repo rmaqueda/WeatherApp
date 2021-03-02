@@ -21,6 +21,7 @@ protocol CityListViewModelProtocol {
 }
 
 protocol CityListProviderProtocol {
+    var storage: CityStorage { get }
     var cities: [City] { get }
     
     func save(city: City) throws
