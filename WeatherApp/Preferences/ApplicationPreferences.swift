@@ -26,6 +26,7 @@ struct ApplicationPreferences {
     static let openWeatherAPIKey: String = secrets["OpenWeatherAPIKey"]!
     static let openWeatherAPIURL = URL(string: "https://api.openweathermap.org/data/2.5/")!
     static let openWeatherAPIUnit = "metric"
+    static let openWeatherWebURL = URL(string: "https://www.weather.com")!
     
     static let language = Locale.current.languageCode ?? "en"
     

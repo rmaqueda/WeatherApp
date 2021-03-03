@@ -36,7 +36,7 @@ enum ForecastIcon: String, Decodable {
     
     case unknown
     
-    var SFSymbolName: String {
+    var sfSymbolName: String {
         switch self {
         case .clearSky:
             return "sun.max.fill"

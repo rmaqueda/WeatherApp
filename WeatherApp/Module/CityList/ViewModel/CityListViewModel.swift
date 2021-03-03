@@ -45,4 +45,8 @@ class CityListViewModel: CityListViewModelProtocol, ObservableObject {
         wireframe.presentForecast(for: city)
     }
     
+    func didPressTWC() {
+        wireframe.presentTWCWeb()
+    }
+    
 }

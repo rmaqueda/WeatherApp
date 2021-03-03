@@ -45,7 +45,7 @@ class HourForecastCollectionViewCell: UICollectionViewCell, WeatherViewRepresent
             probabilityPrecipitation.text = hourData.probabilityPrecipitation
             subTitle.text = hourData.subTitle
             
-            if let symbolName = hourData.icon?.SFSymbolName {
+            if let symbolName = hourData.icon?.sfSymbolName {
                 imageView.image = UIImage(systemName: symbolName)
             }
         }

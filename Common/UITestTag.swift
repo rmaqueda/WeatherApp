@@ -8,7 +8,7 @@
 import Foundation
 
 #if DEBUG
-let UITestEnvironmentKey = "UITestTag"
+let uiTestEnvironmentKey = "UITestTag"
 
 enum UITestTag: String {
     case weatherHappyPath

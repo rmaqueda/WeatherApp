@@ -18,6 +18,8 @@ protocol CityListViewModelProtocol {
     
     func presentCitySearch()
     func presentForecast(for city: City)
+    
+    func didPressTWC()
 }
 
 protocol CityListProviderProtocol {

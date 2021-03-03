@@ -20,7 +20,7 @@ final class WeatherModuleUITests: XCTestCase {
 
     func test_givenWeatherForecastRequestSuccess_whenAppIsLaunched_thenShowExpectedCity() throws {
         // given
-        app.launchEnvironment = [UITestEnvironmentKey: UITestTag.weatherHappyPath.rawValue]
+        app.launchEnvironment = [uiTestEnvironmentKey: UITestTag.weatherHappyPath.rawValue]
         
         // when
         app.launch()
@@ -31,7 +31,7 @@ final class WeatherModuleUITests: XCTestCase {
     
     func test_givenWeatherForecastRequestError_whenAppIsLaunched_thenShowExpectedError() throws {
         // given
-        app.launchEnvironment = [UITestEnvironmentKey: UITestTag.weatherErrorPath.rawValue]
+        app.launchEnvironment = [uiTestEnvironmentKey: UITestTag.weatherErrorPath.rawValue]
         
         // when
         app.launch()

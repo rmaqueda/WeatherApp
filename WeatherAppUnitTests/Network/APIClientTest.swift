@@ -12,14 +12,15 @@ import Combine
 final class APIClientTest: XCTestCase {
     private var sut: APIClient!
     
-    private let stubURL = URL(string: "https://example.com")!
+    private let url = URL(string: "https://example.com")!
     private let configuration = APIClientConfiguration()
+    
     private var cancellables = Set<AnyCancellable>()
     
     override func setUp() {
         super.setUp()
         
-        sut = APIClient(baseURL: stubURL, configuration: configuration, session: .stubbed)
+        sut = APIClient(baseURL: url, configuration: configuration, session: .stubbed)
     }
     
     override func tearDown() {
@@ -31,7 +32,7 @@ final class APIClientTest: XCTestCase {
     func test_givenAnyValidResponse_whenResponse_thenReturnsOutput() throws {
         // given
         let request = APIRequest<String, TestError>.get("/user", jsonDecoder: JSONDecoder.openWeatherDecoder)
-        try HTTPStubProtocol.stub(output: "stub", statusCode: 200, for: request, baseURL: stubURL)
+        try HTTPStubProtocol.stub(output: "stub", statusCode: 200, for: request, baseURL: url)
         let didReceiveValue = expectation(description: "didReceiveValue")
         var result: String?
 
