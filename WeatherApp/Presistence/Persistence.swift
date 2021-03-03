@@ -22,8 +22,7 @@ class CityDiskStorage: CityStorage {
             return
         }
         
-        let cities = try? JSONDecoder().decode([City].self, from: data)
-        self.cities = cities ?? []
+        cities = (try? JSONDecoder().decode([City].self, from: data)) ?? []
     }
     
     func isSaved(city: City) -> Bool {
