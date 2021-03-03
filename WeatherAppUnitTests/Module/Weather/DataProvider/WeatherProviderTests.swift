@@ -14,7 +14,7 @@ final class WeatherProviderTests: XCTestCase {
     private var spy: APIClientSpy<OpenWeatherResponse>!
 
     private let url = URL(string: "http://stub.com")!
-    private let response = OpenWeatherResponse.mockMadrid
+    private let mock = OpenWeatherResponse.mockMadrid
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -22,7 +22,7 @@ final class WeatherProviderTests: XCTestCase {
         super.setUp()
 
         spy = APIClientSpy(baseURL: url)
-        spy.response = response
+        spy.response = mock
 
         sut = WeatherProvider(apiClient: spy, storage: CityDiskStorage())
     }
