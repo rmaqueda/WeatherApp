@@ -28,12 +28,12 @@ class CityListFooterView: UITableViewHeaderFooterView {
     }
     
     private func setupView() {
-        contentView.backgroundColor = .black
+        contentView.backgroundColor = .background
         
         let twcImage = UIImage(named: "twc")?.withRenderingMode(.alwaysTemplate)
         twcButton.setImage(twcImage, for: .normal)
         twcButton.tintColor = .gray
-        searchButton.tintColor = .white
+        searchButton.tintColor = .foreground
         searchButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
     }
     
@@ -52,7 +52,7 @@ class CityListFooterView: UITableViewHeaderFooterView {
         let range = (title as NSString).range(of: stringToColor)
         
         let mutableAttributedString = NSMutableAttributedString(string: title)
-        mutableAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: range)
+        mutableAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.foreground, range: range)
 
         magnitudeButton.setAttributedTitle(mutableAttributedString, for: .normal)
     }
