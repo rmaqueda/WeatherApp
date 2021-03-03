@@ -104,10 +104,6 @@ class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MK
             return
         }
         
-        // TODO: Fix this double dismiss
-        dismiss(animated: true, completion: nil)
-        dismiss(animated: true, completion: nil)
-        
         let searchRequest = MKLocalSearch.Request(completion: city)
         search(using: searchRequest)
     }
@@ -124,7 +120,7 @@ class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MK
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
     
     // MARK: MKLocalSearchCompleter Delegate
@@ -133,15 +129,7 @@ class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MK
         completerResults = completer.results
         tableView.reloadData()
     }
-    
-    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        if let error = error as NSError? {
-            print("MKLocalSearchCompleter encountered an error: \(error.localizedDescription). The query fragment is: \"\(completer.queryFragment)\"")
-        }
-        completerResults = []
-        tableView.reloadData()
-    }
-    
+        
     // MARK: MKLocalSearch Request
     
     private func search(using searchRequest: MKLocalSearch.Request) {
@@ -152,14 +140,15 @@ class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MK
             guard error == nil else { return }
             guard let self = self else { return }
 
-            if let item = response?.mapItems.first,
-               let name = item.name {
-                let city = City(name: name,
-                                coordinate: City.Coordinate(lat: item.placemark.coordinate.latitude, lon: item.placemark.coordinate.longitude),
-                                timeZone: item.timeZone,
-                                temperature: nil)
-
-                self.viewModel.presentForecast(for: city)
+            if let item = response?.mapItems.first, let name = item.name {
+                let coordinate = City.Coordinate(lat: item.placemark.coordinate.latitude, lon: item.placemark.coordinate.longitude)
+                let city = City(name: name, coordinate: coordinate, timeZone: item.timeZone)
+                
+                self.searchController.dismiss(animated: false) {
+                    self.dismiss(animated: true) {
+                        self.viewModel.presentForecast(for: city)
+                    }
+                }
             }
         }
     }

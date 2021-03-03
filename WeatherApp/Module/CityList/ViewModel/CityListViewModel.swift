@@ -7,24 +7,13 @@
 //
 
 import Foundation
-import UIKit
-import Combine
 
-class CityListViewModel: CityListViewModelProtocol, ObservableObject {
-    private let provider: CityListProviderProtocol
-    private let wireframe: Wireframe
-
+struct CityListViewModel: CityListViewModelProtocol {
     var cities: [City] { provider.cities }
-    
+    let provider: CityListProviderProtocol
+    let wireframe: Wireframe
     var unitTemperature: UnitTemperature = .celsius
-    
-    private var cancellable = Set<AnyCancellable>()
-    
-    required init(provider: CityListProviderProtocol, wireframe: Wireframe) {
-        self.provider = provider
-        self.wireframe = wireframe
-    }
-    
+        
     // MARK: CityListViewModelProtocol
     
     func deleteCity(at index: Int) throws {

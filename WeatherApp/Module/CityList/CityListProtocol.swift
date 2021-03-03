@@ -12,6 +12,8 @@ import Combine
 // sourcery: autoSpy
 protocol CityListViewModelProtocol {
     var cities: [City] { get }
+    var provider: CityListProviderProtocol { get }
+    var wireframe: Wireframe { get }
     var unitTemperature: UnitTemperature { get set }
     
     func deleteCity(at index: Int) throws
