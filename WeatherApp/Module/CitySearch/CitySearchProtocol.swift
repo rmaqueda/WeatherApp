@@ -8,10 +8,9 @@
 
 import Foundation
 
+// sourcery: autoSpy
 protocol CitySearchViewModelProtocol {
-    func presentForecast(for city: City)
-}
-
-protocol CitySearchProviderProtocol {
+    var wireframe: Wireframe { get }
     
+    func presentForecast(for city: City)
 }

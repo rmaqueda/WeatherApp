@@ -52,8 +52,7 @@ struct Wireframe: WireframeProtocol {
     }
     
     func presentCitySearch() {
-        let provider = CitySearchProvider(wireframe: self)
-        let viewModel = CitySearchViewModel(provider: provider, wireframe: self)
+        let viewModel = CitySearchViewModel(wireframe: self)
         let viewController = CitySearchViewController(viewModel: viewModel)
 
         navigationController.present(viewController, animated: true)

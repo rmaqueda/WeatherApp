@@ -51,6 +51,16 @@ public class SpyCityListViewModelProtocol: CityListViewModelProtocol, TestSpy {
 	}
 
     public var cities: [City] = []
+    public var provider: CityListProviderProtocol {
+        get { return underlyingProvider }
+        set(value) { underlyingProvider = value }
+    }
+    public var underlyingProvider: CityListProviderProtocol!
+    public var wireframe: Wireframe {
+        get { return underlyingWireframe }
+        set(value) { underlyingWireframe = value }
+    }
+    public var underlyingWireframe: Wireframe!
     public var unitTemperature: UnitTemperature {
         get { return underlyingUnitTemperature }
         set(value) { underlyingUnitTemperature = value }
@@ -77,6 +87,29 @@ public class SpyCityListViewModelProtocol: CityListViewModelProtocol, TestSpy {
     }
     public func didPressTWC() {
         callstack.record(.didPressTWC)
+    }
+}
+
+// MARK: Spy for CitySearchViewModelProtocol
+public class SpyCitySearchViewModelProtocol: CitySearchViewModelProtocol, TestSpy {
+	public enum Method: Equatable {
+        case presentForecast(city: City)
+	}
+
+    public var wireframe: Wireframe {
+        get { return underlyingWireframe }
+        set(value) { underlyingWireframe = value }
+    }
+    public var underlyingWireframe: Wireframe!
+
+    public var callstack = CallstackContainer<Method>()
+
+    public init() {
+        // Intentionally unimplemented
+    }
+
+    public func presentForecast(for city: City) {
+        callstack.record(.presentForecast(city: city ))
     }
 }
 

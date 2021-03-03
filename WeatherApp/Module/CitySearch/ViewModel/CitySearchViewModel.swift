@@ -10,15 +10,9 @@ import Foundation
 import UIKit
 import Combine
 
-class CitySearchViewModel: CitySearchViewModelProtocol, ObservableObject {
-    private let provider: CitySearchProviderProtocol
-    private let wireframe: Wireframe
-    
-    required init(provider: CitySearchProviderProtocol, wireframe: Wireframe) {
-        self.provider = provider
-        self.wireframe = wireframe
-    }
-    
+struct CitySearchViewModel: CitySearchViewModelProtocol {
+    let wireframe: Wireframe
+        
     func presentForecast(for city: City) {
         wireframe.presentForecast(for: city)
     }
