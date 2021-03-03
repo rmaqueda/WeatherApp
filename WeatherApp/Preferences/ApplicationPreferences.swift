@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
+// swiftlint:disable force_cast
+// The file have constants, so force unwrap is safe.
 struct ApplicationPreferences {
-    // swiftlint:disable force_cast
-    // The file should be included, so force unwrap is safe.
     private static var secrets: [String: String] = {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
         let plistPath = Bundle.main.path(forResource: "Secrets", ofType: "plist")!
@@ -20,7 +20,6 @@ struct ApplicationPreferences {
                                                                format: &propertyListFormat)
         return dict as! [String: String]
     }()
-    // swiftlint:enable force_cast
     
     static let googleAPIKey: String? = secrets["GoogleAPIKey"]
     static let openWeatherAPIKey: String = secrets["OpenWeatherAPIKey"]!
@@ -46,3 +45,4 @@ struct ApplicationPreferences {
     }
     
 }
+// swiftlint:enable force_cast
