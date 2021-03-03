@@ -9,9 +9,9 @@
 import UIKit
 
 class CityTableViewCell: UITableViewCell {
-    @IBOutlet weak var mainText: UILabel!
-    @IBOutlet weak var subTitle: UILabel!
-    @IBOutlet weak var temperature: UILabel!
+    @IBOutlet private weak var mainText: UILabel!
+    @IBOutlet private weak var subTitle: UILabel!
+    @IBOutlet private weak var temperature: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,11 +36,13 @@ class CityTableViewCell: UITableViewCell {
         temperature.text = nil
     }
     
-    func configure(with city: City, dateFormatter: DateFormatter) {
+    func configure(with city: City) {
         mainText.text = city.name
         
-        dateFormatter.timeZone = city.timeZone
-        subTitle.text = dateFormatter.string(from: Date())
+        let formatter = DateFormatter.time
+        formatter.timeZone = city.timeZone
+        subTitle.text = formatter.string(from: Date())
+        
         temperature.text = city.temperature
     }
 

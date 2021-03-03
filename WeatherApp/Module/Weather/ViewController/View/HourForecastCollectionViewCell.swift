@@ -9,10 +9,10 @@
 import UIKit
 
 class HourForecastCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable {
-    @IBOutlet weak private var title: UILabel!
-    @IBOutlet weak private var imageView: UIImageView!
-    @IBOutlet weak private var probabilityPrecipitation: UILabel!
-    @IBOutlet weak private var subTitle: UILabel!
+    @IBOutlet private weak var title: UILabel!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var probabilityPrecipitation: UILabel!
+    @IBOutlet private weak var subTitle: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

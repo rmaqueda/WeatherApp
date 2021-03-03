@@ -41,9 +41,7 @@ class WeatherViewModel: WeatherViewModelProtocol {
     }
     
     func updateCity() throws {
-        if provider.isSaved(city: city) {
-            try provider.save(city: city)
-        }
+        try provider.save(city: city)
     }
     
     func requestForecast() {

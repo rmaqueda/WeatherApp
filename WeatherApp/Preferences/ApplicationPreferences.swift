@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 // swiftlint:disable force_cast
-// The file have constants, so force unwrap is safe.
+// The file has constants, so force unwrap is safe.
 struct ApplicationPreferences {
     private static var secrets: [String: String] = {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml

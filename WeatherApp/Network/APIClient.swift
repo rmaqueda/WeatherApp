@@ -30,7 +30,7 @@ struct APIClient: APIClientProtocol {
         return session.dataTaskPublisher(for: urlRequest)
             .tryMap { data, response in
                 // swiftlint:disable force_cast
-                // Response should be always, so force unwrap is safe
+                // Response should not nil, so force unwrap is safe
                 let httpResponse = response as! HTTPURLResponse
                 // swiftlint:enable force_cast
                 

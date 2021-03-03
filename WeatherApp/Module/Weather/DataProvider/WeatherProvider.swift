@@ -20,7 +20,7 @@ struct WeatherProvider: WeatherProviderProtocol {
     }
     
     func isSaved(city: City) -> Bool {
-        storage.isSaved(city: city)
+        storage.cities.contains(city)
     }
     
     func save(city: City) throws {

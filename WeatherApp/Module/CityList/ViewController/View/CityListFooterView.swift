@@ -15,9 +15,9 @@ protocol CityListFooterViewDelegate: AnyObject {
 }
 
 class CityListFooterView: UITableViewHeaderFooterView {
-    @IBOutlet weak var magnitudeButton: UIButton!
-    @IBOutlet weak var twcButton: UIButton!
-    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet private weak var magnitudeButton: UIButton!
+    @IBOutlet private weak var twcButton: UIButton!
+    @IBOutlet private weak var searchButton: UIButton!
     
     weak var delegate: CityListFooterViewDelegate?
     

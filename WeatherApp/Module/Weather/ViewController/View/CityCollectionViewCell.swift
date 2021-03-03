@@ -8,8 +8,8 @@
 import UIKit
 
 class CityCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable {
-    @IBOutlet weak private var cityName: UILabel!
-    @IBOutlet weak private var conditions: UILabel!
+    @IBOutlet private weak var cityName: UILabel!
+    @IBOutlet private weak var conditions: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

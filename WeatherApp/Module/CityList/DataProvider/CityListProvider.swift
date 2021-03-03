@@ -12,19 +12,19 @@ struct CityListProvider: CityListProviderProtocol {
     let storage: CityStorage
     
     var cities: [City] {
-        storage.savedCities
+        storage.cities
     }
     
     func save(city: City) throws {
         try storage.save(city: city)
     }
     
-    func delete(city: City) throws {
-        try storage.delete(city: city)
+    func deleteCity(at index: Int) throws {
+        try storage.deleteCity(at: index)
     }
     
-    func move(city: City, to index: Int) throws {
-        try storage.move(city: city, to: index)
+    func moveCity(from: Int, to: Int) throws {
+        try storage.moveCity(from: from, to: to)
     }
     
 }

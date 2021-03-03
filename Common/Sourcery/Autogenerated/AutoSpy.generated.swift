@@ -8,6 +8,105 @@ import Combine
 import UIKit
 @testable import WeatherApp
 
+// MARK: Spy for CityListProviderProtocol
+public class SpyCityListProviderProtocol: CityListProviderProtocol, TestSpy {
+	public enum Method: Equatable {
+        case save(city: City)
+        case deleteCity(index: Int)
+        case moveCity(from: Int, to: Int)
+	}
+
+    public var cities: [City] = []
+    public var storage: CityStorage {
+        get { return underlyingStorage }
+        set(value) { underlyingStorage = value }
+    }
+    public var underlyingStorage: CityStorage!
+
+    public var callstack = CallstackContainer<Method>()
+
+    public init() {
+        // Intentionally unimplemented
+    }
+
+    public func save(city: City) throws {
+        callstack.record(.save(city: city ))
+    }
+    public func deleteCity(at index: Int) throws {
+        callstack.record(.deleteCity(index: index ))
+    }
+    public func moveCity(from: Int, to: Int) throws {
+        callstack.record(.moveCity(from: from , to: to ))
+    }
+}
+
+// MARK: Spy for CityListViewModelProtocol
+public class SpyCityListViewModelProtocol: CityListViewModelProtocol, TestSpy {
+	public enum Method: Equatable {
+        case deleteCity(index: Int)
+        case moveCity(from: Int, to: Int)
+        case presentCitySearch
+        case presentForecast(city: City)
+        case didPressTWC
+	}
+
+    public var cities: [City] = []
+    public var unitTemperature: UnitTemperature {
+        get { return underlyingUnitTemperature }
+        set(value) { underlyingUnitTemperature = value }
+    }
+    public var underlyingUnitTemperature: UnitTemperature!
+
+    public var callstack = CallstackContainer<Method>()
+
+    public init() {
+        // Intentionally unimplemented
+    }
+
+    public func deleteCity(at index: Int) throws {
+        callstack.record(.deleteCity(index: index ))
+    }
+    public func moveCity(from: Int, to: Int) throws {
+        callstack.record(.moveCity(from: from , to: to ))
+    }
+    public func presentCitySearch() {
+        callstack.record(.presentCitySearch)
+    }
+    public func presentForecast(for city: City) {
+        callstack.record(.presentForecast(city: city ))
+    }
+    public func didPressTWC() {
+        callstack.record(.didPressTWC)
+    }
+}
+
+// MARK: Spy for CityStorage
+public class SpyCityStorage: CityStorage, TestSpy {
+	public enum Method: Equatable {
+        case save(city: City)
+        case deleteCity(index: Int)
+        case moveCity(from: Int, to: Int)
+	}
+
+    public var cities: [City] = []
+
+    public var callstack = CallstackContainer<Method>()
+
+    public init() {
+        // Intentionally unimplemented
+    }
+
+    public func save(city: City) throws {
+        callstack.record(.save(city: city ))
+    }
+    public func deleteCity(at index: Int) throws {
+        callstack.record(.deleteCity(index: index ))
+    }
+    public func moveCity(from: Int, to: Int) throws {
+        callstack.record(.moveCity(from: from , to: to ))
+    }
+}
+
 // MARK: Spy for WeatherProviderProtocol
 public class SpyWeatherProviderProtocol: WeatherProviderProtocol, TestSpy {
 	public enum Method: Equatable {

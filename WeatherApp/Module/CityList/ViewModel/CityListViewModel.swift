@@ -14,7 +14,7 @@ class CityListViewModel: CityListViewModelProtocol, ObservableObject {
     private let provider: CityListProviderProtocol
     private let wireframe: Wireframe
 
-    var dataSource: [City] { provider.cities }
+    var cities: [City] { provider.cities }
     
     var unitTemperature: UnitTemperature = .celsius
     
@@ -28,13 +28,11 @@ class CityListViewModel: CityListViewModelProtocol, ObservableObject {
     // MARK: CityListViewModelProtocol
     
     func deleteCity(at index: Int) throws {
-        let city = provider.cities[index]
-        try provider.delete(city: city)
+        try provider.deleteCity(at: index)
     }
     
     func moveCity(from: Int, to: Int) throws {
-        let city = provider.cities[from]
-        try provider.move(city: city, to: to)
+        try provider.moveCity(from: from, to: to)
     }
     
     func presentCitySearch() {
