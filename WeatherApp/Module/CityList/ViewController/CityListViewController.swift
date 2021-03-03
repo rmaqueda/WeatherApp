@@ -137,9 +137,7 @@ class CityListViewController: BaseTableViewController, CityListFooterViewDelegat
     }
     
     func didPressTWCButton() {
-        if let url = URL(string: "https://www.weather.com") {
-            UIApplication.shared.open(url)
-        }
+        viewModel.didPressTWC()
     }
     
     func didPressSearchButton() {

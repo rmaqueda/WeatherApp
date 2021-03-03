@@ -77,9 +77,7 @@ struct Wireframe: WireframeProtocol {
     }
     
     func presentTWCWeb() {
-        if let url = URL(string: "https://www.weather.com") {
-            UIApplication.shared.open(url)
-        }
+        UIApplication.shared.open(ApplicationPreferences.openWeatherWebURL)
     }
     
     func didPressCityListButton() {

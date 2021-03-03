@@ -9,9 +9,9 @@ import XCTest
 @testable import WeatherApp
 
 final class APIRequestTests: XCTestCase {
-    let aURL = URL(string: "http://stub.com")!
-    let path = "/path"
-    lazy var aURLWithPath = aURL.appendingPathComponent(path)
+    private let aURL = URL(string: "http://stub.com")!
+    private let path = "/path"
+    private lazy var aURLWithPath = aURL.appendingPathComponent(path)
     
     func test_givenAURLPath_whenCreateRequest_thenRequestHasConfiguredURLPath() {
         // given

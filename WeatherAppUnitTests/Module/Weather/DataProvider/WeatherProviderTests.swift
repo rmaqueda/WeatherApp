@@ -13,16 +13,16 @@ final class WeatherProviderTests: XCTestCase {
     private var sut: WeatherProvider!
     private var spy: APIClientSpy<OpenWeatherResponse>!
 
-    private let URLStub = URL(string: "http://stub.com")!
-    private let responseMock = OpenWeatherResponse.mockMadrid
+    private let url = URL(string: "http://stub.com")!
+    private let response = OpenWeatherResponse.mockMadrid
 
     private var cancellables = Set<AnyCancellable>()
 
     override func setUp() {
         super.setUp()
 
-        spy = APIClientSpy(baseURL: URLStub)
-        spy.response = responseMock
+        spy = APIClientSpy(baseURL: url)
+        spy.response = response
 
         sut = WeatherProvider(apiClient: spy, storage: CityDiskStorage())
     }
@@ -41,7 +41,7 @@ final class WeatherProviderTests: XCTestCase {
         let expectedAPIRequest: APIRequest<OpenWeatherResponse, TestError> = APIRequest.get("onecall",
                                                                                             parameters: ["lat": 0.0, "lon": 0.0],
                                                                                             jsonDecoder: JSONDecoder.openWeatherDecoder)
-        let expectedRequest = URLRequest(baseURL: URLStub, apiRequest: expectedAPIRequest)
+        let expectedRequest = URLRequest(baseURL: url, apiRequest: expectedAPIRequest)
 
         // when
         sut.forecast(for: City(name: "stub", coordinate: City.Coordinate(lat: 0, lon: 0), timeZone: nil, temperature: nil))

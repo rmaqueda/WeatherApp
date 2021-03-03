@@ -74,11 +74,11 @@ class WeatherViewController: BaseCollectionViewController {
     private func configureToolBar() {
         navigationController?.isToolbarHidden = false
         
-        let TWCButton = UIBarButtonItem(image: UIImage(named: "twc"), style: .plain, target: self, action: #selector(didTapTWC(_:)))
+        let twcButton = UIBarButtonItem(image: UIImage(named: "twc"), style: .plain, target: self, action: #selector(didTapTWC(_:)))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let listButton = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .plain, target: self, action: #selector(didTapCancel(_:)))
         
-        toolbarItems = [TWCButton, spacer, listButton]
+        toolbarItems = [twcButton, spacer, listButton]
     }
     
     // MARK: UICollectionViewDataSource
