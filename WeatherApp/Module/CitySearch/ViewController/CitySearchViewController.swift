@@ -54,17 +54,12 @@ class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MK
     }
 
     private func configureTableView() {
-        tableView.tableFooterView = UIView()
         tableView.tableHeaderView = searchController.searchBar
-        tableView.tableHeaderView?.backgroundColor = .black
-        tableView.backgroundColor = .black
     }
     
     private func configureSearch() {
-        searchController.searchBar.delegate = self
         searchController.searchBar.barStyle = .black
-        searchController.searchBar.keyboardAppearance = .dark
-        searchController.searchBar.tintColor = .white
+        searchController.searchBar.delegate = self
         searchController.searchBar.showsCancelButton = true
         searchController.automaticallyShowsScopeBar = false
         searchController.obscuresBackgroundDuringPresentation = false
@@ -86,7 +81,7 @@ class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MK
         let city = completerResults[indexPath.row]
         
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "CityReuseIdentifier")
-        cell.backgroundColor = .black
+        cell.backgroundColor = .clear
         cell.selectionStyle = .none
         cell.textLabel?.attributedText = (city.title + " " + city.subtitle).highlightedString(rangeValues: city.titleHighlightRanges)
         
@@ -105,6 +100,7 @@ class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MK
         }
         
         let searchRequest = MKLocalSearch.Request(completion: city)
+        searchRequest.resultTypes = [.address, .pointOfInterest]
         search(using: searchRequest)
     }
     
@@ -120,7 +116,7 @@ class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MK
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        dismiss(animated: true)
+        dismissAll()
     }
     
     // MARK: MKLocalSearchCompleter Delegate
@@ -133,22 +129,25 @@ class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MK
     // MARK: MKLocalSearch Request
     
     private func search(using searchRequest: MKLocalSearch.Request) {
-        searchRequest.resultTypes = [.address, .pointOfInterest]
-
-        let localSearch = MKLocalSearch(request: searchRequest)
-        localSearch.start { [weak self] response, error in
-            guard error == nil else { return }
-            guard let self = self else { return }
-
-            if let item = response?.mapItems.first, let name = item.name {
-                let coordinate = City.Coordinate(lat: item.placemark.coordinate.latitude, lon: item.placemark.coordinate.longitude)
-                let city = City(name: name, coordinate: coordinate, timeZone: item.timeZone)
-                
-                self.searchController.dismiss(animated: false) {
-                    self.dismiss(animated: true) {
-                        self.viewModel.presentForecast(for: city)
-                    }
-                }
+        MKLocalSearch(request: searchRequest).start { [weak self] response, _ in
+            self?.showCityIfPossible(with: response)
+        }
+    }
+    
+    private func showCityIfPossible(with response: MKLocalSearch.Response?) {
+        if let item = response?.mapItems.first, let name = item.name {
+            let coordinate = City.Coordinate(lat: item.placemark.coordinate.latitude, lon: item.placemark.coordinate.longitude)
+            let city = City(name: name, coordinate: coordinate, timeZone: item.timeZone)
+            dismissAll { [weak self] in
+                self?.viewModel.presentForecast(for: city)
+            }
+        }
+    }
+    
+    private func dismissAll(_ completion: (() -> Void)? = nil) {
+        searchController.dismiss(animated: false) { [weak self] in
+            self?.dismiss(animated: true) {
+                completion?()
             }
         }
     }

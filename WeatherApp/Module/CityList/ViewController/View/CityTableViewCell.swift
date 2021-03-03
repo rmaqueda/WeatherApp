@@ -18,10 +18,10 @@ class CityTableViewCell: UITableViewCell {
         
         resetCell()
         
-        mainText.textColor = .white
-        subTitle.textColor = .white
-        temperature.textColor = .white
-        backgroundColor = .black
+        mainText.textColor = .foreground
+        subTitle.textColor = .foreground
+        temperature.textColor = .foreground
+        backgroundColor = .background
     }
     
     override func prepareForReuse() {

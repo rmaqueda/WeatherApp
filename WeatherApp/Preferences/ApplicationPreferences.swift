@@ -30,18 +30,23 @@ struct ApplicationPreferences {
     static let language = Locale.current.languageCode ?? "en"
     
     static func setupAppearance() {
-        UICollectionView.appearance().backgroundColor = UIColor(named: "BackgroundColor")
+        UICollectionView.appearance().backgroundColor = .background
         
-        UINavigationBar.appearance().tintColor = UIColor(named: "ForeGroundColor")
-        UINavigationBar.appearance().barTintColor = UIColor(named: "BackgroundColor")
-        UINavigationBar.appearance().backgroundColor = UIColor(named: "BackgroundColor")
+        UINavigationBar.appearance().tintColor = .foreground
+        UINavigationBar.appearance().barTintColor = .background
+        UINavigationBar.appearance().backgroundColor = .background
         
-        UIToolbar.appearance().barTintColor = UIColor(named: "BackgroundColor")
-        UIToolbar.appearance().tintColor = UIColor(named: "ForeGroundColor")
+        UIToolbar.appearance().barTintColor = .background
+        UIToolbar.appearance().tintColor = .foreground
+        
+        UISearchBar.appearance().keyboardAppearance = .dark
+        UISearchBar.appearance().tintColor = .foreground
 
-        UIImageView.appearance().tintColor = UIColor(named: "ForeGroundColor")
+        UIImageView.appearance().tintColor = .foreground
         
-        UIActivityIndicatorView.appearance().color = UIColor(named: "ForeGroundColor")
+        UITableView.appearance().backgroundColor = .background
+        
+        UIActivityIndicatorView.appearance().color = .foreground
     }
     
 }
