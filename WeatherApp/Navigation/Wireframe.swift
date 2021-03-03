@@ -34,7 +34,7 @@ struct Wireframe: WireframeProtocol {
     
     func presentMainScreen() {
         presentCityList()
-        if storage.savedCities.isEmpty {
+        if storage.cities.isEmpty {
             presentCitySearch()
         }
     }

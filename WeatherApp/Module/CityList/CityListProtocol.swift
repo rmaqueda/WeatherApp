@@ -9,8 +9,9 @@
 import UIKit
 import Combine
 
+// sourcery: autoSpy
 protocol CityListViewModelProtocol {
-    var dataSource: [City] { get }
+    var cities: [City] { get }
     var unitTemperature: UnitTemperature { get set }
     
     func deleteCity(at index: Int) throws
@@ -18,15 +19,24 @@ protocol CityListViewModelProtocol {
     
     func presentCitySearch()
     func presentForecast(for city: City)
-    
     func didPressTWC()
 }
 
+// sourcery: autoSpy
 protocol CityListProviderProtocol {
+    var cities: [City] { get }
     var storage: CityStorage { get }
+    
+    func save(city: City) throws
+    func deleteCity(at index: Int) throws
+    func moveCity(from: Int, to: Int) throws
+}
+
+// sourcery: autoSpy
+protocol CityStorage {
     var cities: [City] { get }
     
     func save(city: City) throws
-    func delete(city: City) throws
-    func move(city: City, to index: Int) throws
+    func deleteCity(at index: Int) throws
+    func moveCity(from: Int, to: Int) throws
 }

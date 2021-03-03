@@ -9,8 +9,8 @@
 import UIKit
 
 class TemperatureCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable {
-    @IBOutlet weak private var temperature: UILabel!
-    @IBOutlet weak private var highLowTemperature: UILabel!
+    @IBOutlet private weak var temperature: UILabel!
+    @IBOutlet private weak var highLowTemperature: UILabel!
    
     override func awakeFromNib() {
         super.awakeFromNib()

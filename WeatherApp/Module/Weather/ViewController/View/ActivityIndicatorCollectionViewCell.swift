@@ -8,7 +8,7 @@
 import UIKit
 
 class ActivityIndicatorCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable {
-    @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     func configure(with section: WeatherViewSectionData, indexPath: IndexPath) {
         activityIndicator.startAnimating()

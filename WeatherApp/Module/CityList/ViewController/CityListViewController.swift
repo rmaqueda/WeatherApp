@@ -9,15 +9,8 @@
 import UIKit
 import Combine
 
-class CityListViewController: BaseTableViewController, CityListFooterViewDelegate, UITableViewDragDelegate, UITableViewDropDelegate {
+class CityListViewController: BaseTableViewController, CityListFooterViewDelegate, UITableViewDragDelegate {
     private let viewModel: CityListViewModelProtocol
-    
-    private var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        
-        return formatter
-    }()
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -30,8 +23,8 @@ class CityListViewController: BaseTableViewController, CityListFooterViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
         
+        view.backgroundColor = .clear
         configureTableView()
     }
     
@@ -41,29 +34,23 @@ class CityListViewController: BaseTableViewController, CityListFooterViewDelegat
         tableView.reloadData()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
-    
     private func configureTableView() {
         tableView.register(CityTableViewCell.self)
         tableView.registerHeaderFooter(CityListFooterView.self)
-        
         tableView.dragInteractionEnabled = true
         tableView.dragDelegate = self
-        tableView.dropDelegate = self
     }
         
     // MARK: TableView DataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.dataSource.count
+        viewModel.cities.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let city = viewModel.dataSource[indexPath.row]
+        let city = viewModel.cities[indexPath.row]
         let cell: CityTableViewCell = tableView.dequeueReusableCell()
-        cell.configure(with: city, dateFormatter: dateFormatter)
+        cell.configure(with: city)
         
         return cell
     }
@@ -80,6 +67,10 @@ class CityListViewController: BaseTableViewController, CityListFooterViewDelegat
         50
     }
     
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        try? viewModel.moveCity(from: sourceIndexPath.row, to: destinationIndexPath.row)
+    }
+    
     // MARK: TableView Delegate
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -87,7 +78,7 @@ class CityListViewController: BaseTableViewController, CityListFooterViewDelegat
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let city = viewModel.dataSource[indexPath.row]
+        let city = viewModel.cities[indexPath.row]
         viewModel.presentForecast(for: city)
     }
     
@@ -98,35 +89,12 @@ class CityListViewController: BaseTableViewController, CityListFooterViewDelegat
         }
     }
     
-    // MARK: TableView Drag & Drop Delegate
-    
+    // MARK: TableView Drag Delegate
+        
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
-        
-        return [UIDragItem(itemProvider: NSItemProvider())]
-    }
-    
-    func tableView(_ tableView: UITableView,
-                   dropSessionDidUpdate session: UIDropSession,
-                   withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        
-        if session.localDragSession != nil {
-            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-        }
-        
-        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
-    }
-    
-    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        guard let source = coordinator.items.first?.sourceIndexPath,
-              let destination = coordinator.destinationIndexPath else {
-            return
-        }
-       
-        try? viewModel.moveCity(from: source.row, to: destination.row)
-        // TODO: could be possible avoid this reload?
-        tableView.reloadData()
+        let dragItem = UIDragItem(itemProvider: NSItemProvider())
+        dragItem.localObject = viewModel.cities[indexPath.row]
+        return [dragItem]
     }
     
     // MARK: CityListFooterView Delegate
