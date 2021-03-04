@@ -126,33 +126,6 @@ public class SpyCitySearchViewModelProtocol: CitySearchViewModelProtocol, TestSp
     }
 }
 
-// MARK: Spy for CityStorageProtocol
-public class SpyCityStorageProtocol: CityStorageProtocol, TestSpy {
-	public enum Method: Equatable {
-        case save(city: City)
-        case deleteCity(index: Int)
-        case moveCity(from: Int, to: Int)
-	}
-
-    public var cities: [City] = []
-
-    public var callstack = CallstackContainer<Method>()
-
-    public init() {
-        // Intentionally unimplemented
-    }
-
-    public func save(city: City) throws {
-        callstack.record(.save(city: city ))
-    }
-    public func deleteCity(at index: Int) throws {
-        callstack.record(.deleteCity(index: index ))
-    }
-    public func moveCity(from: Int, to: Int) throws {
-        callstack.record(.moveCity(from: from , to: to ))
-    }
-}
-
 // MARK: Spy for WeatherProviderProtocol
 public class SpyWeatherProviderProtocol: WeatherProviderProtocol, TestSpy {
 	public enum Method: Equatable {

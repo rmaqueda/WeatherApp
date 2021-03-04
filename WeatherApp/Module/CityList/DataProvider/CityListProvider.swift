@@ -9,9 +9,9 @@
 import Combine
 
 struct CityListProvider: CityListProviderProtocol {
-    private let storage: CityStorageProtocol
+    private let storage: CityListProviderProtocol
     
-    init(storage: CityStorageProtocol) {
+    init(storage: CityListProviderProtocol) {
         self.storage = storage
     }
     

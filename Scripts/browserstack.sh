@@ -30,7 +30,7 @@ echo $TEST_SUITE_URL
 # Launch test echo "Launching tests..." 
 BUILD=`curl --silent --user "$1:$2" \
 --request POST "https://api-cloud.browserstack.com/app-automate/xcuitest/v2/build" \
---data '{"project": "WeatherApp", "devices": ["iPhone 12-14", "iPhone 11 Pro-13", "iPhone 11-14", "iPad Air 4-14", "iPhone SE 2020-13"], "app": '$APP_URL', "testSuite": '$TEST_SUITE_URL', "networkLogs": "true", "debugscreenshots": "true", "deviceLogs": "true"}' \
+--data '{"project": "WeatherApp", "devices": ["iPhone 12-14", "iPhone 11 Pro-13", "iPhone 11-14", "iPad Air 4-14"], "app": '$APP_URL', "testSuite": '$TEST_SUITE_URL', "networkLogs": "true", "debugscreenshots": "true", "deviceLogs": "true"}' \
 --header "Content-Type: application/json"`
 
 if [[ $BUILD != *Success* ]]; then
