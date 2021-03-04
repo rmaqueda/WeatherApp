@@ -9,7 +9,7 @@
 import Combine
 import Foundation
 
-protocol APIClientProtocol {   
+protocol APIClientProtocol {
     func response<Output, Error>(for apiRequest: APIRequest<Output, Error>) -> AnyPublisher<Output, APIClientError<Error>>
 }
 

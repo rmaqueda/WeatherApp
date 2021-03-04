@@ -11,9 +11,9 @@ import Combine
 
 struct WeatherProvider: WeatherProviderProtocol {
     private let apiClient: APIClientProtocol
-    private let storage: CityStorageProtocol
+    private let storage: CityListProviderProtocol
     
-    init(apiClient: APIClientProtocol, storage: CityStorageProtocol) {
+    init(apiClient: APIClientProtocol, storage: CityListProviderProtocol) {
         self.apiClient = apiClient
         self.storage = storage
     }

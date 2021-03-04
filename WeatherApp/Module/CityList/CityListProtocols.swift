@@ -31,12 +31,3 @@ protocol CityListProviderProtocol {
     func deleteCity(at index: Int) throws
     func moveCity(from: Int, to: Int) throws
 }
-
-// sourcery: autoSpy
-protocol CityStorageProtocol {
-    var cities: [City] { get }
-    
-    func save(city: City) throws
-    func deleteCity(at index: Int) throws
-    func moveCity(from: Int, to: Int) throws
-}

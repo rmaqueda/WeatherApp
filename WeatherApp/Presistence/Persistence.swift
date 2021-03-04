@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CityDiskStorage: CityStorageProtocol {
+class CityDiskStorage: CityListProviderProtocol {
     private let citiesKey = "cities"
     private let userDefaults = UserDefaults.standard
     
