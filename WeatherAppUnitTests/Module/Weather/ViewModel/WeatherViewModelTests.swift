@@ -20,8 +20,8 @@ final class WeatherViewModelTests: XCTestCase {
         
         spy = SpyWeatherProviderProtocol()
         sut = WeatherViewModel(city: City.mockMadrid,
-                               mapper: WeatherViewModelMapper(),
                                provider: spy,
+                               mapper: WeatherViewModelMapper(),
                                wireframe: SpyWireframeProtocol())
     }
     

@@ -10,8 +10,13 @@ import Foundation
 import Combine
 
 struct WeatherProvider: WeatherProviderProtocol {
-    let apiClient: APIClientProtocol
-    let storage: CityStorage
+    private let apiClient: APIClientProtocol
+    private let storage: CityStorageProtocol
+    
+    init(apiClient: APIClientProtocol, storage: CityStorageProtocol) {
+        self.apiClient = apiClient
+        self.storage = storage
+    }
         
     func forecast(for city: City) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>> {
         apiClient.response(for: .get("onecall",

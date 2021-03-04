@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TemperatureCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable {
+final class TemperatureCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable {
     @IBOutlet private weak var temperature: UILabel!
     @IBOutlet private weak var highLowTemperature: UILabel!
    

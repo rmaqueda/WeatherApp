@@ -7,14 +7,33 @@
 //
 
 import Foundation
-import UIKit
 import Combine
 
-struct CitySearchViewModel: CitySearchViewModelProtocol {
-    let wireframe: Wireframe
+final class CitySearchViewModel: CitySearchViewModelProtocol {
+    @Published private(set) var cities: [NSAttributedString] = []
+    var citiesPublisher: Published<[NSAttributedString]>.Publisher { $cities }
+    
+    private let wireframe: WireframeProtocol
+    private let provider: CitySearchProviderProtocol
+    
+    private var cancellables = Set<AnyCancellable>()
+     
+    required init(provider: CitySearchProviderProtocol, wireframe: WireframeProtocol) {
+        self.wireframe = wireframe
+        self.provider = provider
+    }
         
-    func presentForecast(for city: City) {
-        wireframe.presentForecast(for: city)
+    func searchCities(searchText: String) {
+        provider.searchCities(searchText: searchText) { results in
+            self.cities = results.map {
+                ($0.title + " " + $0.subtitle).highlightedString(rangeValues: $0.titleHighlightRanges)
+            }
+        }
     }
     
+    func didSelectCity(at index: Int) {
+        provider.searchCity(at: index) { [weak self] city in
+            self?.wireframe.presentForecast(for: city)
+        }
+    }
 }

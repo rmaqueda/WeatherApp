@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class CityListViewController: BaseTableViewController, CityListFooterViewDelegate, UITableViewDragDelegate {
+final class CityListViewController: BaseTableViewController, CityListFooterViewDelegate, UITableViewDragDelegate {
     private let viewModel: CityListViewModelProtocol
     
     private var cancellables = Set<AnyCancellable>()

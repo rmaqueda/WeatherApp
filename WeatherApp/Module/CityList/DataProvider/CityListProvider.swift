@@ -9,7 +9,11 @@
 import Combine
 
 struct CityListProvider: CityListProviderProtocol {
-    let storage: CityStorage
+    private let storage: CityStorageProtocol
+    
+    init(storage: CityStorageProtocol) {
+        self.storage = storage
+    }
     
     var cities: [City] {
         storage.cities

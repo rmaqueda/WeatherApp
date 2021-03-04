@@ -8,21 +8,19 @@
 import Foundation
 import Combine
 
-class WeatherViewModel: WeatherViewModelProtocol {
-    private var city: City
-    private let mapper: WeatherViewModelMapper
-    private let provider: WeatherProviderProtocol
-    private let wireframe: WireframeProtocol
-    
+final class WeatherViewModel: WeatherViewModelProtocol {
     @Published private(set) var dataSource: WeatherViewModelData = WeatherViewModelData.activityIndicator()
-    var dataSourcePublished: Published<WeatherViewModelData> { _dataSource }
     var dataSourcePublisher: Published<WeatherViewModelData>.Publisher { $dataSource }
     
+    private var city: City
+    private let provider: WeatherProviderProtocol
+    private let mapper: WeatherViewModelMapper
+    private let wireframe: WireframeProtocol
     private var cancellables = Set<AnyCancellable>()
     
     required init(city: City,
-                  mapper: WeatherViewModelMapper,
                   provider: WeatherProviderProtocol,
+                  mapper: WeatherViewModelMapper,
                   wireframe: WireframeProtocol) {
         self.city = city
         self.mapper = mapper

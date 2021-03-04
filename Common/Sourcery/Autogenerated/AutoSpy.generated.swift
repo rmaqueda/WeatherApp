@@ -6,6 +6,7 @@
 import Foundation
 import Combine
 import UIKit
+import MapKit
 @testable import WeatherApp
 
 // MARK: Spy for CityListProviderProtocol
@@ -17,11 +18,6 @@ public class SpyCityListProviderProtocol: CityListProviderProtocol, TestSpy {
 	}
 
     public var cities: [City] = []
-    public var storage: CityStorage {
-        get { return underlyingStorage }
-        set(value) { underlyingStorage = value }
-    }
-    public var underlyingStorage: CityStorage!
 
     public var callstack = CallstackContainer<Method>()
 
@@ -51,16 +47,6 @@ public class SpyCityListViewModelProtocol: CityListViewModelProtocol, TestSpy {
 	}
 
     public var cities: [City] = []
-    public var provider: CityListProviderProtocol {
-        get { return underlyingProvider }
-        set(value) { underlyingProvider = value }
-    }
-    public var underlyingProvider: CityListProviderProtocol!
-    public var wireframe: Wireframe {
-        get { return underlyingWireframe }
-        set(value) { underlyingWireframe = value }
-    }
-    public var underlyingWireframe: Wireframe!
     public var unitTemperature: UnitTemperature {
         get { return underlyingUnitTemperature }
         set(value) { underlyingUnitTemperature = value }
@@ -90,17 +76,13 @@ public class SpyCityListViewModelProtocol: CityListViewModelProtocol, TestSpy {
     }
 }
 
-// MARK: Spy for CitySearchViewModelProtocol
-public class SpyCitySearchViewModelProtocol: CitySearchViewModelProtocol, TestSpy {
+// MARK: Spy for CitySearchProviderProtocol
+public class SpyCitySearchProviderProtocol: CitySearchProviderProtocol, TestSpy {
 	public enum Method: Equatable {
-        case presentForecast(city: City)
+        case searchCities(searchText: String)
+        case searchCity(index: Int)
 	}
 
-    public var wireframe: Wireframe {
-        get { return underlyingWireframe }
-        set(value) { underlyingWireframe = value }
-    }
-    public var underlyingWireframe: Wireframe!
 
     public var callstack = CallstackContainer<Method>()
 
@@ -108,13 +90,44 @@ public class SpyCitySearchViewModelProtocol: CitySearchViewModelProtocol, TestSp
         // Intentionally unimplemented
     }
 
-    public func presentForecast(for city: City) {
-        callstack.record(.presentForecast(city: city ))
+    public func searchCities(searchText: String, completionHandler: @escaping ([MKLocalSearchCompletion]) -> Void) {
+        callstack.record(.searchCities(searchText: searchText ))
+    }
+    public func searchCity(at index: Int, completionHandler: @escaping (City) -> Void) {
+        callstack.record(.searchCity(index: index ))
     }
 }
 
-// MARK: Spy for CityStorage
-public class SpyCityStorage: CityStorage, TestSpy {
+// MARK: Spy for CitySearchViewModelProtocol
+public class SpyCitySearchViewModelProtocol: CitySearchViewModelProtocol, TestSpy {
+	public enum Method: Equatable {
+        case searchCities(searchText: String)
+        case didSelectCity(index: Int)
+	}
+
+    public var cities: [NSAttributedString] = []
+    public var citiesPublisher: Published<[NSAttributedString]>.Publisher {
+        get { return underlyingCitiesPublisher }
+        set(value) { underlyingCitiesPublisher = value }
+    }
+    public var underlyingCitiesPublisher: Published<[NSAttributedString]>.Publisher!
+
+    public var callstack = CallstackContainer<Method>()
+
+    public init() {
+        // Intentionally unimplemented
+    }
+
+    public func searchCities(searchText: String) {
+        callstack.record(.searchCities(searchText: searchText ))
+    }
+    public func didSelectCity(at index: Int) {
+        callstack.record(.didSelectCity(index: index ))
+    }
+}
+
+// MARK: Spy for CityStorageProtocol
+public class SpyCityStorageProtocol: CityStorageProtocol, TestSpy {
 	public enum Method: Equatable {
         case save(city: City)
         case deleteCity(index: Int)
@@ -148,16 +161,6 @@ public class SpyWeatherProviderProtocol: WeatherProviderProtocol, TestSpy {
         case forecast(city: City)
 	}
 
-    public var apiClient: APIClientProtocol {
-        get { return underlyingApiClient }
-        set(value) { underlyingApiClient = value }
-    }
-    public var underlyingApiClient: APIClientProtocol!
-    public var storage: CityStorage {
-        get { return underlyingStorage }
-        set(value) { underlyingStorage = value }
-    }
-    public var underlyingStorage: CityStorage!
 
     public var callstack = CallstackContainer<Method>()
 
@@ -177,6 +180,55 @@ public class SpyWeatherProviderProtocol: WeatherProviderProtocol, TestSpy {
     public func forecast(for city: City) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>> {
         callstack.record(.forecast(city: city ))
         return forecastResult
+    }
+}
+
+// MARK: Spy for WeatherViewModelProtocol
+public class SpyWeatherViewModelProtocol: WeatherViewModelProtocol, TestSpy {
+	public enum Method: Equatable {
+        case saveCity
+        case updateCity
+        case requestForecast
+        case didPressCityList
+        case didPressTWC
+	}
+
+    public var dataSource: WeatherViewModelData {
+        get { return underlyingDataSource }
+        set(value) { underlyingDataSource = value }
+    }
+    public var underlyingDataSource: WeatherViewModelData!
+    public var dataSourcePublisher: Published<WeatherViewModelData>.Publisher {
+        get { return underlyingDataSourcePublisher }
+        set(value) { underlyingDataSourcePublisher = value }
+    }
+    public var underlyingDataSourcePublisher: Published<WeatherViewModelData>.Publisher!
+    public var isSaved: Bool {
+        get { return underlyingIsSaved }
+        set(value) { underlyingIsSaved = value }
+    }
+    public var underlyingIsSaved: Bool!
+
+    public var callstack = CallstackContainer<Method>()
+
+    public init() {
+        // Intentionally unimplemented
+    }
+
+    public func saveCity() throws {
+        callstack.record(.saveCity)
+    }
+    public func updateCity() throws {
+        callstack.record(.updateCity)
+    }
+    public func requestForecast() {
+        callstack.record(.requestForecast)
+    }
+    public func didPressCityList() {
+        callstack.record(.didPressCityList)
+    }
+    public func didPressTWC() {
+        callstack.record(.didPressTWC)
     }
 }
 

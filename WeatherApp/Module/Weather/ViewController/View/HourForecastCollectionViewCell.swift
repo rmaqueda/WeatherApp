@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HourForecastCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable {
+final class HourForecastCollectionViewCell: UICollectionViewCell, WeatherViewRepresentable {
     @IBOutlet private weak var title: UILabel!
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var probabilityPrecipitation: UILabel!

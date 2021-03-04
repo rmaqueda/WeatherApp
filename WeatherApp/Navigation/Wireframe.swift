@@ -52,7 +52,8 @@ struct Wireframe: WireframeProtocol {
     }
     
     func presentCitySearch() {
-        let viewModel = CitySearchViewModel(wireframe: self)
+        let provider = CitySearchProvider()
+        let viewModel = CitySearchViewModel(provider: provider, wireframe: self)
         let viewController = CitySearchViewController(viewModel: viewModel)
 
         navigationController.present(viewController, animated: true)
@@ -61,8 +62,8 @@ struct Wireframe: WireframeProtocol {
     func presentForecast(for city: City) {
         let provider = WeatherProvider(apiClient: apiClient, storage: storage)
         let viewModel = WeatherViewModel(city: city,
-                                         mapper: WeatherViewModelMapper(),
                                          provider: provider,
+                                         mapper: WeatherViewModelMapper(),
                                          wireframe: self)
         let viewController = WeatherViewController(viewModel: viewModel)
         

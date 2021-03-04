@@ -33,7 +33,6 @@ struct WeatherViewModelMockFactory {
 
 class WeatherViewModelMock: WeatherViewModelProtocol {
     @Published private(set) var dataSource: WeatherViewModelData = WeatherViewModelData.activityIndicator()
-    var dataSourcePublished: Published<WeatherViewModelData> { _dataSource }
     var dataSourcePublisher: Published<WeatherViewModelData>.Publisher { $dataSource }
 
     var requestForecastSuccessResult: WeatherViewModelData?
