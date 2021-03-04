@@ -9,11 +9,19 @@
 import Foundation
 
 struct CityListViewModel: CityListViewModelProtocol {
-    var cities: [City] { provider.cities }
-    let provider: CityListProviderProtocol
-    let wireframe: Wireframe
+    var cities: [City] {
+        provider.cities
+    }
     var unitTemperature: UnitTemperature = .celsius
+    
+    private let provider: CityListProviderProtocol
+    private let wireframe: WireframeProtocol
         
+    init(provider: CityListProviderProtocol, wireframe: WireframeProtocol) {
+        self.provider = provider
+        self.wireframe = wireframe
+    }
+    
     // MARK: CityListViewModelProtocol
     
     func deleteCity(at index: Int) throws {

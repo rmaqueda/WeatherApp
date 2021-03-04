@@ -14,7 +14,7 @@ protocol CityListFooterViewDelegate: AnyObject {
     func didPressSearchButton()
 }
 
-class CityListFooterView: UITableViewHeaderFooterView {
+final class CityListFooterView: UITableViewHeaderFooterView {
     @IBOutlet private weak var magnitudeButton: UIButton!
     @IBOutlet private weak var twcButton: UIButton!
     @IBOutlet private weak var searchButton: UIButton!

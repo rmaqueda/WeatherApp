@@ -14,6 +14,7 @@ final class WeatherViewControllerSnapShotTests: XCTestCase {
     var sut: WeatherViewController!
     let spy = SpyWeatherViewModelProtocol()
     var nav: UINavigationController!
+    @Published var publisher: WeatherViewModelData = WeatherViewModelData.activityIndicator()
     
     override func setUp() {
         super.setUp()
@@ -22,7 +23,10 @@ final class WeatherViewControllerSnapShotTests: XCTestCase {
         
         let mock = OpenWeatherResponse.mockMadrid
         let mockMapped = WeatherViewModelMapper().map(city: City.mockMadrid, with: mock)
+        
         spy.dataSource = mockMapped
+        spy.underlyingDataSourcePublisher = $publisher
+        spy.underlyingIsSaved = true
         nav = UINavigationController(rootViewController: sut)
     }
     

@@ -9,11 +9,7 @@
 import Combine
 import Foundation
 
-protocol APIClientProtocol {
-    var baseURL: URL { get }
-    var configuration: APIClientConfiguration { get }
-    var session: URLSession { get }
-    
+protocol APIClientProtocol {   
     func response<Output, Error>(for apiRequest: APIRequest<Output, Error>) -> AnyPublisher<Output, APIClientError<Error>>
 }
 

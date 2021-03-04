@@ -8,9 +8,9 @@
 import UIKit
 import Combine
 
-class WeatherViewController: BaseCollectionViewController {
-    private let layout = WeatherCollectionViewLayout()
+final class WeatherViewController: BaseCollectionViewController {
     private let viewModel: WeatherViewModelProtocol
+    private let layout = WeatherCollectionViewLayout()
     private var cancellables = Set<AnyCancellable>()
     
     required init(viewModel: WeatherViewModelProtocol) {
@@ -104,6 +104,23 @@ class WeatherViewController: BaseCollectionViewController {
         
         return cell
     }
+    
+    private func handleError(error: APIClientError<OpenWeatherAPIError>) {
+        var message: String = "The network request failed.\n\n"
+        
+        switch error {
+        case .loadingError(let loadingError):
+            message += loadingError.localizedDescription
+        case .decodingError(let decodingError):
+            message += decodingError.localizedDescription
+        case .apiError(let apiError):
+            message += apiError.error?.message.capitalized ?? "Unknown error."
+        }
+        
+        presentRetryAlert(withTitle: "Oops", message: message) { [weak self] _ in
+            self?.viewModel.requestForecast()
+        }
+    }
         
     // MARK: Actions
     
@@ -122,23 +139,6 @@ class WeatherViewController: BaseCollectionViewController {
     
     @objc func didTapCancel(_ sender: UIBarButtonItem) {
         viewModel.didPressCityList()
-    }
-            
-    private func handleError(error: APIClientError<OpenWeatherAPIError>) {
-        var message: String = "The network request failed.\n\n"
-        
-        switch error {
-        case .loadingError(let loadingError):
-            message += loadingError.localizedDescription
-        case .decodingError(let decodingError):
-            message += decodingError.localizedDescription
-        case .apiError(let apiError):
-            message += apiError.error?.message.capitalized ?? "Unknown error."
-        }
-        
-        presentRetryAlert(withTitle: "Oops", message: message) { [weak self] _ in
-            self?.viewModel.requestForecast()
-        }
     }
     
 }

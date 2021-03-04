@@ -5,18 +5,15 @@
 //  Created by Ricardo Maqueda Martinez on 25/01/2021.
 //  Copyright © 2021 Ricardo Maqueda Martinez. All rights reserved.
 //
-// https://developer.apple.com/documentation/mapkit/searching_for_nearby_points_of_interest
 
 import UIKit
 import Combine
-import MapKit
 
-class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MKLocalSearchCompleterDelegate {
-    private let viewModel: CitySearchViewModel
+final class CitySearchViewController: BaseTableViewController, UISearchBarDelegate {
+    private let viewModel: CitySearchViewModelProtocol
     private let searchController = UISearchController(searchResultsController: nil)
-    private var searchCompleter: MKLocalSearchCompleter?
-    private var completerResults: [MKLocalSearchCompletion] = []
-
+    private var cancellables = Set<AnyCancellable>()
+    
     required init(viewModel: CitySearchViewModel) {
         self.viewModel = viewModel
         super.init()
@@ -29,30 +26,11 @@ class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MK
         
         configureTableView()
         configureSearch()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
- 
-        configureSearchCompleter()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        stopProvidingCompletions()
+        configureBindings()
     }
     
     // MARK: Configuration
     
-    private func configureSearchCompleter() {
-        searchCompleter = MKLocalSearchCompleter()
-        let filters = MKPointOfInterestFilter(including: [.airport])
-        searchCompleter?.pointOfInterestFilter = filters
-        searchCompleter?.resultTypes = [.address, .pointOfInterest]
-        searchCompleter?.delegate = self
-    }
-
     private func configureTableView() {
         tableView.tableHeaderView = searchController.searchBar
     }
@@ -67,23 +45,28 @@ class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MK
         definesPresentationContext = true
     }
     
-    private func stopProvidingCompletions() {
-        searchCompleter = nil
+    private func configureBindings() {
+        viewModel.citiesPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
     }
-        
+            
     // MARK: TableView DataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        completerResults.count
+        viewModel.cities.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let city = completerResults[indexPath.row]
+        let city = viewModel.cities[indexPath.row]
         
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "CityReuseIdentifier")
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        cell.textLabel?.attributedText = (city.title + " " + city.subtitle).highlightedString(rangeValues: city.titleHighlightRanges)
+        cell.textLabel?.attributedText = city
         
         return cell
     }
@@ -95,55 +78,20 @@ class CitySearchViewController: BaseTableViewController, UISearchBarDelegate, MK
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let city = searchCompleter?.results[indexPath.row] else {
-            return
-        }
-        
-        let searchRequest = MKLocalSearch.Request(completion: city)
-        searchRequest.resultTypes = [.address, .pointOfInterest]
-        search(using: searchRequest)
+        viewModel.didSelectCity(at: indexPath.row)
+        dismissAll()
     }
     
     // MARK: UISearchBar Delegate
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            completerResults = []
-            tableView.reloadData()
-        } else {
-            searchCompleter?.queryFragment = searchText
-        }
+        viewModel.searchCities(searchText: searchText)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         dismissAll()
     }
-    
-    // MARK: MKLocalSearchCompleter Delegate
-    
-    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        completerResults = completer.results
-        tableView.reloadData()
-    }
         
-    // MARK: MKLocalSearch Request
-    
-    private func search(using searchRequest: MKLocalSearch.Request) {
-        MKLocalSearch(request: searchRequest).start { [weak self] response, _ in
-            self?.showCityIfPossible(with: response)
-        }
-    }
-    
-    private func showCityIfPossible(with response: MKLocalSearch.Response?) {
-        if let item = response?.mapItems.first, let name = item.name {
-            let coordinate = City.Coordinate(lat: item.placemark.coordinate.latitude, lon: item.placemark.coordinate.longitude)
-            let city = City(name: name, coordinate: coordinate, timeZone: item.timeZone)
-            dismissAll { [weak self] in
-                self?.viewModel.presentForecast(for: city)
-            }
-        }
-    }
-    
     private func dismissAll(_ completion: (() -> Void)? = nil) {
         searchController.dismiss(animated: false) { [weak self] in
             self?.dismiss(animated: true) {

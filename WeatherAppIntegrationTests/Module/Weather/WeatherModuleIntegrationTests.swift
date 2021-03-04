@@ -20,8 +20,8 @@ final class WeatherModuleIntegrationTests: XCTestCase {
         let storage = CityDiskStorage()
         let provider = WeatherProvider(apiClient: apiClient, storage: storage)
         sut = WeatherViewModel(city: City.mockMadrid,
-                               mapper: WeatherViewModelMapper(),
                                provider: provider,
+                               mapper: WeatherViewModelMapper(),
                                wireframe: SpyWireframeProtocol())
     }
     

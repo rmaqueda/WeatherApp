@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CityTableViewCell: UITableViewCell {
+final class CityTableViewCell: UITableViewCell {
     @IBOutlet private weak var mainText: UILabel!
     @IBOutlet private weak var subTitle: UILabel!
     @IBOutlet private weak var temperature: UILabel!

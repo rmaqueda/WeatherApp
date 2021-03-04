@@ -1,5 +1,5 @@
 //
-//  CityListProtocol.swift
+//  CityListProtocols.swift
 //  OpenWeather
 //
 //  Created by Ricardo Maqueda Martinez on 24/01/2021.
@@ -12,8 +12,7 @@ import Combine
 // sourcery: autoSpy
 protocol CityListViewModelProtocol {
     var cities: [City] { get }
-    var provider: CityListProviderProtocol { get }
-    var wireframe: Wireframe { get }
+    
     var unitTemperature: UnitTemperature { get set }
     
     func deleteCity(at index: Int) throws
@@ -27,15 +26,14 @@ protocol CityListViewModelProtocol {
 // sourcery: autoSpy
 protocol CityListProviderProtocol {
     var cities: [City] { get }
-    var storage: CityStorage { get }
-    
+  
     func save(city: City) throws
     func deleteCity(at index: Int) throws
     func moveCity(from: Int, to: Int) throws
 }
 
 // sourcery: autoSpy
-protocol CityStorage {
+protocol CityStorageProtocol {
     var cities: [City] { get }
     
     func save(city: City) throws
