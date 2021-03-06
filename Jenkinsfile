@@ -2,7 +2,7 @@ pipeline {
   agent { label 'iOS' }
 
   environment {
-    KEYCHAIN_PASSWORD = credentials('KEYCHAIN_PASSWORD'
+    KEYCHAIN_PASSWORD = credentials('KEYCHAIN_PASSWORD')
     OPEN_WEATHER_API_KEY = credentials('OPEN_WEATHER_API_KEY')
     BROWSERSTACK_USER = credentials('BROWSERSTACK_USER')
     BROWSERSTACK_KEY = credentials('BROWSERSTACK_KEY')
