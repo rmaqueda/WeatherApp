@@ -24,7 +24,8 @@ platform :ios do
       output_types: "junit",
       output_directory: 'test',
       derived_data_path: 'build',
-      buildlog_path: 'logs'
+      buildlog_path: 'logs',
+      reset_simulator: true
       )
   end
 
