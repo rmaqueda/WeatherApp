@@ -15,7 +15,6 @@ pipeline {
   stages {
 
     stage('Env') {
-      agent { label 'iOS' }
       steps { 
         sh 'set'
         sh 'security unlock-keychain -p ${KEYCHAIN_PASSWORD} ${HOME}/Library/Keychains/login.keychain'
