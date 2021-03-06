@@ -14,7 +14,7 @@ struct UITestsWireframe {
     
     func presentScreen(for tag: String) {
         guard let uiTestTag = UITestTag(rawValue: tag) else {
-            return
+            fatalError("Invalid UI testing tag.")
         }
         
         let viewModel =  WeatherViewModelMockFactory(uiTestTag: uiTestTag).build()
