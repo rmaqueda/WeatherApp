@@ -2,8 +2,8 @@ pipeline {
   agent { label 'iOS' }
 
   environment {
+    KEYCHAIN_PASSWORD = credentials('KEYCHAIN_PASSWORD'
     OPEN_WEATHER_API_KEY = credentials('OPEN_WEATHER_API_KEY')
-    SONAR_TOKEN = credentials('SONAR_TOKEN')
     BROWSERSTACK_USER = credentials('BROWSERSTACK_USER')
     BROWSERSTACK_KEY = credentials('BROWSERSTACK_KEY')
   }
@@ -17,6 +17,7 @@ pipeline {
     stage('Env') {
       steps { 
         sh 'set'
+        sh 'security unlock-keychain -p ${KEYCHAIN_PASSWORD} ${HOME}/Library/Keychains/login.keychain'
         sh 'cp WeatherApp/Preferences/Secrets_example.plist WeatherApp/Preferences/Secrets.plist'
         sh '/usr/libexec/PlistBuddy -c "Set :OpenWeatherAPIKey ${OPEN_WEATHER_API_KEY}" WeatherApp/Preferences/Secrets.plist'
       }
