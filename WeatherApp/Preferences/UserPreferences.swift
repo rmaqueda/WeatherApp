@@ -1,20 +1,35 @@
 //
-//  Persistence.swift
+//  UserPreferences.swift
 //  WeatherApp
 //
-//  Created by Ricardo Maqueda Martinez on 20/02/2021.
+//  Created by Ricardo Maqueda Martinez on 08/03/2021.
 //
 
 import Foundation
 
-class CityDiskStorage: CityListProviderProtocol {
+// sourcery: autoSpy
+protocol UserPreferencesProtocol {
+    var cities: [City] { get }
+    var temperatureUnit: TemperatureUnit { get }
+    
+    func save(city: City) throws
+    func deleteCity(at index: Int) throws
+    func moveCity(from: Int, to: Int) throws
+    
+    func toggleTemperatureUnit() throws
+}
+
+class UserPreferencesDisk: UserPreferencesProtocol {
     private let citiesKey = "cities"
+    private let temperatureUnitKey = "temperatureUnit"
     private let userDefaults = UserDefaults.standard
     
-    var cities: [City] = []
+    private(set) var cities: [City] = []
+    private(set) var temperatureUnit: TemperatureUnit = .celsius
     
     init() {
         loadCities()
+        loadTemperatureUnit()
     }
     
     private func loadCities() {
@@ -25,8 +40,10 @@ class CityDiskStorage: CityListProviderProtocol {
         cities = (try? JSONDecoder().decode([City].self, from: data)) ?? []
     }
     
-    func isSaved(city: City) -> Bool {
-        cities.contains(city)
+    private func loadTemperatureUnit() {
+        if let rawValue = userDefaults.string(forKey: temperatureUnitKey) {
+            self.temperatureUnit = TemperatureUnit(rawValue: rawValue) ?? TemperatureUnit.celsius
+        }
     }
     
     func save(city: City) throws {
@@ -48,6 +65,11 @@ class CityDiskStorage: CityListProviderProtocol {
         let city = cities.remove(at: from)
         cities.insert(city, at: to)
         try save(cities)
+    }
+    
+    func toggleTemperatureUnit() throws {
+        temperatureUnit.toggle()
+        userDefaults.set(temperatureUnit.rawValue, forKey: temperatureUnitKey)
     }
     
     private func save(_ cities: [City]) throws {

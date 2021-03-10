@@ -11,25 +11,25 @@ import Combine
 
 struct WeatherProvider: WeatherProviderProtocol {
     private let apiClient: APIClientProtocol
-    private let storage: CityListProviderProtocol
+    private let userPreferences: UserPreferencesProtocol
     
-    init(apiClient: APIClientProtocol, storage: CityListProviderProtocol) {
+    init(apiClient: APIClientProtocol, userPreferences: UserPreferencesProtocol) {
         self.apiClient = apiClient
-        self.storage = storage
+        self.userPreferences = userPreferences
     }
         
     func forecast(for city: City) -> AnyPublisher<OpenWeatherResponse, APIClientError<OpenWeatherAPIError>> {
         apiClient.response(for: .get("onecall",
-                                     parameters: ["lat": city.coordinate.lat, "lon": city.coordinate.lon],
+                                     parameters: ["lat": city.coordinate.latitude, "lon": city.coordinate.longitude],
                                      jsonDecoder: JSONDecoder.openWeatherDecoder))
     }
     
     func isSaved(city: City) -> Bool {
-        storage.cities.contains(city)
+        userPreferences.cities.contains(city)
     }
     
     func save(city: City) throws {
-        try storage.save(city: city)
+        try userPreferences.save(city: city)
     }
     
 }

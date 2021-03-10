@@ -10,26 +10,37 @@ import Foundation
 
 struct CityListViewModel: CityListViewModelProtocol {
     var cities: [City] {
-        provider.cities
+        userPreference.cities.map {
+            var city = $0
+            city.setTemperatureString(temperatureUnit: userPreference.temperatureUnit)
+            return city
+        }
     }
-    var unitTemperature: UnitTemperature = .celsius
     
-    private let provider: CityListProviderProtocol
+    var temperatureUnit: TemperatureUnit {
+        userPreference.temperatureUnit
+    }
+    
+    private let userPreference: UserPreferencesProtocol
     private let wireframe: WireframeProtocol
         
-    init(provider: CityListProviderProtocol, wireframe: WireframeProtocol) {
-        self.provider = provider
+    init(userPreference: UserPreferencesProtocol, wireframe: WireframeProtocol) {
+        self.userPreference = userPreference
         self.wireframe = wireframe
     }
     
     // MARK: CityListViewModelProtocol
     
+    func toggleTemperatureUnit() throws {
+        try userPreference.toggleTemperatureUnit()
+    }
+    
     func deleteCity(at index: Int) throws {
-        try provider.deleteCity(at: index)
+        try userPreference.deleteCity(at: index)
     }
     
     func moveCity(from: Int, to: Int) throws {
-        try provider.moveCity(from: from, to: to)
+        try userPreference.moveCity(from: from, to: to)
     }
     
     func presentCitySearch() {

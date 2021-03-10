@@ -42,7 +42,7 @@ class CitySearchProvider: NSObject, CitySearchProviderProtocol, MKLocalSearchCom
         
         MKLocalSearch(request: searchRequest).start { response, _ in
             if let item = response?.mapItems.first, let name = item.name {
-                let coordinate = City.Coordinate(lat: item.placemark.coordinate.latitude, lon: item.placemark.coordinate.longitude)
+                let coordinate = City.Coordinate(latitude: item.placemark.coordinate.latitude, longitude: item.placemark.coordinate.longitude)
                 let city = City(name: name, coordinate: coordinate, timeZone: item.timeZone)
                 completionHandler(city)
             }

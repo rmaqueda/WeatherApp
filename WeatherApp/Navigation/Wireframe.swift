@@ -22,6 +22,8 @@ protocol WireframeProtocol {
 
 struct Wireframe: WireframeProtocol {
     let window: UIWindow
+    let userPreferences: UserPreferencesProtocol
+    
     private let apiClient: APIClient = {
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.timeoutIntervalForRequest = 5.0
@@ -29,19 +31,18 @@ struct Wireframe: WireframeProtocol {
         
         return APIClient(session: session)
     }()
-    private let storage = CityDiskStorage()
+    
     private let navigationController = UINavigationController()
     
     func presentMainScreen() {
         presentCityList()
-        if storage.cities.isEmpty {
+        if userPreferences.cities.isEmpty {
             presentCitySearch()
         }
     }
     
     func presentCityList() {
-        let provider = CityListProvider(storage: storage)
-        let viewModel = CityListViewModel(provider: provider, wireframe: self)
+        let viewModel = CityListViewModel(userPreference: userPreferences, wireframe: self)
         let viewController = CityListViewController(viewModel: viewModel)
 
         navigationController.viewControllers = [viewController]
@@ -60,10 +61,11 @@ struct Wireframe: WireframeProtocol {
     }
     
     func presentForecast(for city: City) {
-        let provider = WeatherProvider(apiClient: apiClient, storage: storage)
+        let provider = WeatherProvider(apiClient: apiClient, userPreferences: userPreferences)
         let viewModel = WeatherViewModel(city: city,
                                          provider: provider,
                                          mapper: WeatherViewModelMapper(),
+                                         userPreferences: userPreferences,
                                          wireframe: self)
         let viewController = WeatherViewController(viewModel: viewModel)
         

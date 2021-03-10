@@ -19,6 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if AppDelegate.isUnitTest {
                 self.window = UIWindow(windowScene: windowScene)
                 self.window?.makeKeyAndVisible()
+                
                 return
             }
             if let tag = AppDelegate.uiTestTag {
@@ -30,8 +31,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             #endif
                     
             ApplicationPreferences.setupAppearance()
-            
-            let wireframe = Wireframe(window: aWindow)
+            let userPreferences = UserPreferencesDisk()
+            let wireframe = Wireframe(window: aWindow, userPreferences: userPreferences)
             wireframe.presentMainScreen()
         }
     }

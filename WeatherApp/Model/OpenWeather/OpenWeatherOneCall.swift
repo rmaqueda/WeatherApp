@@ -4,7 +4,6 @@
 //
 //  Created by Ricardo Maqueda Martinez on 22/02/2021.
 //
-// swiftlint:disable redundant_string_enum_value
 // This structs are generated automatically with https://app.quicktype.io
 import Foundation
 
@@ -16,8 +15,8 @@ struct OpenWeatherAPIError: Error, Codable {
 
 // MARK: - OneCall
 struct OpenWeatherResponse: Codable {
-    let lat: Double
-    let lon: Double
+    let latitude: Double
+    let longitude: Double
     let timezone: String
     let timezoneOffset: Int
     let current: Current
@@ -27,8 +26,8 @@ struct OpenWeatherResponse: Codable {
     let daily: [Daily]
     
     enum CodingKeys: String, CodingKey {
-        case lat = "lat"
-        case lon = "lon"
+        case latitude = "lat"
+        case longitude = "lon"
         case timezone = "timezone"
         case timezoneOffset = "timezone_offset"
         case current = "current"
@@ -58,7 +57,7 @@ struct Alert: Codable {
 
 // MARK: - Current
 struct Current: Codable {
-    let dt: Date
+    let date: Date
     let sunrise: Date
     let sunset: Date
     let temp: Double
@@ -74,7 +73,7 @@ struct Current: Codable {
     let weather: [Weather]
     
     enum CodingKeys: String, CodingKey {
-        case dt = "dt"
+        case date = "dt"
         case sunrise = "sunrise"
         case sunset = "sunset"
         case temp = "temp"
@@ -108,7 +107,7 @@ struct Weather: Codable {
 
 // MARK: - Daily
 struct Daily: Codable {
-    let dt: Date
+    let date: Date
     let sunrise: Date
     let sunset: Date
     let temp: Temp
@@ -125,7 +124,7 @@ struct Daily: Codable {
     let uvi: Double
     
     enum CodingKeys: String, CodingKey {
-        case dt = "dt"
+        case date = "dt"
         case sunrise = "sunrise"
         case sunset = "sunset"
         case temp = "temp"
@@ -147,14 +146,14 @@ struct Daily: Codable {
 struct FeelsLike: Codable {
     let day: Double
     let night: Double
-    let eve: Double
-    let morn: Double
+    let evening: Double
+    let morning: Double
     
     enum CodingKeys: String, CodingKey {
         case day = "day"
         case night = "night"
-        case eve = "eve"
-        case morn = "morn"
+        case evening = "eve"
+        case morning = "morn"
     }
 }
 
@@ -164,22 +163,22 @@ struct Temp: Codable {
     let min: Double
     let max: Double
     let night: Double
-    let eve: Double
-    let morn: Double
+    let evening: Double
+    let morning: Double
     
     enum CodingKeys: String, CodingKey {
         case day = "day"
         case min = "min"
         case max = "max"
         case night = "night"
-        case eve = "eve"
-        case morn = "morn"
+        case evening = "eve"
+        case morning = "morn"
     }
 }
 
 // MARK: - Hourly
 struct Hourly: Codable {
-    let dt: Date
+    let date: Date
     let temp: Double
     let feelsLike: Double
     let pressure: Int
@@ -195,7 +194,7 @@ struct Hourly: Codable {
     let rain: Rain?
     
     enum CodingKeys: String, CodingKey {
-        case dt = "dt"
+        case date = "dt"
         case temp = "temp"
         case feelsLike = "feels_like"
         case pressure = "pressure"
@@ -223,11 +222,11 @@ struct Rain: Codable {
 
 // MARK: - Minutely
 struct Minutely: Codable {
-    let dt: Date
+    let date: Date
     let precipitation: Double
     
     enum CodingKeys: String, CodingKey {
-        case dt = "dt"
+        case date = "dt"
         case precipitation = "precipitation"
     }
 }

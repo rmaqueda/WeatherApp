@@ -63,34 +63,37 @@ extension NumberFormatter {
     func string(from number: Double) -> String? {
         self.string(from: number as NSNumber)
     }
-}
-
-extension MeasurementFormatter {
     
-    static let temperature: MeasurementFormatter = {
-        let formatter = MeasurementFormatter()
-        formatter.unitStyle = .short
-        formatter.numberFormatter = .noDecimal
-        
-        return formatter
-    }()
- 
-    static func string(from: Double?) -> String {
-        guard let value = from else { return "--" }
-        let formatter = MeasurementFormatter.temperature
-        
-        // FixBug Simulator and user temperature format
-        // The Simulator doesn't respect the Temperature Unit setting, so force to work with celsius
-        // https://openradar.appspot.com/radar?id=5042283099455488
-        #if targetEnvironment(simulator)
-            let measurement = Measurement(value: value, unit: UnitTemperature.fahrenheit)
-        #else
-            let measurement = Measurement(value: value, unit: UnitTemperature.celsius)
-        #endif
-        // end FixBug Simulator
-        
-        let temperature = formatter.string(from: measurement)
-        
-        return temperature
+    static func temperatureString(celsius: Double?, unit: TemperatureUnit = .celsius) -> String {
+        guard let value = celsius else {
+            return "--"
+        }
+        switch unit {
+        case .celsius:
+            return celsiusString(celsius: value)
+        case .fahrenheit:
+            return fahrenheitString(celsius: value)
+        }
     }
+    
+    static func celsiusString(celsius: Double) -> String {
+        let formatter = NumberFormatter.noDecimal
+        guard let string = formatter.string(from: celsius) else {
+            return "--"
+        }
+        
+        return string + "°"
+    }
+    
+    static func fahrenheitString(celsius: Double) -> String {
+        let formatter = NumberFormatter.noDecimal
+        let measure = Measurement(value: celsius, unit: UnitTemperature.celsius)
+        let fahrenheit = measure.converted(to: .fahrenheit).value
+        guard let string = formatter.string(from: fahrenheit) else {
+            return "--"
+        }
+        
+        return string + "°"
+    }
+    
 }

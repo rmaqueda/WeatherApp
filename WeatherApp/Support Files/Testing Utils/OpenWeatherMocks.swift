@@ -11,9 +11,8 @@ extension City {
         
     static var mockMadrid: City {
         City(name: "Madrid",
-             coordinate: Coordinate.init(lat: 0.0, lon: 0.0),
-             timeZone: nil,
-             temperature: nil)
+             coordinate: Coordinate.init(latitude: 0.0, longitude: 0.0),
+             timeZone: nil)
     }
 }
 

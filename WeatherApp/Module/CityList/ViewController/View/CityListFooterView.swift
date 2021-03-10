@@ -37,20 +37,11 @@ final class CityListFooterView: UITableViewHeaderFooterView {
         searchButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
     }
     
-    func configure(for unitTemperature: UnitTemperature) {
-        let title = "ºC / ºF"
-        let stringToColor: String
-        switch unitTemperature {
-        case .celsius:
-            stringToColor = "ºC"
-        case .fahrenheit:
-            stringToColor = "ºF"
-        default:
-            stringToColor = "ºC"
-        }
+    func configure(for temperatureUnit: TemperatureUnit) {
+        let title = TemperatureUnit.celsius.rawValue + " / " + TemperatureUnit.fahrenheit.rawValue
+        let stringToColor = temperatureUnit.rawValue
         
         let range = (title as NSString).range(of: stringToColor)
-        
         let mutableAttributedString = NSMutableAttributedString(string: title)
         mutableAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.foreground, range: range)
 

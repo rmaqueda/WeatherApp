@@ -24,7 +24,7 @@ final class WeatherProviderTests: XCTestCase {
         spy = APIClientSpy(baseURL: url)
         spy.response = mock
 
-        sut = WeatherProvider(apiClient: spy, storage: CityDiskStorage())
+        sut = WeatherProvider(apiClient: spy, userPreferences: UserPreferencesDisk())
     }
 
     override func tearDown() {
@@ -44,7 +44,7 @@ final class WeatherProviderTests: XCTestCase {
         let expectedRequest = URLRequest(baseURL: url, apiRequest: expectedAPIRequest)
 
         // when
-        sut.forecast(for: City(name: "stub", coordinate: City.Coordinate(lat: 0, lon: 0), timeZone: nil, temperature: nil))
+        sut.forecast(for: City.mockMadrid)
             .assertNoFailure()
             .sink(receiveValue: {
                 response = $0
@@ -55,7 +55,7 @@ final class WeatherProviderTests: XCTestCase {
         wait(for: [didReceiveValue], timeout: 1)
 
         // then
-        XCTAssertEqual(response?.lat, 51.5002)
+        XCTAssertEqual(response?.latitude, 51.5002)
         XCTAssertTrue(spy.check(method: .response(for: expectedRequest), predicate: CallstackMatcher.times(1)))
     }
 

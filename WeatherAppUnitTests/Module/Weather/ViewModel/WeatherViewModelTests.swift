@@ -22,6 +22,7 @@ final class WeatherViewModelTests: XCTestCase {
         sut = WeatherViewModel(city: City.mockMadrid,
                                provider: spy,
                                mapper: WeatherViewModelMapper(),
+                               userPreferences: UserPreferencesDisk(),
                                wireframe: SpyWireframeProtocol())
     }
     

@@ -17,11 +17,12 @@ final class WeatherModuleIntegrationTests: XCTestCase {
         super.setUp()
         
         let apiClient = APIClient(session: .stubbed)
-        let storage = CityDiskStorage()
-        let provider = WeatherProvider(apiClient: apiClient, storage: storage)
+        let userPreferences = UserPreferencesDisk()
+        let provider = WeatherProvider(apiClient: apiClient, userPreferences: userPreferences)
         sut = WeatherViewModel(city: City.mockMadrid,
                                provider: provider,
                                mapper: WeatherViewModelMapper(),
+                               userPreferences: userPreferences,
                                wireframe: SpyWireframeProtocol())
     }
     
