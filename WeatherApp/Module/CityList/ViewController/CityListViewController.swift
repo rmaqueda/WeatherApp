@@ -58,7 +58,7 @@ final class CityListViewController: BaseTableViewController, CityListFooterViewD
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView: CityListFooterView = tableView.dequeueReusableHeaderFooterView()
         footerView.delegate = self
-        footerView.configure(for: viewModel.unitTemperature)
+        footerView.configure(for: viewModel.temperatureUnit)
         
         return footerView
     }
@@ -100,8 +100,8 @@ final class CityListViewController: BaseTableViewController, CityListFooterViewD
     // MARK: CityListFooterView Delegate
     
     func didPressMagnitudeButton() {
-        // TODO: Finish magnitude change feature
-        //viewModel.unitTemperature.toggle()
+        try? viewModel.toggleTemperatureUnit()
+        tableView.reloadData()
     }
     
     func didPressTWCButton() {

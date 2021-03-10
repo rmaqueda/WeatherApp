@@ -43,7 +43,7 @@ final class CityTableViewCell: UITableViewCell {
         formatter.timeZone = city.timeZone
         subTitle.text = formatter.string(from: Date())
         
-        temperature.text = city.temperature
+        temperature.text = city.temperatureString
     }
 
 }

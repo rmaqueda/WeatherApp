@@ -13,7 +13,9 @@ import Combine
 protocol CityListViewModelProtocol {
     var cities: [City] { get }
     
-    var unitTemperature: UnitTemperature { get set }
+    var temperatureUnit: TemperatureUnit { get }
+    
+    func toggleTemperatureUnit() throws
     
     func deleteCity(at index: Int) throws
     func moveCity(from: Int, to: Int) throws
@@ -21,13 +23,4 @@ protocol CityListViewModelProtocol {
     func presentCitySearch()
     func presentForecast(for city: City)
     func didPressTWC()
-}
-
-// sourcery: autoSpy
-protocol CityListProviderProtocol {
-    var cities: [City] { get }
-  
-    func save(city: City) throws
-    func deleteCity(at index: Int) throws
-    func moveCity(from: Int, to: Int) throws
 }
