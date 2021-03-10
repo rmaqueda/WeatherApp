@@ -38,7 +38,7 @@ final class CityListFooterView: UITableViewHeaderFooterView {
     }
     
     func configure(for temperatureUnit: TemperatureUnit) {
-        let title = "ºC / ºF"
+        let title = TemperatureUnit.celsius.rawValue + " / " + TemperatureUnit.fahrenheit.rawValue
         let stringToColor = temperatureUnit.rawValue
         
         let range = (title as NSString).range(of: stringToColor)
