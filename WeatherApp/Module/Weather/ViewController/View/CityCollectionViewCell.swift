@@ -17,6 +17,10 @@ final class CityCollectionViewCell: UICollectionViewCell, WeatherViewRepresentab
         cityName.accessibilityIdentifier = "CityNameLabel"
         conditions.accessibilityIdentifier = "ConditionsLabel"
         
+        cityName.textColor = .foreground
+        conditions.textColor = .foreground
+        backgroundColor = .background
+        
         resetCell()
     }
 
@@ -31,7 +35,7 @@ final class CityCollectionViewCell: UICollectionViewCell, WeatherViewRepresentab
         conditions.text = nil
     }
     
-    func configure(with section: WeatherViewSectionData, indexPath: IndexPath) {
+    func configure(with section: WeatherViewSection, indexPath: IndexPath) {
         if case let .city(info) = section {
             let city = info
             cityName.text = city.name

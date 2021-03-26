@@ -10,13 +10,13 @@ import Combine
 
 final class WeatherViewController: BaseCollectionViewController {
     private let viewModel: WeatherViewModelProtocol
-    private let layout = WeatherCollectionViewLayout()
+    private let layout: WeatherCollectionViewLayout
     private var cancellables = Set<AnyCancellable>()
     
     required init(viewModel: WeatherViewModelProtocol) {
         self.viewModel = viewModel
-        
-        super.init(collectionViewLayout: layout.createLayout())
+        self.layout = WeatherCollectionViewLayout(viewModel: viewModel)
+        super.init(collectionViewLayout: self.layout.createLayout())
     }
         
     // MARK: View life cycle
@@ -31,7 +31,7 @@ final class WeatherViewController: BaseCollectionViewController {
         
         viewModel.requestForecast()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -41,20 +41,24 @@ final class WeatherViewController: BaseCollectionViewController {
     // MARK: Configuration
     
     private func configureCollectionView() {
+        collectionView.register(ActivityIndicatorCollectionViewCell.self)
         collectionView.register(CityCollectionViewCell.self)
         collectionView.register(TemperatureCollectionViewCell.self)
         collectionView.register(HourForecastCollectionViewCell.self)
-        collectionView.register(ActivityIndicatorCollectionViewCell.self)
     }
     
     private func configureBindings() {
         viewModel.dataSourcePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] viewModel in
-                if let error = viewModel.error {
-                    self?.handleError(error: error)
+                guard let self = self else {
+                    return
                 }
-                self?.collectionView.reloadData()
+                if let error = viewModel.error {
+                    self.handleError(error: error)
+                } else {
+                    self.collectionView.reloadData()
+                }
             }
             .store(in: &cancellables)
     }
@@ -88,15 +92,15 @@ final class WeatherViewController: BaseCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.dataSource.sections[section].metadata.numberOfItems
+        viewModel.dataSource.sections[section].numberOfItems
     }
         
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let section = viewModel.dataSource.sections[indexPath.section]
         
         // swiftlint:disable force_cast
-        // Should dequeue a cell if the nib was previously register, so force unwrap is safe
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: section.metadata.cellClass.reuseIdentifier,
+        // Should dequeue a cell if the nib was previously registered, so force unwrap is safe
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: section.cellClass.reuseIdentifier,
                                                       for: indexPath) as! WeatherViewRepresentable
         // swiftlint:enable force_cast
                     

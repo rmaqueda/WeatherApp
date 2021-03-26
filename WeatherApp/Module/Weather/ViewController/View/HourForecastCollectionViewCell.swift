@@ -17,6 +17,11 @@ final class HourForecastCollectionViewCell: UICollectionViewCell, WeatherViewRep
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        title.textColor = .foreground
+        probabilityPrecipitation.textColor = .foreground
+        subTitle.textColor = .foreground
+        backgroundColor = .background
+        
         resetCell()
     }
     
@@ -32,7 +37,7 @@ final class HourForecastCollectionViewCell: UICollectionViewCell, WeatherViewRep
         subTitle.text = nil
     }
     
-    func configure(with section: WeatherViewSectionData, indexPath: IndexPath) {
+    func configure(with section: WeatherViewSection, indexPath: IndexPath) {
         title.accessibilityIdentifier = "DailyForecastTitle_\(indexPath.row)"
         imageView.accessibilityIdentifier = "DailyForecastImageView_\(indexPath.row)"
         probabilityPrecipitation.accessibilityIdentifier = "DailyForecastPrecipitation_\(indexPath.row)"

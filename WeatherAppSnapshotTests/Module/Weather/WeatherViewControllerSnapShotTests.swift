@@ -19,14 +19,16 @@ final class WeatherViewControllerSnapShotTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        sut = WeatherViewController(viewModel: spy)
-        
         let mock = OpenWeatherResponse.mockMadrid
         let mockMapped = WeatherViewModelMapper().map(city: City.mockMadrid, with: mock)
         
         spy.dataSource = mockMapped
+        spy.underlyingDataSource = mockMapped
         spy.underlyingDataSourcePublisher = $publisher
         spy.underlyingIsSaved = true
+        
+        sut = WeatherViewController(viewModel: spy)
+        
         nav = UINavigationController(rootViewController: sut)
     }
     

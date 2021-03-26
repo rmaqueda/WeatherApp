@@ -8,7 +8,7 @@
 import Foundation
 
 struct WeatherViewModelData {
-    let sections: [WeatherViewSectionData]
+    let sections: [WeatherViewSection]
     let error: APIClientError<OpenWeatherAPIError>?
     
     struct City {
@@ -29,7 +29,7 @@ struct WeatherViewModelData {
         let icon: ForecastIcon?
     }
     
-    init(sections: [WeatherViewSectionData]) {
+    init(sections: [WeatherViewSection]) {
         self.sections = sections
         self.error = nil
     }

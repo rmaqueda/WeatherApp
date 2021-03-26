@@ -21,9 +21,9 @@ struct WeatherViewModelMockFactory {
         
         switch uiTestTag {
         case .weatherHappyPath:
-            viewModel.requestForecastSuccessResult = WeatherViewModelData.mockSuccess
+            viewModel.requestForecastResult = WeatherViewModelData.mockSuccess
         case .weatherErrorPath:
-            viewModel.requestForecastErrorResult = WeatherViewModelData.mockError
+            viewModel.requestForecastResult = WeatherViewModelData.mockError
         }
         
         return viewModel
@@ -35,21 +35,14 @@ class WeatherViewModelMock: WeatherViewModelProtocol {
     @Published private(set) var dataSource: WeatherViewModelData = WeatherViewModelData.activityIndicator()
     var dataSourcePublisher: Published<WeatherViewModelData>.Publisher { $dataSource }
 
-    var requestForecastSuccessResult: WeatherViewModelData?
-    var requestForecastErrorResult: WeatherViewModelData?
+    var requestForecastResult: WeatherViewModelData?
 
     func requestForecast() {
-        if let response = requestForecastSuccessResult {
-            dataSource = response
-        } else if let error = requestForecastErrorResult {
-            dataSource = error
+        if let result = requestForecastResult {
+            dataSource = result
         }
     }
-
-    func cacheSwitchDidChange(isEnable: Bool) {
-        requestForecastSuccessResult = WeatherViewModelData.mockSuccess
-    }
-        
+    
     var isSaved: Bool  = false
     
     func didPressCityList() {

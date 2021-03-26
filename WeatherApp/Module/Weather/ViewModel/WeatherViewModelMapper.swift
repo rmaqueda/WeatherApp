@@ -29,7 +29,11 @@ struct WeatherViewModelMapper {
         let temperatureData = WeatherViewModelData.Temperature(current: temperature, highLow: "H: \(temperatureMax)  L: \(temperatureMin)")
         
         return WeatherViewModelData(
-            sections: [.city(info: city), .temperature(info: temperatureData), .dailyForecast(info: hourly)]
+            sections: [
+                .city(info: city),
+                .temperature(info: temperatureData),
+                .dailyForecast(info: hourly)
+            ]
         )
     }
     

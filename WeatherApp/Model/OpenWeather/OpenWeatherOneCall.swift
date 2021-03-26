@@ -21,7 +21,7 @@ struct OpenWeatherResponse: Codable {
     let timezoneOffset: Int
     let current: Current
     let alerts: [Alert]?
-    let minutely: [Minutely]
+    let minutely: [Minutely]?
     let hourly: [Hourly]
     let daily: [Daily]
     

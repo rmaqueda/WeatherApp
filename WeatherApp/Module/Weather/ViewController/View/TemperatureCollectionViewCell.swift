@@ -18,6 +18,10 @@ final class TemperatureCollectionViewCell: UICollectionViewCell, WeatherViewRepr
         temperature.accessibilityIdentifier = "TemperatureLabel"
         highLowTemperature.accessibilityIdentifier = "HighLowTemperatureLabel"
         
+        temperature.textColor = .foreground
+        highLowTemperature.textColor = .foreground
+        backgroundColor = .background
+        
         resetCell()
     }
     
@@ -32,7 +36,7 @@ final class TemperatureCollectionViewCell: UICollectionViewCell, WeatherViewRepr
         highLowTemperature.text = nil
     }
     
-    func configure(with section: WeatherViewSectionData, indexPath: IndexPath) {
+    func configure(with section: WeatherViewSection, indexPath: IndexPath) {
         if case let .temperature(info) = section {
             let temp = info
             temperature.text = temp.current

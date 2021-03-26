@@ -11,20 +11,22 @@ import Foundation
 import UIKit
 
 struct WeatherCollectionViewLayout {
+    let viewModel: WeatherViewModelProtocol
     
     func createLayout() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout { sectionIndex, _ in
-            let section = WeatherViewSectionType.allCases[sectionIndex]
-            
+            let section = viewModel.dataSource.sections[sectionIndex]
+
             switch section {
             case .city:
-                return self.oneItemLayout(itemHeight: section.size.height)
+                return oneItemLayout(itemHeight: section.size.height)
             case .temperature:
-                return self.oneItemLayout(itemHeight: section.size.height)
+                return oneItemLayout(itemHeight: section.size.height)
             case .dailyForecast:
-                return self.horizontalScrollLayout(itemSize: section.size, numberItems: section.numberOfItems)
+                return horizontalScrollLayout(itemSize: section.size,
+                                                   numberItems: section.numberOfItems)
             case .activityIndicator:
-                return self.oneItemLayout(itemHeight: section.size.height)
+                return oneItemLayout(itemHeight: section.size.height)
             }
         }
     }
@@ -86,9 +88,9 @@ struct ForecastLayoutGroup {
         var layoutGroup: NSCollectionLayoutGroup
         switch direction {
         case .vertical:
-            layoutGroup = .vertical(layoutSize: groupSize, subitem: item, count: items)
+            layoutGroup = .vertical(layoutSize: groupSize, subitems: [item])
         case .horizontal:
-            layoutGroup = .horizontal(layoutSize: groupSize, subitem: item, count: items)
+            layoutGroup = .horizontal(layoutSize: groupSize, subitems: [item])
         }
         
         return layoutGroup

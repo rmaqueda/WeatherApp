@@ -46,8 +46,6 @@ final class WeatherViewModel: WeatherViewModelProtocol {
     }
     
     func requestForecast() {
-        dataSource = WeatherViewModelData.activityIndicator()
-        
         provider.forecast(for: city)
             .map({
                 self.city.temperatureCelsius = $0.current.temp

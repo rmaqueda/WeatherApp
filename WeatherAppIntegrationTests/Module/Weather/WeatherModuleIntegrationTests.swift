@@ -38,7 +38,7 @@ final class WeatherModuleIntegrationTests: XCTestCase {
         try HTTPStubProtocol.stubForecastRequest()
         let didReceiveActivityIndicator = expectation(description: "didReceiveValue")
         let didReceiveSections = expectation(description: "didReceiveValue")
-        var expectedSections: [WeatherViewSectionData]?
+        var expectedSections: [WeatherViewSection]?
         
         // when
         sut.requestForecast()
@@ -49,7 +49,7 @@ final class WeatherModuleIntegrationTests: XCTestCase {
                 let sections = response.sections
                 
                 if let firstSection = sections.first,
-                   case WeatherViewSectionData.activityIndicator = firstSection {
+                   case WeatherViewSection.activityIndicator = firstSection {
                     didReceiveActivityIndicator.fulfill()
                 } else {
                     expectedSections = sections
@@ -80,7 +80,7 @@ final class WeatherModuleIntegrationTests: XCTestCase {
             .receive(on: DispatchQueue.main)
             .sink { response in
                 if let firstSection = response.sections.first,
-                   case WeatherViewSectionData.activityIndicator = firstSection {
+                   case WeatherViewSection.activityIndicator = firstSection {
                     didReceiveActivityIndicator.fulfill()
                 } else {
                     expectedResponse = response

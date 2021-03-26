@@ -1,12 +1,12 @@
 # Weather App
 
-It's an IOS project written in Swift. The challenge is to develop a weather application following some of the rules of [clean architecture](https://pusher.com/tutorials/clean-architecture-introduction) and a good test coverage.
+It's an IOS project written in Swift. The challenge is to develop a weather application following some of the rules of [clean architecture](https://pusher.com/tutorials/clean-architecture-introduction) and a large test coverage.
 
 If you have any feedback I would love to hear it!
 
 ## How to build
 
-The project uses Cocoapod to manage the dependecies, so to build the project you will need:
+The project uses Cocoapod to manage dependencies, so to build the project you will need:
 
 ```
 # git clone https://github.com/rmaqueda/WeatherApp
@@ -15,7 +15,7 @@ The project uses Cocoapod to manage the dependecies, so to build the project you
 # open WeatherApp.xcworkspace
 ```
 
-The first build will be fail and ask you to enter the Open Weather API Key, you can get one [here](https://openweathermap.org/api)
+The first time you build the project it'll fail and ask you to enter the Open Weather API Key, you can get one [here](https://openweathermap.org/api)
 
 Here a brief description of the main topics:
 
@@ -43,7 +43,7 @@ This's an object diagram of Weather module:
 
 ## Swift
 
-The minimum developer target is iOS 13 because of **Combine** and **Compositional Layout** requirements.
+The minimum developer target is iOS 13 because the project uses **Combine** and **Compositional Layout**.
 
 ## UI
 
@@ -59,7 +59,7 @@ I've added [TestSpy](https://github.com/f-meloni/TestSpy) util tool. This helps 
 
 I'm using [Sourcery](https://github.com/krzysztofzablocki/Sourcery) to auto-generate spy objects, [👀 build script](https://github.com/rmaqueda/WeatherApp/blob/main/Scripts/Build-Phases/sourcery.sh)
 
-There are three different test targets:
+There are four different test targets:
 
 - **WeatherAppUnitTests**: Unit tests, all of them are using spy objects.
 
@@ -71,7 +71,7 @@ There are three different test targets:
   
     -- System test:  End to end, black box tests. they are launching the application as it is and performing some actions to check their results at the UI layer.
 
-- **WeatherAppSnapshotTests**: Snapshot tests're basic tests of the main screen comparing snapshots and recursive description of the UI. [👀 snapshops](https://github.com/rmaqueda/WeatherApp/tree/main/WeatherAppSnapshotTests/Module/Weather/__Snapshots__/WeatherViewControllerSnapShotTests)
+- **WeatherAppSnapshotTests**: Snapshot tests're basic tests of the main screen comparing snapshots and recursive description of the UI. [👀 snapshots](https://github.com/rmaqueda/WeatherApp/tree/main/WeatherAppSnapshotTests/Module/Weather/__Snapshots__/WeatherViewControllerSnapShotTests)
 
 The project is integrated with Jenkins and [Browserstack](https://www.browserstack.com/) and the pipeline runs tests after detecting new commits in parallel on nine different devices:
 

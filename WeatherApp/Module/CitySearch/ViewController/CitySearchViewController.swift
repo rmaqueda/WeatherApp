@@ -36,6 +36,7 @@ final class CitySearchViewController: BaseTableViewController, UISearchBarDelega
     }
     
     private func configureSearch() {
+        searchController.searchBar.tintColor = .background
         searchController.searchBar.barStyle = .black
         searchController.searchBar.delegate = self
         searchController.searchBar.showsCancelButton = true

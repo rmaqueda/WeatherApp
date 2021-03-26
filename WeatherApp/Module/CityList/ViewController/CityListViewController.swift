@@ -24,7 +24,7 @@ final class CityListViewController: BaseTableViewController, CityListFooterViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .clear
+        view.backgroundColor = .background
         configureTableView()
     }
     

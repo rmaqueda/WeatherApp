@@ -9,31 +9,11 @@
 import Foundation
 import UIKit
 
-enum WeatherViewSectionType: Int, CaseIterable {
-    case city
-    case temperature
-    case dailyForecast
+enum WeatherViewSection {
+    case city(info: WeatherViewModelData.City)
+    case temperature(info: WeatherViewModelData.Temperature)
+    case dailyForecast(info: [WeatherViewModelData.HourCondition])
     case activityIndicator
-    
-    var numberOfItems: Int {
-        if case .dailyForecast = self {
-            return 24
-        }
-        return 1
-    }
-    
-    var size: CGSize {
-        switch self {
-        case .city:
-            return CGSize(width: 200, height: 90)
-        case .temperature:
-            return CGSize(width: 200, height: 140)
-        case .dailyForecast:
-            return CGSize(width: 50, height: 100)
-        case .activityIndicator:
-            return CGSize(width: 200, height: 300)
-        }
-    }
     
     var cellClass: ReusableView.Type {
         switch self {
@@ -47,24 +27,30 @@ enum WeatherViewSectionType: Int, CaseIterable {
             return ActivityIndicatorCollectionViewCell.self
         }
     }
-}
-
-enum WeatherViewSectionData {
-    case city(info: WeatherViewModelData.City)
-    case temperature(info: WeatherViewModelData.Temperature)
-    case dailyForecast(info: [WeatherViewModelData.HourCondition])
-    case activityIndicator
     
-    var metadata: WeatherViewSectionType {
+    var numberOfItems: Int {
         switch self {
         case .city:
-            return .city
+            return 1
         case .temperature:
-            return .temperature
+            return 1
         case .dailyForecast:
-            return .dailyForecast
+            return 24
         case .activityIndicator:
-            return .activityIndicator
+            return 1
+        }
+    }
+    
+    var size: CGSize {
+        switch self {
+        case .city:
+            return CGSize(width: 200, height: 90)
+        case .temperature:
+            return CGSize(width: 200, height: 140)
+        case .dailyForecast:
+            return CGSize(width: 50, height: 100)
+        case .activityIndicator:
+            return CGSize(width: 200, height: 300)
         }
     }
 

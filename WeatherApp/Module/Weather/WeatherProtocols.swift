@@ -29,7 +29,7 @@ protocol WeatherViewModelProtocol {
 // MARK: View Protocol
 
 protocol WeatherViewRepresentable: UICollectionViewCell {
-    func configure(with section: WeatherViewSectionData, indexPath: IndexPath)
+    func configure(with section: WeatherViewSection, indexPath: IndexPath)
 }
 
 // MARK: Data Provider
