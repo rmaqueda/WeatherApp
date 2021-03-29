@@ -14,7 +14,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let aWindow = UIWindow(windowScene: windowScene)
             self.window = aWindow
-
+            ApplicationPreferences.setupAppearance()
+            
+            // Avoid to load the application logic during unit test.
+            // Make the unit tests fast and avoid unnecessary: network requests, load stacks, etc.
             #if DEBUG
             if AppDelegate.isUnitTest {
                 self.window = UIWindow(windowScene: windowScene)
@@ -22,6 +25,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 
                 return
             }
+            
+            // Get UI testing tag and load the app with specified mock data.
             if let tag = AppDelegate.uiTestTag {
                 let wireframe = UITestsWireframe(window: aWindow)
                 wireframe.presentScreen(for: tag)
@@ -30,7 +35,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
             #endif
                     
-            ApplicationPreferences.setupAppearance()
             let userPreferences = UserPreferencesDisk()
             let wireframe = Wireframe(window: aWindow, userPreferences: userPreferences)
             wireframe.presentMainScreen()

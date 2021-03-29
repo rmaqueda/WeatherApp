@@ -12,7 +12,7 @@ import UIKit
 // The file has constants, so force unwrap is safe.
 struct ApplicationPreferences {
     private static var secrets: [String: String] = {
-        var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
+        var propertyListFormat = PropertyListSerialization.PropertyListFormat.xml
         let plistPath = Bundle.main.path(forResource: "Secrets", ofType: "plist")!
         let plistXML = FileManager.default.contents(atPath: plistPath)!
         let dict = try? PropertyListSerialization.propertyList(from: plistXML,

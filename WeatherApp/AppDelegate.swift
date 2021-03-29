@@ -15,6 +15,7 @@ import Firebase
     #endif
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Avoid load the three party libraries during unit test.
         #if DEBUG
         guard !AppDelegate.isUnitTest else {
             return true
