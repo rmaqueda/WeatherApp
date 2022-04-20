@@ -46,7 +46,7 @@ class HTTPStubProtocol: URLProtocol {
             return true
         } else {
             // Here Could be possible crash on system networks request during the tests, with:
-            //fatalError("Stub missing the request'll go to system call.")
+            // fatalError("Stub missing the request'll go to system call.")
             return false
         }
     }

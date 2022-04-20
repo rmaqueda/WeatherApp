@@ -9,7 +9,7 @@
 import Foundation
 
 enum ForecastIcon: String, Decodable {
-    //Day
+    // Day
     case clearSky = "01d"
     case fewClouds = "02d"
     case scatteredClouds = "03d"

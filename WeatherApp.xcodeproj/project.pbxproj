@@ -1164,7 +1164,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Scripts/Build-Phases/sourcery.sh\n./Scripts/Build-Phases/copy_secrets.sh\n./Scripts/Build-Phases/swiftlint.sh\n";
+			shellScript = "./Scripts/Build-Phases/sourcery.sh\n./Scripts/Build-Phases/swiftlint.sh\n./Scripts/Build-Phases/copy_secrets.sh\n";
 			showEnvVarsInLog = 0;
 		};
 		BFBBB109A8EE1F2DB5C5FE44 /* [CP] Check Pods Manifest.lock */ = {

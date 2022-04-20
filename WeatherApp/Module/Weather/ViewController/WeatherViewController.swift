@@ -51,13 +51,10 @@ final class WeatherViewController: BaseCollectionViewController {
         viewModel.dataSourcePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] viewModel in
-                guard let self = self else {
-                    return
-                }
                 if let error = viewModel.error {
-                    self.handleError(error: error)
+                    self?.handleError(error: error)
                 } else {
-                    self.collectionView.reloadData()
+                    self?.collectionView.reloadData()
                 }
             }
             .store(in: &cancellables)
