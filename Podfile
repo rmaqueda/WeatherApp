@@ -14,7 +14,7 @@ target 'WeatherApp' do
 
   target 'WeatherAppSnapshotTests' do
     inherit! :search_paths
-    pod 'SnapshotTesting', '~> 1.8.0'
+    pod 'SnapshotTesting', '~> 1.9.0'
   end
 
   target 'WeatherAppUITests' do

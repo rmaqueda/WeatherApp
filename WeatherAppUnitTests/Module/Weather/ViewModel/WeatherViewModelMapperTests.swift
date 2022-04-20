@@ -55,7 +55,7 @@ final class WeatherViewModelMapperTests: XCTestCase {
             let firstElement = response.hourly[0]
             
             XCTAssertEqual(firstForecast.date.description, firstElement.date.description)
-            XCTAssertEqual(firstForecast.title, "07")
+            XCTAssertEqual(firstForecast.title, "08")
             XCTAssertEqual(firstForecast.subTitle, "9°")
             XCTAssertEqual(firstForecast.probabilityPrecipitation, NumberFormatter.percentage.string(from: firstElement.pop))
             XCTAssertEqual(firstForecast.icon, .brokenCloudsNight)
