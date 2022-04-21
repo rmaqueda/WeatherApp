@@ -19,6 +19,8 @@ final class WeatherViewControllerSnapShotTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
+        // isRecording = true
+        
         let mock = OpenWeatherResponse.mockMadrid
         let mockMapped = WeatherViewModelMapper().map(city: City.mockMadrid, with: mock)
         
