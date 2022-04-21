@@ -45,7 +45,7 @@ final class WeatherViewModelMapperTests: XCTestCase {
             XCTAssertEqual(temperature.current, NumberFormatter.temperatureString(celsius: response.current.temp, unit: .celsius))
             XCTAssertEqual(temperature.highLow, "H: 12°  L: 8°")
         } else {
-            XCTFail("Index 1 should be a city")
+            XCTFail("Index 1 should be a forecast")
         }
         
         if case let .dailyForecast(info: dailyForecast) = viewDataModel.sections[2] {
