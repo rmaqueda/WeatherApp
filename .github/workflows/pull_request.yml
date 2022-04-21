@@ -14,7 +14,6 @@ jobs:
         run: pod install
       - name: Build and test
         run: |
-          xcodebuild clean test -workspace WeatherApp.xcworkspace	-scheme WeatherApp -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
-          set -o pipefail && xcodebuild clean test -workspace WeatherApp.xcworkspace -scheme WeatherApp -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO | tee xcodebuild.log | xcpretty --test
+          xcodebuild clean test -workspace WeatherApp.xcworkspace -scheme WeatherApp -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO | tee xcodebuild.log | xcpretty --test && exit ${PIPESTATUS[0]}
         env: 
          destination: ${{ matrix.destination }}
