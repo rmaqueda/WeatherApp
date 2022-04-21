@@ -10,6 +10,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+
+      - name: Cache CocoaPod
+        uses: actions/cache@v2
+          with:
+            path: Pods
+            key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+            restore-keys: |
+              ${{ runner.os }}-pods-
       
       - name: OpenWeather API Key
         run: |
