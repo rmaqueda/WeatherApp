@@ -16,10 +16,11 @@ jobs:
         run: |
           cp WeatherApp/Preferences/Secrets_example.plist WeatherApp/Preferences/Secrets.plist
           /usr/libexec/PlistBuddy -c "Set :OpenWeatherAPIKey ${OPEN_WEATHER_API_KEY}" WeatherApp/Preferences/Secrets.plist
-      
+
       - name: CocoaPod Install
         run: pod install
       
       - name: Build and test
-        run: xcodebuild clean test -workspace WeatherApp.xcworkspace -scheme WeatherApp -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO | tee xcodebuild.log | xcpretty --test && exit ${PIPESTATUS[0]}
         env: destination: ${{ matrix.destination }}
+        run: xcodebuild clean test -workspace WeatherApp.xcworkspace -scheme WeatherApp -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO | tee xcodebuild.log | xcpretty --test && exit ${PIPESTATUS[0]}
+        
