@@ -54,6 +54,8 @@ final class WeatherViewModelMapperTests: XCTestCase {
             let firstForecast = dailyForecast[0]
             let firstElement = response.hourly[0]
             
+            print(DateFormatter.hour.locale)
+            
             XCTAssertEqual(firstForecast.date.description, firstElement.date.description)
             XCTAssertEqual(firstForecast.title, "08")
             XCTAssertEqual(firstForecast.subTitle, "9°")
