@@ -57,7 +57,7 @@ final class WeatherViewModelMapperTests: XCTestCase {
             print("Locale is: \(DateFormatter.hour.locale!)")
             
             XCTAssertEqual(firstForecast.date.description, firstElement.date.description)
-            XCTAssertEqual(firstForecast.title, "08")
+            XCTAssertEqual(firstForecast.title, "07")
             XCTAssertEqual(firstForecast.subTitle, "9°")
             XCTAssertEqual(firstForecast.probabilityPrecipitation, NumberFormatter.percentage.string(from: firstElement.pop))
             XCTAssertEqual(firstForecast.icon, .brokenCloudsNight)
