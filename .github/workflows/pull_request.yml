@@ -30,7 +30,7 @@ jobs:
         run: pod install
       
       - name: Build and test
-        run: xcodebuild clean test -workspace WeatherApp.xcworkspace -scheme WeatherApp -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO | tee xcodebuild.log | xcpretty --test && exit ${PIPESTATUS[0]}
+        run: bundle exec fastlane tests
         env: 
           destination: ${{ matrix.destination }}
         
