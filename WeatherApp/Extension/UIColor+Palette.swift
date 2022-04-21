@@ -11,11 +11,11 @@ import UIKit
 extension UIColor {
     
     static var foreground: UIColor {
-        UIColor(named: "ForegroundColor")!
+        UIColor(named: "First")!
     }
     
     static var background: UIColor {
-        UIColor(named: "BackgroundColor")!
+        UIColor(named: "Second")!
     }
     
     static var unSelected: UIColor {

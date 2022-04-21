@@ -45,7 +45,7 @@ final class WeatherViewModelMapperTests: XCTestCase {
             XCTAssertEqual(temperature.current, NumberFormatter.temperatureString(celsius: response.current.temp, unit: .celsius))
             XCTAssertEqual(temperature.highLow, "H: 12°  L: 8°")
         } else {
-            XCTFail("Index 1 should be a city")
+            XCTFail("Index 1 should be a forecast")
         }
         
         if case let .dailyForecast(info: dailyForecast) = viewDataModel.sections[2] {
@@ -54,8 +54,10 @@ final class WeatherViewModelMapperTests: XCTestCase {
             let firstForecast = dailyForecast[0]
             let firstElement = response.hourly[0]
             
+            print("Locale is: \(DateFormatter.hour.locale!)")
+            
             XCTAssertEqual(firstForecast.date.description, firstElement.date.description)
-            XCTAssertEqual(firstForecast.title, "08")
+            XCTAssertEqual(firstForecast.title, "07")
             XCTAssertEqual(firstForecast.subTitle, "9°")
             XCTAssertEqual(firstForecast.probabilityPrecipitation, NumberFormatter.percentage.string(from: firstElement.pop))
             XCTAssertEqual(firstForecast.icon, .brokenCloudsNight)

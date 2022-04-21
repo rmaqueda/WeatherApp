@@ -1,0 +1,39 @@
+on: pull_request
+name: Test
+jobs:
+  test:
+    name: Test
+    runs-on: macOS-latest
+    strategy:
+        matrix:
+          destination: ['platform=iOS Simulator,name=iPhone 11']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Cache CocoaPod
+        uses: actions/cache@v2
+        with:
+          path: Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: OpenWeather API Key
+        run: |
+          cp WeatherApp/Preferences/Secrets_example.plist WeatherApp/Preferences/Secrets.plist
+          /usr/libexec/PlistBuddy -c "Set :OpenWeatherAPIKey ${OPEN_WEATHER_API_KEY}" WeatherApp/Preferences/Secrets.plist
+        env: 
+          OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
+
+      - name: CocoaPod Install
+        run: pod install
+      
+      - name: Build and test
+        run: bundle exec fastlane tests
+        env: 
+          destination: ${{ matrix.destination }}
+        

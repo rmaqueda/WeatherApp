@@ -3,7 +3,7 @@ default_platform(:ios)
 platform :ios do
 
   before_all do
-    xcode_select("/Applications/Xcode_12.3.app")
+    xcode_select("/Applications/Xcode_13.2.1.app")
   end
 
   desc "Lint all targets with Swiftlint."
@@ -19,7 +19,6 @@ platform :ios do
     run_tests(
       # xcpretty has an issue with junit report and test in mutiples devices: https://github.com/fastlane/fastlane/issues/10276
       # devices: ["iPhone SE 13.6", "iPhone SE 14.0", "iPad Air 2 13.6", "iPad Air 2 14.0"],
-      devices: ["iPhone SE 14.0"],
       disable_concurrent_testing: true,
       output_types: "junit",
       output_directory: 'test',
