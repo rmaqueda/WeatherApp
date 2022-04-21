@@ -12,10 +12,10 @@ jobs:
         uses: actions/checkout@main
       
       - name: OpenWeather API Key
-        env: OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
+        env: openWeatherApi: ${{ secrets.OPEN_WEATHER_API_KEY }}
         run: |
           cp WeatherApp/Preferences/Secrets_example.plist WeatherApp/Preferences/Secrets.plist
-          /usr/libexec/PlistBuddy -c "Set :OpenWeatherAPIKey ${OPEN_WEATHER_API_KEY}" WeatherApp/Preferences/Secrets.plist
+          /usr/libexec/PlistBuddy -c "Set :OpenWeatherAPIKey ${openWeatherApi}" WeatherApp/Preferences/Secrets.plist
 
       - name: CocoaPod Install
         run: pod install
