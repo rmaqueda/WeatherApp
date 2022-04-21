@@ -13,11 +13,11 @@ jobs:
 
       - name: Cache CocoaPod
         uses: actions/cache@v2
-          with:
-            path: Pods
-            key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-            restore-keys: |
-              ${{ runner.os }}-pods-
+        with:
+          path: Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
       
       - name: OpenWeather API Key
         run: |
