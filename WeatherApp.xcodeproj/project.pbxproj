@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		116C9BF72812945200ACFADC /* Constants.plist in Resources */ = {isa = PBXBuildFile; fileRef = 116C9BF62812945200ACFADC /* Constants.plist */; };
 		12FEB150E78050A52D1AFA24 /* Pods_WeatherApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EDBB2D5C1BD986E293A6325 /* Pods_WeatherApp.framework */; };
 		712B8A5F080DA712F4A5547A /* Pods_WeatherAppUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7144BD179762F18A8B1F333F /* Pods_WeatherAppUnitTests.framework */; };
 		8C02025A25E75777008CF2AA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C02025925E75777008CF2AA /* GoogleService-Info.plist */; };
@@ -141,6 +142,7 @@
 /* Begin PBXFileReference section */
 		0A79EA8A2DE6B36FFA5F1BB9 /* Pods-WeatherApp-WeatherAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp-WeatherAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-WeatherApp-WeatherAppUITests/Pods-WeatherApp-WeatherAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		0EDBB2D5C1BD986E293A6325 /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		116C9BF62812945200ACFADC /* Constants.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Constants.plist; sourceTree = "<group>"; };
 		33911BD88C28C64A7C19680D /* Pods-WeatherAppUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherAppUnitTests.release.xcconfig"; path = "Target Support Files/Pods-WeatherAppUnitTests/Pods-WeatherAppUnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		517BC318141A0EADDE1F62F2 /* Pods-WeatherAppSnapshotTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherAppSnapshotTests.debug.xcconfig"; path = "Target Support Files/Pods-WeatherAppSnapshotTests/Pods-WeatherAppSnapshotTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6A90DB5011C72596FDD9BE82 /* Pods-WeatherApp-WeatherAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp-WeatherAppUITests.release.xcconfig"; path = "Target Support Files/Pods-WeatherApp-WeatherAppUITests/Pods-WeatherApp-WeatherAppUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -707,6 +709,7 @@
 				8C8E1D3225D6632D006D8E73 /* ApplicationPreferences.swift */,
 				8C7F492725F5F8CF0069279D /* UserPreferences.swift */,
 				8C8E1D5125D664B8006D8E73 /* Secrets.plist */,
+				116C9BF62812945200ACFADC /* Constants.plist */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -990,6 +993,7 @@
 				8C39EC7B25CD2EE300265F3E /* ActivityIndicatorCollectionViewCell.xib in Resources */,
 				8C3DCD7B25CEA81E001B77B4 /* OpenWeatherResponseLondon.json in Resources */,
 				8C10488B25CBAF8400282A3E /* LaunchScreen.storyboard in Resources */,
+				116C9BF72812945200ACFADC /* Constants.plist in Resources */,
 				8C39EBF725CC32F700265F3E /* CityCollectionViewCell.xib in Resources */,
 				8C39EBE625CC2CD200265F3E /* HourForecastCollectionViewCell.xib in Resources */,
 				8C71586425E0D36100583CB6 /* CityListFooterView.xib in Resources */,

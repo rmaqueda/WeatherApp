@@ -21,13 +21,22 @@ struct ApplicationPreferences {
         return dict as! [String: String]
     }()
     
+    private static var constants: [String: String] = {
+        var propertyListFormat = PropertyListSerialization.PropertyListFormat.xml
+        let plistPath = Bundle.main.path(forResource: "Constants", ofType: "plist")!
+        let plistXML = FileManager.default.contents(atPath: plistPath)!
+        let dict = try? PropertyListSerialization.propertyList(from: plistXML,
+                                                               options: .mutableContainersAndLeaves,
+                                                               format: &propertyListFormat)
+        return dict as! [String: String]
+    }()
+    
     static let googleAPIKey: String? = secrets["GoogleAPIKey"]
     static let openWeatherAPIKey: String = secrets["OpenWeatherAPIKey"]!
-    static let openWeatherAPIURL = URL(string: "https://api.openweathermap.org/data/2.5/")!
-    static let openWeatherAPIUnit = "metric"
-    static let openWeatherWebURL = URL(string: "https://www.weather.com")!
-    
-    static let language = Locale.current.languageCode ?? "en"
+    static let openWeatherAPIURL = URL(string: constants["OpenWeatherAPIURL"]!)!
+    static let openWeatherAPIUnit = constants["OpenWeatherAPIUnit"]!
+    static let openWeatherWebURL = URL(string: constants["OpenWeatherWebURL"]!)!
+    static let language = Locale.current.languageCode ?? constants["Language"]!
     
     static func setupAppearance() {
         UICollectionView.appearance().backgroundColor = .background
