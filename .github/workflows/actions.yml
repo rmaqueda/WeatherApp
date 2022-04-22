@@ -44,7 +44,7 @@ jobs:
       - name: 'Save Xcode build log'
         uses: actions/upload-artifact@v3
           with:
-          name: WeatherApp-WeatherApp.log
-          path: logs
-          retention-days: 5
+            name: WeatherApp-WeatherApp.log
+            path: logs
+            retention-days: 5
         
