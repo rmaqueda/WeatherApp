@@ -41,10 +41,10 @@ jobs:
       - name: Build and test
         run: bundle exec fastlane tests
 
-    - name: 'Save Xcode build log'
-      uses: actions/upload-artifact@v3
-      with:
-        name: WeatherApp-WeatherApp.log
-        path: logs
-        retention-days: 5
+      - name: 'Save Xcode build log'
+        uses: actions/upload-artifact@v3
+          with:
+          name: WeatherApp-WeatherApp.log
+          path: logs
+          retention-days: 5
         
