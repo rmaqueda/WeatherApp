@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - main
-      - 'releases/**'
-      
+      - 'release/**'
+
 name: Test
 jobs:
   test:
@@ -22,12 +22,15 @@ jobs:
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
-      
+
       - name: Ruby setup
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
           bundler-cache: true
+
+      - name: CocoaPod install
+        run: pod install
 
       - name: Setup secrets
         run: |
@@ -36,9 +39,6 @@ jobs:
         env: 
           OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
 
-      - name: CocoaPod install
-        run: pod install
-      
       - name: Build and test
         run: bundle exec fastlane tests
 
