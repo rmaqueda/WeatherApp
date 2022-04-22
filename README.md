@@ -105,7 +105,7 @@ SwiftLint is set up in all targets. [👀 rules](https://github.com/rmaqueda/Wea
 
 I've used [CPD](https://pmd.github.io/latest/pmd_userdocs_cpd.html) to detect duplicate code blocks automatically inline during developer time, this's pretty cool because you've an early idea of copy paste code block with a Xcode warnings.
 
-## Continuous Integration
+## Continuous Integration (obsolete now using GitHub Actions)
 
 I've used Fastlane to simplify all the build and test commands [👀 Fastfile](https://github.com/rmaqueda/WeatherApp/blob/main/fastlane/Fastfile).
 
