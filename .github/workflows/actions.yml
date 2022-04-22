@@ -4,15 +4,16 @@ on:
     branches:
       - main
       - 'releases/**'
+      
 name: Test
 jobs:
   test:
     name: Test
     runs-on: macOS-latest
-
     steps:
+
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v2
 
       - name: Cache CocoaPod
         uses: actions/cache@v2
@@ -35,7 +36,7 @@ jobs:
         env: 
           OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
 
-      - name: CocoaPod Install
+      - name: CocoaPod install
         run: pod install
       
       - name: Build and test
