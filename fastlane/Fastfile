@@ -17,8 +17,6 @@ platform :ios do
   desc "Run unit tests in iOS sumilator."
   lane :tests do
     run_tests(
-      # xcpretty has an issue with junit report and test in mutiples devices: https://github.com/fastlane/fastlane/issues/10276
-      # devices: ["iPhone SE 13.6", "iPhone SE 14.0", "iPad Air 2 13.6", "iPad Air 2 14.0"],
       disable_concurrent_testing: true,
       output_types: "junit",
       output_directory: 'test',

@@ -9,6 +9,7 @@ test
 
 # Reports
 cpd-output.xml
+fastlane/report.xml
 
 # Files containing secrets 
 WeatherApp/Preferences/Secrets.plist
