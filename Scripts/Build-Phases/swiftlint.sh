@@ -17,7 +17,6 @@ run_swiftlint() {
 }
 
 if [[ -e "${SWIFT_LINT}" ]]; then
-    echo "SwiftLint version: $(${SWIFT_LINT} version)"
     # Run for staged files
     for filename in $(git diff --diff-filter=d --name-only);
     do
@@ -43,4 +42,4 @@ fi
 END_DATE=$(date +"%s")
 DIFF=$(($END_DATE - $START_DATE))
 echo "SwiftLint took $(($DIFF / 60)) minutes and $(($DIFF % 60)) seconds to complete."
-exit $hasErrors```
+exit $hasErrors
