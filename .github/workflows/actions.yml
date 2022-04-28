@@ -53,7 +53,7 @@ jobs:
         env:
           project: 'WeatherApp.xcodeproj'
           params: '
-          --build-directory ./DerivedData
+          --build-directory ./build
           --output-directory ./reports
           --scheme WeatherApp
           --binary-basename WeatherApp
