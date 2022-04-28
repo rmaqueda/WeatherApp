@@ -40,20 +40,20 @@ final class WeatherViewControllerSnapShotTests: XCTestCase {
         super.tearDown()
     }
   
-//    func test_weatherScreen_iPhoneSe() {
-//        assertSnapshot(matching: nav, as: .image(on: .iPhoneSe, precision: 0.8))
-//    }
-//    
-//    func test_weatherScreen_iPhoneXsMax() {
-//        assertSnapshot(matching: nav, as: .image(on: .iPhoneXsMax, precision: 0.8))
-//    }
-//    
-//    func test_weatherScreen_iPadPro12_9() {
-//        assertSnapshot(matching: nav, as: .image(on: .iPadPro12_9, precision: 0.8))
-//    }
-//    
-//    func test_weatherScreen_iPadMini() {
-//        assertSnapshot(matching: nav, as: .image(on: .iPadMini, precision: 0.8))
-//    }
+    func test_weatherScreen_iPhoneSe() {
+        assertSnapshot(matching: nav, as: .image(on: .iPhoneSe, precision: 0.8))
+    }
+    
+    func test_weatherScreen_iPhoneXsMax() {
+        assertSnapshot(matching: nav, as: .image(on: .iPhoneXsMax, precision: 0.8))
+    }
+    
+    func test_weatherScreen_iPadPro12_9() {
+        assertSnapshot(matching: nav, as: .image(on: .iPadPro12_9, precision: 0.8))
+    }
+    
+    func test_weatherScreen_iPadMini() {
+        assertSnapshot(matching: nav, as: .image(on: .iPadMini, precision: 0.8))
+    }
             
 }
