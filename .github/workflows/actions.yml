@@ -64,7 +64,6 @@ jobs:
            bundler exec fastlane run swiftlint output_file:"./reports/swiftlint.json" reporter:"json" ignore_exit_status:"true"
 
       - name: Run Sonar
-        if: ${{ env.sonarToken != 0 }}
         run: |
           git fetch --unshallow --no-tags
           sonar-scanner -Dsonar.login=${{ secrets.SONAR_TOKEN }}
