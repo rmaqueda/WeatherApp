@@ -63,18 +63,16 @@ jobs:
         run: |
            bundler exec fastlane run swiftlint output_file:"./reports/swiftlint.json" reporter:"json" ignore_exit_status:"true"
 
+      - name: Run Sonar
+        if: ${{ env.sonarToken != 0 }}
+        run: |
+          git fetch --unshallow --no-tags
+          sonar-scanner -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
       - name: 'Save Xcode build log'
         uses: actions/upload-artifact@v3
         with:
           name: WeatherApp-WeatherApp.log
           path: logs
           retention-days: 5
-
-      - name: Run Sonar
-        if: ${{ env.sonarToken != 0 }}
-        run: |
-          git fetch --unshallow --no-tags
-          sonar-scanner -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
