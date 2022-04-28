@@ -51,7 +51,7 @@ jobs:
         run: |
           slather coverage --sonarqube-xml ${params} ${project}
         env:
-          project: 'Adyen.xcodeproj'
+          project: 'WeatherApp.xcodeproj'
           params: '
           --build-directory ./DerivedData
           --output-directory ./reports
