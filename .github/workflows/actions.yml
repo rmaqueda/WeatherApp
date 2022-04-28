@@ -32,6 +32,11 @@ jobs:
       - name: CocoaPod install
         run: pod install
 
+      - name: Install Tools
+        run: |
+          brew install sonar-scanner
+          gem install slather
+
       - name: Setup secrets
         run: |
           cp WeatherApp/Preferences/Secrets_example.plist WeatherApp/Preferences/Secrets.plist
@@ -41,6 +46,30 @@ jobs:
 
       - name: Build and test
         run: bundle exec fastlane tests
+
+      - name: Slather
+        run: |
+          slather coverage --sonarqube-xml ${params} ${project}
+        env:
+          project: 'WeatherApp.xcodeproj'
+          params: '
+          --build-directory ./build
+          --output-directory ./reports
+          --scheme WeatherApp
+          --binary-basename WeatherApp
+          --binary-basename Common'
+
+      - name: SwiftLint
+        run: |
+           bundler exec fastlane run swiftlint output_file:"./reports/swiftlint.json" reporter:"json" ignore_exit_status:"true"
+
+      - name: Run Sonar
+        run: |
+          git fetch --unshallow --no-tags
+          sonar-scanner -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: 'Save Xcode build log'
         uses: actions/upload-artifact@v3
