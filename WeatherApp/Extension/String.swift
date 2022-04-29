@@ -12,7 +12,11 @@ import UIKit
 extension String {
     
     func capitalizingFirstLetter() -> String {
-        prefix(1).capitalized + dropFirst()
+        prefix(1).uppercased() + self.lowercased().dropFirst()
+    }
+    
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
     }
     
 }
